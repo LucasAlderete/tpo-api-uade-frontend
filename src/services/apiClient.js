@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiClient = axios.create({
-  baseURL: "https://pokeapi.co/", // Base URL para todas las peticiones
+const apiClient = axios.create( {
+  baseURL: "http://localhost:8080/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -9,23 +9,12 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // O de donde obtengas el token
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 404) {
-      window.location.href = "/login";
-    }
+  }, (error) => {
     return Promise.reject(error);
   }
 );
