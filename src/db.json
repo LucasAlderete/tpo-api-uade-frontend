@@ -74,17 +74,17 @@
         {
             "id": 1,
             "path": "/images/mouse.jpg",
-            "product": 1
+            "product": "SI-GHI54321"
         },
         {
             "id": 2,
             "path": "/images/smarthpone.jpg",
-            "product": 2
+            "product": "SI-ABC12345"
         },
         {
-            "id": 2,
+            "id": 3,
             "path": "/images/laptop.jpg",
-            "product": 2
+            "product": "SI-DEF67890"
         }
     ]
 }
