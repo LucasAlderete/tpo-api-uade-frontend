@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
 import { useAuth } from "../hooks/useAuth";
-import { addToFavs } from '../services/serviceFavs.js';
+import { addToFavs, removeFromFavs} from '../services/serviceFavs.js';
 import { Link } from 'react-router-dom';
 const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleAddToFavorites = async () => {
+    if (isFavorite) {
+      const response = await removeFromFavs(product.id);
+      
+      if (response.success) {
+        setIsFavorite(false); // Actualiza el estado para mostrar el corazón
+      } else {
+        console.error(response.error || "No se pudo agregar a favoritos.");
+      }
+      return;
+    }
+
     const response = await addToFavs(product.id);
     
     if (response.success) {
@@ -31,12 +42,12 @@ const ProductCard = ({ product }) => {
         <button
           className={`btn ${isFavorite ? 'btn-danger' : 'btn-outline-primary'}`}
           onClick={handleAddToFavorites}
-          disabled={isFavorite} // Desactiva el botón si ya está en favoritos
         >
           {isFavorite ? '❤️' : 'Agregar a Favoritos'}
         </button>
+        <br></br>
 
-        <Link to={`/product/${product.id}`} className="btn btn-secondary ms-2">
+        <Link to={`/product/${product.product_id}`} className="btn btn-primary ms-2 mt-2">
           Ver Producto
         </Link>
       </div>

@@ -6,7 +6,7 @@ const HOME_RESPONSE = {
     "products": {
         "almacenamiento": [
             {
-                "product_id": 0,
+                "product_id": 1,
                 "name": "Samsung 970 EVO Plus",
                 "url_image": null,
                 "description": "Disco SSD Samsung",
@@ -18,7 +18,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 2,
                 "name": "Crucial MX500",
                 "url_image": null,
                 "description": "Disco SSD Crucial",
@@ -30,7 +30,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 3,
                 "name": "Seagate Barracuda 1TB",
                 "url_image": null,
                 "description": "Disco Duro Seagate",
@@ -44,7 +44,7 @@ const HOME_RESPONSE = {
         ],
         "fuente": [
             {
-                "product_id": 0,
+                "product_id": 4,
                 "name": "Corsair CV550",
                 "url_image": null,
                 "description": "Fuente Corsair",
@@ -56,7 +56,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 5,
                 "name": "EVGA SuperNOVA 750 G5",
                 "url_image": null,
                 "description": "Fuente EVGA",
@@ -68,7 +68,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 6,
                 "name": "Thermaltake Smart BX1",
                 "url_image": null,
                 "description": "Fuente Thermaltake",
@@ -82,7 +82,7 @@ const HOME_RESPONSE = {
         ],
         "motherboard": [
             {
-                "product_id": 0,
+                "product_id": 7,
                 "name": "MSI B450 TOMAHAWK MAX",
                 "url_image": null,
                 "description": "Motherboard MSI",
@@ -94,7 +94,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 8,
                 "name": "Asus Z490-A Prime",
                 "url_image": null,
                 "description": "Motherboard Asus",
@@ -106,7 +106,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id":9,
                 "name": "Gigabyte B550 AORUS PRO",
                 "url_image": null,
                 "description": "Motherboard Gigabyte",
@@ -120,7 +120,7 @@ const HOME_RESPONSE = {
         ],
         "monitor": [
             {
-                "product_id": 0,
+                "product_id": 10,
                 "name": "Asus VG248QE",
                 "url_image": null,
                 "description": "Monitor Gamer Asus",
@@ -132,7 +132,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 11,
                 "name": "Samsung Odyssey G5",
                 "url_image": null,
                 "description": "Monitor Gamer Samsung",
@@ -144,7 +144,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 12,
                 "name": "LG 23MP68VQ",
                 "url_image": null,
                 "description": "Monitor LG",
@@ -158,7 +158,7 @@ const HOME_RESPONSE = {
         ],
         "procesador": [
             {
-                "product_id": 0,
+                "product_id": 13,
                 "name": "Ryzen 5 3600",
                 "url_image": null,
                 "description": "Procesador AMD Ryzen 5",
@@ -170,7 +170,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 14,
                 "name": "Intel Core i7 10700K",
                 "url_image": null,
                 "description": "Procesador Intel i7",
@@ -182,7 +182,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 15,
                 "name": "Ryzen 3 3200G",
                 "url_image": null,
                 "description": "Procesador AMD Ryzen 3",
@@ -194,7 +194,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 16,
                 "name": "Zapatilla",
                 "url_image": null,
                 "description": "asadasdasdsafaf",
@@ -208,7 +208,7 @@ const HOME_RESPONSE = {
         ],
         "perifericos": [
             {
-                "product_id": 0,
+                "product_id": 17,
                 "name": "HyperX Alloy FPS Pro",
                 "url_image": null,
                 "description": "Teclado HyperX",
@@ -220,7 +220,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 18,
                 "name": "Logitech G305",
                 "url_image": null,
                 "description": "Mouse Logitech",
@@ -232,7 +232,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 19,
                 "name": "Razer Kraken X",
                 "url_image": null,
                 "description": "Auriculares Razer",
@@ -244,7 +244,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 20,
                 "name": "Mouse",
                 "url_image": null,
                 "description": "asadasdasdsafaf",
@@ -262,7 +262,7 @@ const HOME_RESPONSE = {
         ],
         "gpu": [
             {
-                "product_id": 0,
+                "product_id": 21,
                 "name": "Nvidia RTX 3060",
                 "url_image": null,
                 "description": "Tarjeta Gráfica Nvidia",
@@ -274,7 +274,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 22,
                 "name": "AMD Radeon RX 5600XT",
                 "url_image": null,
                 "description": "Tarjeta Gráfica AMD",
@@ -286,7 +286,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 23,
                 "name": "Nvidia GTX 1650",
                 "url_image": null,
                 "description": "Tarjeta Gráfica Nvidia",
@@ -300,7 +300,7 @@ const HOME_RESPONSE = {
         ],
         "ram": [
             {
-                "product_id": 0,
+                "product_id": 24,
                 "name": "Corsair Vengeance LPX",
                 "url_image": null,
                 "description": "Memoria RAM Corsair",
@@ -312,7 +312,7 @@ const HOME_RESPONSE = {
                 "highlighted": false
             },
             {
-                "product_id": 0,
+                "product_id": 25,
                 "name": "Kingston HyperX Fury",
                 "url_image": null,
                 "description": "Memoria RAM Kingston",
@@ -324,7 +324,7 @@ const HOME_RESPONSE = {
                 "highlighted": true
             },
             {
-                "product_id": 0,
+                "product_id": 26,
                 "name": "Crucial Ballistix Sport",
                 "url_image": null,
                 "description": "Memoria RAM Crucial",
@@ -339,7 +339,7 @@ const HOME_RESPONSE = {
     },
     "recently_viewed_products": [
         {
-            "product_id": 0,
+            "product_id": 27,
             "name": "Gigabyte B550 AORUS PRO",
             "url_image": null,
             "description": "Motherboard Gigabyte",
@@ -353,7 +353,7 @@ const HOME_RESPONSE = {
     ],
     "featured_products": [
         {
-            "product_id": 0,
+            "product_id": 28,
             "name": "Intel Core i7 10700K",
             "url_image": null,
             "description": "Procesador Intel i7",
@@ -365,7 +365,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 29,
             "name": "Kingston HyperX Fury",
             "url_image": null,
             "description": "Memoria RAM Kingston",
@@ -377,7 +377,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 30,
             "name": "Nvidia RTX 3060",
             "url_image": null,
             "description": "Tarjeta Gráfica Nvidia",
@@ -389,7 +389,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 31,
             "name": "Samsung Odyssey G5",
             "url_image": null,
             "description": "Monitor Gamer Samsung",
@@ -401,7 +401,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 32,
             "name": "EVGA SuperNOVA 750 G5",
             "url_image": null,
             "description": "Fuente EVGA",
@@ -413,7 +413,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 33,
             "name": "Asus Z490-A Prime",
             "url_image": null,
             "description": "Motherboard Asus",
@@ -425,7 +425,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 34,
             "name": "Logitech G305",
             "url_image": null,
             "description": "Mouse Logitech",
@@ -437,7 +437,7 @@ const HOME_RESPONSE = {
             "highlighted": true
         },
         {
-            "product_id": 0,
+            "product_id": 35,
             "name": "Crucial MX500",
             "url_image": null,
             "description": "Disco SSD Crucial",
