@@ -1,0 +1,10 @@
+.menu-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  /* Ajusta el estilo de MenubarTrigger para que se vea mejor en horizontal */
+  .menu-horizontal .MenubarTrigger {
+    margin-right: 16px; /* Ajusta el espacio entre elementos si es necesario */
+  }
