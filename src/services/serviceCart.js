@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = '/cart';
+const API_BASE_URL = 'http://localhost:8080/cart';
 
 const getCart = async (userId) => {
   const response = await axios.get(`${API_BASE_URL}?userId=${userId}`);
@@ -39,4 +39,11 @@ const checkout = async (userId) => {
 };
 
 
-export default cartService;
+export default {
+  getCart,
+  addProduct,
+  decreaseProductQuantity,
+  removeProduct,
+  emptyCart,
+  checkout
+};
