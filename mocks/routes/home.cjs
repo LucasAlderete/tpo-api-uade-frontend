@@ -467,6 +467,50 @@ const HOME_RESPONSE = {
           },
         }
       ],
-    }
+    },
+
+    {
+        id: "get-product", // route id
+        url: "/api/product/2", // url in express format
+        method: "GET", // HTTP method
+        variants: [
+          {
+            id: "success", // variant id
+            type: "json", // variant handler id
+            options: {
+              status: 200, // status to send
+              body: {
+                "product_id": 2,
+                "name": "Crucial MX500",
+                "url_image": "https://images.watercoolinguk.co.uk/images/product_images/original/217/crucial-mx500-m2-ssd-sata-6g-1tb-sscc-073-67376-1.jpg",
+                "description": "Disco SSD Crucial",
+                "price": 10000.0,
+                "images": [],
+                "category_name": "Almacenamiento",
+                "stock": 100,
+                "additional_information": "SSD, 500GB",
+                "highlighted": true
+            }, // body to send
+            },
+          }
+        ],
+      },
+      {
+          id: "get-add-to-cart", // route id
+          url: "/api/add-to-cart", // url in express format
+          method: "GET", // HTTP method
+          variants: [
+            {
+              id: "success", // variant id
+              type: "json", // variant handler id
+              options: {
+                status: 200, // status to send
+                body: {
+                  "status": "added to cart"
+              },
+              },
+            }
+          ],
+        }
   ];
   

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
+import { addToCart } from '../services/serviceCart.js';
 import { useAuth } from "../hooks/useAuth";
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isCart, setIsCart] = useState(false);
 
   const handleAddToFavorites = async () => {
     if (isFavorite) {
@@ -27,6 +29,26 @@ const ProductCard = ({ product }) => {
       console.error(response.error || "No se pudo agregar a favoritos.");
     }
   };
+  const handleAddToCart = async () => {
+    if (isCart) {
+      const response = await addToCart();
+
+      if (response.status) {
+        setIsCart(false); 
+      } else {
+        console.error(response.error || "No se pudo agregar ");
+      }
+      return;
+    }
+
+    const response = await addToCart();
+
+    if (response.status) {
+      setIsCart(true); // Actualiza el estado para mostrar el corazón
+    } else {
+      console.error(response.error || "No se pudo agregar a Carrito.");
+    }
+  };
 
   return (
     <div className="card m-2" style={{ width: '18rem' }}>
@@ -45,6 +67,13 @@ const ProductCard = ({ product }) => {
           onClick={handleAddToFavorites}
         >
           {isFavorite ? '❤️' : 'Agregar a Favoritos'}
+        </button>
+        <br />
+        <button
+          className={`btn ${isCart ? 'btn-warning' : 'btn-outline-primary'}`}
+          onClick={handleAddToCart}
+        >
+          {isCart ? 'En carrito' : 'Agregar a Carrito'}
         </button>
         <br />
 

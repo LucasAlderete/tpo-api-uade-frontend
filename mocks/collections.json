@@ -1,6 +1,6 @@
 [
   {
     "id": "base",
-    "routes": ["get-home:success", "get-fav:success"]
+    "routes": ["get-home:success", "get-fav:success", "get-add-to-cart:success", "get-product:success"]
   }
 ]
