@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import cartService from "../services/serviceCart";
-import CheckoutPopup from "../components/CheckoutPopup";
+import ErrorPopup from "../components/ErrorPopup";
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { FaShoppingCart, FaTrash } from 'react-icons/fa';
 
-function Cart({ userId=1 }) {
+function Cart({ userId }) {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [checkoutMessage, setCheckoutMessage] = useState("");
+  const [popupTitle, setPopupTitle] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupSeverity, setPopupSeverity] = useState("info");
+
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -17,56 +20,74 @@ function Cart({ userId=1 }) {
         setItems(cartData.items);
         setTotal(cartData.total);
       } catch (error) {
-        console.error("Error fetching cart data:", error);
+        handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
       }
     };
     fetchCart();
   }, [userId]);
 
+  const handlePopup = (title, message, severity) => {
+    setPopupTitle(title);
+    setPopupMessage(message);
+    setPopupSeverity(severity);
+    setPopupOpen(true);
+  };
+
   const addProduct = async (productId) => {
-    await cartService.addProduct(userId, productId);
-    await refreshCart();
+    try {
+      await cartService.addProduct(userId, productId);
+      await refreshCart();
+    } catch (error) {
+      handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
+    }
   };
 
   const decreaseProductQuantity = async (productId) => {
-    await cartService.decreaseProductQuantity(userId, productId);
-    await refreshCart();
+    try {
+      await cartService.decreaseProductQuantity(userId, productId);
+      await refreshCart();
+    } catch (error) {
+      handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
+    }
   };
 
   const removeProduct = async (productId) => {
-    await cartService.removeProduct(userId, productId);
-    await refreshCart();
+    try {
+      await cartService.removeProduct(userId, productId);
+      await refreshCart();
+    } catch (error) {
+      handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
+    }
   };
 
   const emptyCart = async () => {
-    await cartService.emptyCart(userId);
-    setItems([]);
+    try {
+      await cartService.emptyCart(userId);
+      setItems([]);
+    } catch (error) {
+      handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
+    }
   };
 
   const handleCheckout = async () => {
     try {
       const response = await cartService.checkout(userId);
       if (response.success) {
-        setCheckoutMessage("Compra realizada exitosamente!");
-        setItems([]); 
+        handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
+        setItems([]);
       } else {
-        setCheckoutMessage(`Faltan productos en stock: ${response.products.join(', ')}`);
+        handlePopup("Falta de Stock", `Faltan productos en stock: ${response.products.join(', ')}`, "warning");
       }
     } catch (error) {
-      setCheckoutMessage("Error al realizar la compra. Intente nuevamente.");
-      console.error("Error durante el checkout:", error);
+      handlePopup("Error", "Error al realizar la compra. Intente nuevamente.", "error");
     }
-    setPopupOpen(true);
   };
-
-  const handleClose = () => setPopupOpen(false);
 
   const refreshCart = async () => {
     const cartData = await cartService.getCart(userId);
     setItems(cartData.items);
     setTotal(cartData.total);
   };
-  
 
   return (
     <Container fluid className="cart-page py-5 vh-100 d-flex align-items-center">
@@ -135,15 +156,21 @@ function Cart({ userId=1 }) {
             <Button
               variant="primary"
               className="mt-4 w-100"
-              onClick={handleCheckout}
               disabled={items.length === 0}
+              onClick={handleCheckout}
             >
               COMPRAR
             </Button>
-            <CheckoutPopup open={popupOpen} onClose={handleClose} message={checkoutMessage} />
           </div>
         </Col>
       </Row>
+      <ErrorPopup
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        title={popupTitle}
+        message={popupMessage}
+        severity={popupSeverity}
+      />
     </Container>
   );
 };
