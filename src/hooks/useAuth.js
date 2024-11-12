@@ -11,7 +11,7 @@ const useAuth = () => {
     setError(null); 
 
     try {
-      const user = await loginUser(usuarioOEmail, contrasenia);
+      const user = await authenticate(usuarioOEmail, contrasenia);
       if (user) {
         login(user);
         if (user.role === 'admin') {

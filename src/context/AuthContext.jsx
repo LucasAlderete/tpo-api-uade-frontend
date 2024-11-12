@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../services/serviceAuth";
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
 
@@ -17,9 +18,9 @@ export function AuthProvider({ children }) {
     try {
       const responseData = await authenticate(username, password);
       setToken(responseData);
-      localStorage.setItem("token", JSON.stringify(responseData));
+      localStorage.setItem("token", JSON.stringify(token));
       navigate("/home");
-    } catch (error) {
+    } catch{
       alert("credenciales incorrectas")
     }
   };
@@ -35,6 +36,10 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+AuthProvider.propTypes = {
+  children: PropTypes.node,
 }
 
 export default AuthContext;

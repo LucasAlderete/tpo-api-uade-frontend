@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
-import { useAuth } from "../hooks/useAuth";
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import useAuth from '../hooks/useAuth.js';
 
 const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -111,6 +112,31 @@ const ProductCarousel = ({ title, products }) => {
   );
 };
 
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    url_image: PropTypes.string,
+    product_id: PropTypes.number.isRequired,
+  }).isRequired
+};
+
+ProductCarousel.propTypes = {
+  title: PropTypes.string.isRequired,
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      price: PropTypes.number.isRequired,
+      url_image: PropTypes.string,
+      product_id: PropTypes.number.isRequired,
+    })
+  ).isRequired
+};
+
 const CategorySection = ({ categoryName, products }) => (
   <div className="mb-4">
     <h3>{categoryName}</h3>
@@ -123,6 +149,20 @@ const CategorySection = ({ categoryName, products }) => (
     </div>
   </div>
 );
+
+CategorySection.propTypes = {
+  categoryName: PropTypes.string.isRequired,
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      price: PropTypes.number.isRequired,
+      url_image: PropTypes.string,
+      product_id: PropTypes.number.isRequired,
+    })
+  ).isRequired
+};
 
 const Home = () => {
   const { user } = useAuth();
