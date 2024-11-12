@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-const API_URL = 'http://localhost:3000/api/products';
+const API_URL = 'http://localhost:3000/products';
 
 const axiosWithInterceptor = axios.create();
 
@@ -14,6 +14,8 @@ axiosWithInterceptor.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+
 
 export const addProductToDb = async ({productData, productId}) => {
   try {

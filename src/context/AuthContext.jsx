@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { authenticate } from "../services/serviceLogin";
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
 
@@ -10,8 +11,6 @@ export function AuthProvider({ children }) {
     return JSON.parse(savedUser) ?? null;
   });
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
   const login = async (username, password) => {
     try {
       const response = await authenticate(username, password);
@@ -19,8 +18,8 @@ export function AuthProvider({ children }) {
       setUser(response);
       console.log(user);
       localStorage.setItem("user", JSON.stringify(response));
-      navigate("/home");
-    } catch (err) {
+      redirect("/home");
+    } catch {
       setError("Credenciales incorrectas");
     }
   };
@@ -28,7 +27,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/login");
+    redirect("/login");
   };
 
   useEffect(() => {
@@ -41,5 +40,9 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node 
+};
 
 export default AuthContext;
