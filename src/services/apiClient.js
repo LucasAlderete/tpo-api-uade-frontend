@@ -14,6 +14,7 @@ authClient.interceptors.response.use(
   (error) => { return Promise.reject(error) }
 );
 
+//API CLIENT
 const apiClient = axios.create( {
   baseURL: "http://localhost:8080/api/",
   headers: {
@@ -21,7 +22,7 @@ const apiClient = axios.create( {
   }
 });
 
-//API CLIENT
+
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -45,7 +46,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 403) {
-      navigate("/login");
+      useNavigate("/login");
     }
     return Promise.reject(error);
   }

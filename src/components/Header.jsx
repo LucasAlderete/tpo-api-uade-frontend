@@ -7,6 +7,7 @@ const Header = () => {
   const handleLogOut = () => {
     logout();
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
