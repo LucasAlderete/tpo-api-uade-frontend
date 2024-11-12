@@ -1,17 +1,80 @@
 import React, { useState, useEffect } from "react";
 import cartService from "../services/serviceCart";
-import AlertMessage from "../components/CheckoutAlert";
+import CheckoutPopup from "../components/CheckoutPopup";
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { FaShoppingCart, FaTrash } from 'react-icons/fa';
 
-function Cart() {
+function Cart({ userId=1 }) {
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [checkoutMessage, setCheckoutMessage] = useState("");
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const cartData = await cartService.getCart(userId);
+        setItems(cartData.items);
+        setTotal(cartData.total);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchCart();
+  }, [userId]);
+
+  const addProduct = async (productId) => {
+    await cartService.addProduct(userId, productId);
+    await refreshCart();
+  };
+
+  const decreaseProductQuantity = async (productId) => {
+    await cartService.decreaseProductQuantity(userId, productId);
+    await refreshCart();
+  };
+
+  const removeProduct = async (productId) => {
+    await cartService.removeProduct(userId, productId);
+    await refreshCart();
+  };
+
+  const emptyCart = async () => {
+    await cartService.emptyCart(userId);
+    setItems([]);
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const response = await cartService.checkout(userId);
+      if (response.success) {
+        setCheckoutMessage("Compra realizada exitosamente!");
+        setItems([]); 
+      } else {
+        setCheckoutMessage(`Faltan productos en stock: ${response.products.join(', ')}`);
+      }
+    } catch (error) {
+      setCheckoutMessage("Error al realizar la compra. Intente nuevamente.");
+      console.error("Error durante el checkout:", error);
+    }
+    setPopupOpen(true);
+  };
+
+  const handleClose = () => setPopupOpen(false);
+
+  const refreshCart = async () => {
+    const cartData = await cartService.getCart(userId);
+    setItems(cartData.items);
+    setTotal(cartData.total);
+  };
+  
+
   return (
     <Container fluid className="cart-page py-5 vh-100 d-flex align-items-center">
         <Row className="justify-content-center w-100">
             <Col md={8} className="d-flex flex-column align-items-center">
            {items.length === 0 ? (
-            <Card className="text-center p-5 empty-cart-card w-100">
-              <FaShoppingCart size={64} className="mb-4" />
+            <Card className="text-center p-5 empty-cart-card w-100 bg-dark text-light align-items-center">
+              <FaShoppingCart size={64} className="mb-4 text-secondary" />
               <h2>Aún no hay items en el carrito!</h2>
               <p>Agrega primero un producto para poder visualizar el carrito</p>
             </Card>
@@ -30,13 +93,13 @@ function Cart() {
                       </span>
                     </Col>
                     <Col xs={3} className="d-flex align-items-center">
-                      <Button variant="outline-secondary" onClick={() => updateQuantity(item.id, -1)}>-</Button>
+                      <Button variant="outline-secondary" onClick={() => decreaseProductQuantity(item.id)}>-</Button>
                       <span className="mx-2" style={{ fontWeight: 'bold', color: '#ccc' }}>{item.quantity}</span>
-                      <Button variant="outline-secondary" onClick={() => updateQuantity(item.id, 1)}>+</Button>
+                      <Button variant="outline-secondary" onClick={() => addProduct(item.id)}>+</Button>
                     </Col>
                     
                     <Col xs={1} className="text-end">
-                      <Button variant="link" onClick={() => updateQuantity(item.id, -item.quantity)}>
+                      <Button variant="link" onClick={() => removeProduct() }>
                         <FaTrash size={18} style={{ color: '#ccc' }} />
                       </Button>
                     </Col>
@@ -44,7 +107,7 @@ function Cart() {
                 </div>
               ))}
               {items.length > 0 && (
-                    <Button variant="danger" className="empty-cart-btn" >
+                    <Button variant="danger" className="empty-cart-btn" onClick={() => emptyCart()}>
                       <FaTrash size={16} />
                     </Button>
               )}
@@ -67,7 +130,7 @@ function Cart() {
             <hr />
             <div className="d-flex justify-content-between total-section">
               <span><strong>TOTAL:</strong></span>
-              {/* <span>${total}</span> */}
+              <span>${total}</span>
             </div>
             <Button
               variant="primary"
@@ -77,6 +140,7 @@ function Cart() {
             >
               COMPRAR
             </Button>
+            <CheckoutPopup open={popupOpen} onClose={handleClose} message={checkoutMessage} />
           </div>
         </Col>
       </Row>
