@@ -20,7 +20,7 @@ const HOME_RESPONSE = {
             {
                 "product_id": 2,
                 "name": "Crucial MX500",
-                "url_image": null,
+                "url_image": "https://images.watercoolinguk.co.uk/images/product_images/original/217/crucial-mx500-m2-ssd-sata-6g-1tb-sscc-073-67376-1.jpg",
                 "description": "Disco SSD Crucial",
                 "price": 10000.0,
                 "images": [],
