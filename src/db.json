@@ -1,0 +1,90 @@
+{
+    "users": [
+        {
+            "userId": 1,
+            "username": "john_doe",
+            "email": "john.doe@example.com",
+            "password": "hashed_password",
+            "birthday": "1990-05-20",
+            "name": "John",
+            "surname": "Doe",
+            "role": "USER",
+            "favoriteProducts": [
+                "SI-ABC12345",
+                "SI-DEF67890"
+            ]
+        },
+        {
+            "userId": 2,
+            "username": "jane_smith",
+            "email": "jane.smith@example.com",
+            "password": "hashed_password",
+            "birthday": "1992-08-15",
+            "name": "Jane",
+            "surname": "Smith",
+            "role": "ADMIN",
+            "favoriteProducts": [
+                "SI-GHI54321"
+            ]
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Smartphone",
+            "price": 500.0,
+            "description": "Latest model with high-end features.",
+            "stock": 100,
+            "additionalInformation": "Warranty included.",
+            "urlImageList": [
+                1
+            ],
+            "highlighted": true,
+            "category": 1,
+            "secureId": "SI-ABC12345"
+        },
+        {
+            "id": 2,
+            "name": "Laptop",
+            "price": 1200.0,
+            "description": "High-performance laptop for gaming and work.",
+            "stock": 50,
+            "additionalInformation": "2-year warranty included.",
+            "urlImageList": [
+                2
+            ],
+            "highlighted": false,
+            "category": 1,
+            "secureId": "SI-DEF67890"
+        },
+        {
+            "id": 3,
+            "name": "Wireless Mouse",
+            "price": 30.0,
+            "description": "Ergonomic wireless mouse.",
+            "stock": 200,
+            "additionalInformation": "Battery included.",
+            "urlImageList": [],
+            "highlighted": false,
+            "category": 1,
+            "secureId": "SI-GHI54321"
+        }
+    ],
+    "images": [
+        {
+            "id": 1,
+            "path": "/images/mouse.jpg",
+            "product": "SI-GHI54321"
+        },
+        {
+            "id": 2,
+            "path": "/images/smarthpone.jpg",
+            "product": "SI-ABC12345"
+        },
+        {
+            "id": 3,
+            "path": "/images/laptop.jpg",
+            "product": "SI-DEF67890"
+        }
+    ]
+}
