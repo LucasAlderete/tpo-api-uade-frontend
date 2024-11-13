@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import myProfileService from '../services/serviceMyProfile';
 
-const MyProfile = ({ username, email, birthday, name, surname }) => {
+const MyProfile = () => {
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [birthday, setBirthday] = useState("")
+  const [name, setName] = useState("")
+  const [surname, setSurname] = useState("")
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    const fetchMyProfile = async () => {
+      try {
+        const myProfileData = await myProfileService.getMyProfile();
+        setUsername(myProfileData.username)
+        setEmail(myProfileData.email)
+        setBirthday(myProfileData.birthday)
+        setName(myProfileData.name)
+        setSurname(myProfileData.surname)
+        setOrders(myProfileData.ordersDto)
+      } catch (error) {
+        // handlePopup("Error", "Error al cargar el perfil del usuario. Intente nuevamente.", "error");
+      }
+    };
+    fetchMyProfile();
+  }, []);
+
   return (
+
     <div className="container mt-5">
 
       {/*Datos*/}
@@ -10,7 +36,10 @@ const MyProfile = ({ username, email, birthday, name, surname }) => {
       <div className="card mb-5">
         <div className="card-body">
           <p className="card-text">
-            <strong>Nombre:</strong> {name} {surname}
+            <strong>Nombre:</strong> {name}
+          </p>
+          <p className="card-text">
+            <strong>Apellido:</strong> {surname}
           </p>
           <p className="card-text">
             <strong>Usuario:</strong> {username}
@@ -21,45 +50,42 @@ const MyProfile = ({ username, email, birthday, name, surname }) => {
           <p className="card-text">
             <strong>Fecha de nacimiento:</strong> {birthday}
           </p>
-          <p className="card-text">
-            <strong>Nombre:</strong> {name}
-          </p>
-          <p className="card-text">
-            <strong>Apellido:</strong> {surname}
-          </p>
+          
         </div>
       </div>
 
       {/*Checkouts*/}
 
       <h3>Checkouts</h3>
-      <div className="accordion" id="accordionExample">
-        {checkouts.map((checkout, index) => (
-          <div className="accordion-item" key={checkout.id}>
-            <h2 className="accordion-header" id={`heading-${checkout.id}`}>
+      
+      <div className="accordion" id="accordionCheckouts">
+        {orders.map((orders, index) => (
+          <div className="accordion-item" key={orders.id}>
+            <h2 className="accordion-header" id={`heading-${orders.id}`}>
               <button
                 className="accordion-button"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target={`#collapse-${checkout.id}`}
+                data-bs-target={`#collapse-${orders.id}`}
                 aria-expanded="true"
-                aria-controls={`collapse-${checkout.id}`}
+                aria-controls={`collapse-${orders.id}`}
               >
-                #{checkout.id}
+                #{orders.id}
               </button>
             </h2>
             <div
-              id={`collapse-${checkout.id}`}
+              id={`collapse-${orders.id}`}
               className="accordion-collapse collapse"
-              aria-labelledby={`heading-${checkout.id}`}
+              aria-labelledby={`heading-${orders.id}`}
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                {/* Información de la orden */}
-                <p><strong>Fecha:</strong> {checkout.date}</p>
-                <p><strong>Precio total:</strong> ${checkout.total}</p>
+                 {/* Información de la orden */}
+            
+                <p><strong>Fecha:</strong> {orders.date}</p>
+                <p><strong>Precio total:</strong> ${orders.total}</p>
 
-                {/* Tabla de items */}
+                 {/*Tabla de items*/}
                 <table className="table">
                   <thead>
                     <tr>
@@ -70,7 +96,7 @@ const MyProfile = ({ username, email, birthday, name, surname }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {checkout.items.map((item, itemIndex) => (
+                    {orders.items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
@@ -85,7 +111,6 @@ const MyProfile = ({ username, email, birthday, name, surname }) => {
           </div>
         ))}
       </div>
-
 
     </div>
   );
