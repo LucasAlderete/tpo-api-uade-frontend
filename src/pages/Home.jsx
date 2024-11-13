@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
 import { addToCart } from '../services/serviceCart.js';
-import { useAuth } from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { Link } from 'react-router-dom';
 
