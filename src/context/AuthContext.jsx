@@ -1,42 +1,37 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../services/serviceLogin";
+import { authenticate } from "../services/serviceAuth";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return JSON.parse(savedUser) ?? null;
+
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("user");
+    return JSON.parse(savedToken) ?? null;
   });
-  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
   const login = async (username, password) => {
     try {
-      const response = await authenticate(username, password);
-
-      setUser(response);
-      console.log(user);
-      localStorage.setItem("user", JSON.stringify(response));
+      const responseData = await authenticate(username, password);
+      setToken(responseData);
+      localStorage.setItem("token", JSON.stringify(responseData));
       navigate("/home");
-    } catch (err) {
-      setError("Credenciales incorrectas");
+    } catch (error) {
+      alert("credenciales incorrectas")
     }
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+    setToken(null);
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
-  useEffect(() => {
-    setError(null);
-  }, [user]);
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, error }}>
+    <AuthContext.Provider value={{ login, logout }}>
       {children}
     </AuthContext.Provider>
   );

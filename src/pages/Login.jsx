@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
+import { authenticate } from "../services/serviceAuth"
 
 const Login = () => {
 
@@ -7,8 +9,7 @@ const Login = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      // Perform login logic here
-      alert(`Email: ${email}\nPassword: ${password}`);
+      authenticate(email, password)
     };
 
     return (
