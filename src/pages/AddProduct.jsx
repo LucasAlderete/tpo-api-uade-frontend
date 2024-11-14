@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
-import { AppContext } from '../context/AppContext';
-import { getProductById, addProductToDb } from '../services/catalogService'; 
+import { AuthContext } from '../context/AuthContext';
+import { getProductById, addProductToDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 
 const AddProductPage = () => {
-  const { error } = useContext(AppContext);
+  const { error } = useContext(AuthContext);
   const [formValues, setFormValues] = useState({
     model: '',
     category: '',
