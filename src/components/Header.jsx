@@ -27,7 +27,7 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
                   className="nav-link active" aria-current="page" to="/">
@@ -48,12 +48,6 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link" aria-current="page" to="/MyProfile">
-                  My Profile
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
                   className="nav-link" aria-current="page" to="/Cart">
                   Cart
                 </Link>
@@ -63,14 +57,13 @@ const Header = () => {
             <form class="d-flex" role="search">
               <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Nombre de usuario
+                  [Nombre de usuario]
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li><button class="dropdown-item" type="button">Mi Perfil</button></li>
-                  <li><button class="dropdown-item text-danger" type="button" onClick={handleLogOut}>Cerrar Sesión</button></li>
+                  <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My Profile</Link></button></li>
+                  <li><button class="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
                 </ul>
               </div>
-              
             </form>
           </div>
         </div>
