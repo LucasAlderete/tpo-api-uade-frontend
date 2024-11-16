@@ -32,23 +32,23 @@ const MyProfile = () => {
 
       {/*Datos*/}
 
-      <h3>My Perfil</h3>
+      <h3>My Profile</h3>
       <div className="card mb-5">
         <div className="card-body">
           <p className="card-text">
-            <strong>Nombre:</strong> {name}
+            <strong>Name:</strong> {name}
           </p>
           <p className="card-text">
-            <strong>Apellido:</strong> {surname}
+            <strong>Surname:</strong> {surname}
           </p>
           <p className="card-text">
-            <strong>Usuario:</strong> {username}
+            <strong>Username:</strong> {username}
           </p>
           <p className="card-text">
             <strong>Email:</strong> {email}
           </p>
           <p className="card-text">
-            <strong>Fecha de nacimiento:</strong> {birthday}
+            <strong>Birthday:</strong> {birthday}
           </p>
           
         </div>
@@ -82,17 +82,17 @@ const MyProfile = () => {
               <div className="accordion-body">
                  {/* Información de la orden */}
             
-                <p><strong>Fecha:</strong> {orders.date}</p>
-                <p><strong>Precio total:</strong> ${orders.total}</p>
+                <p><strong>Date:</strong> {orders.date}</p>
+                <p><strong>Final Price:</strong> ${orders.total}</p>
 
                  {/*Tabla de items*/}
                 <table className="table">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Producto</th>
-                      <th scope="col">Cantidad</th>
-                      <th scope="col">Precio</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Price</th>
                     </tr>
                   </thead>
                   <tbody>

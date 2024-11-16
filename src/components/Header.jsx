@@ -57,7 +57,7 @@ const Header = () => {
             <form class="d-flex" role="search">
               <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  [Nombre de usuario]
+                  [Username]
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My Profile</Link></button></li>
