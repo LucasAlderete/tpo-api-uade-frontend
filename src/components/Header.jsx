@@ -13,7 +13,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            Navbar
+            [NombreEcommerce]
           </a>
           <button
             className="navbar-toggler"
@@ -30,20 +30,32 @@ const Header = () => {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/pokemons"
-                >
-                  Pokemons
+                  className="nav-link active" aria-current="page" to="/">
+                  Home
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/"
-                >
-                  Home
+                  className="nav-link" aria-current="page" to="/Login">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/Register">
+                  Register
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/MyProfile">
+                  My Profile
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/Cart">
+                  Cart
                 </Link>
               </li>
             </ul>

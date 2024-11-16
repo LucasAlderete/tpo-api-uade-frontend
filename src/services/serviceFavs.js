@@ -1,11 +1,10 @@
 export const addToFavs = async (product_id) => {
   try {
-      const response = await fetch(`http://localhost:3100/api/fav`, {
-          method: 'POST',
+      const response = await fetch(`http://localhost:3000/favorites-add`, {
+          method: 'GET',
           headers: {
               'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ product_id })
+          }
       });
       
       if (response.ok) {
@@ -20,12 +19,11 @@ export const addToFavs = async (product_id) => {
 
 export const removeFromFavs = async (product_id) => {
   try {
-    const response = await fetch(`http://localhost:3100/api/fav`, {
-        method: 'DELETE',
+    const response = await fetch(`http://localhost:3000/favorites-remove`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ product_id })
+        }
     });
     
     if (response.ok) {

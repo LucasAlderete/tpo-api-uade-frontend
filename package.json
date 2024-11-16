@@ -7,13 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start:mocks": "mocks-server --path ./mocks"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mocks-server/main": "^4.1.0",
     "@mui/material": "^6.1.6",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",

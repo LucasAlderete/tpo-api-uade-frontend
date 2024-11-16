@@ -3,7 +3,6 @@ import { getHome } from '../services/serviceHome.js';
 import { addToCart } from '../services/serviceCart.js';
 import useAuth from "../hooks/useAuth";
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
-import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -17,6 +16,8 @@ const ProductCard = ({ product, onViewProduct }) => {
       return;
     }
     const response = await addToFavs(product.id);
+    console.log(response);
+
     if (response.success) setIsFavorite(true);
     else console.error(response.error || "No se pudo agregar a favoritos.");
   };
@@ -81,15 +82,6 @@ const ProductCarousel = ({ title, products, onViewProduct }) => {
             );
           })}
         </div>
-
-        <button className="carousel-control-prev" type="button" data-bs-target={`#${title.replace(/\s+/g, '-')}-carousel`} data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Anterior</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target={`#${title.replace(/\s+/g, '-')}-carousel`} data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Siguiente</span>
-        </button>
       </div>
     </div>
   );
