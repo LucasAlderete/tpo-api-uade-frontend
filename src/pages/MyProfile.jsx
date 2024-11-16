@@ -50,7 +50,6 @@ const MyProfile = () => {
           <p className="card-text">
             <strong>Birthday:</strong> {birthday}
           </p>
-          
         </div>
       </div>
 
@@ -111,7 +110,6 @@ const MyProfile = () => {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

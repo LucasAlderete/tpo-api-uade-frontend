@@ -9,9 +9,9 @@ import Cart from "../pages/Cart.jsx";
 
 const AppRoutes = () => {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Header />
-      <div>
+      <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={< Home/>} />
           <Route path="/login" element={< Login/>} />
@@ -19,9 +19,9 @@ const AppRoutes = () => {
           <Route path="/my-profile" element={< MyProfile/>} />
           <Route path="/cart" element={< Cart/>} />
         </Routes>
-      </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
