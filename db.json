@@ -554,11 +554,11 @@
         "recommended_products": null
     },
     "myProfile":{
-        "username": "franncabanillas",
-        "email": "francocabanillas@gmail.com",
-        "birthday": "2002-08-07",
-        "name": "Franco",
-        "surname": "Cabanillas",
+        "username": "john_doe",
+        "email": "john.doe@example.com",
+        "birthday": "1990-05-20",
+        "name": "John",
+        "surname": "Doe",
         "ordersDto": [
             {
             "id": "12345",
