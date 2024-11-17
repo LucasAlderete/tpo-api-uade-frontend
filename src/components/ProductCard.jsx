@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { addToCart } from '../services/serviceCart.js';
 
@@ -6,21 +6,70 @@ const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
 
+  // Leer favoritos y carrito de localStorage al cargar el componente
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+    const cart = JSON.parse(localStorage.getItem('local-cart')) || [];
+
+    setIsFavorite(favorites.includes(product.product_id)); // Usar product_id
+    setIsCart(cart.includes(product.product_id)); // Usar product_id
+  }, [product.product_id]);
+
+  // Guardar cambios en favoritos
   const handleAddToFavorites = async () => {
-    const response = isFavorite ? await removeFromFavs(product.id) : await addToFavs(product.id);
-    if (response.success) setIsFavorite(!isFavorite);
-    else console.error(response.error || "Error al manejar favoritos.");
+    let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+
+    if (isFavorite) {
+      // Quitar de favoritos
+      const response = await removeFromFavs(product.product_id);
+      if (response.success) {
+        favorites = favorites.filter((id) => id !== product.product_id); // Usar product_id
+        setIsFavorite(false);
+      } else {
+        console.error(response.error || "Error al manejar favoritos.");
+        return;
+      }
+    } else {
+      // Agregar a favoritos
+      const response = await addToFavs(product.product_id);
+      if (response.success) {
+        favorites.push(product.product_id); // Usar product_id
+        setIsFavorite(true);
+      } else {
+        console.error(response.error || "Error al manejar favoritos.");
+        return;
+      }
+    }
+
+    localStorage.setItem('local-favorites', JSON.stringify(favorites));
   };
 
+  // Guardar cambios en carrito
   const handleAddToCart = async () => {
-    const response = await addToCart(product.id);
-    if (response.status) setIsCart(!isCart);
-    else console.error(response.error || "Error al manejar carrito.");
+    let cart = JSON.parse(localStorage.getItem('local-cart')) || [];
+
+    if (isCart) {
+      // Quitar del carrito
+      cart = cart.filter((id) => id !== product.product_id); // Usar product_id
+      setIsCart(false);
+    } else {
+      // Agregar al carrito
+      const response = await addToCart(product.product_id);
+      if (response.status) {
+        cart.push(product.product_id); // Usar product_id
+        setIsCart(true);
+      } else {
+        console.error(response.error || "Error al manejar carrito.");
+        return;
+      }
+    }
+
+    localStorage.setItem('local-cart', JSON.stringify(cart));
   };
 
   return (
     <div
-      className="card m-1 p-2 shadow-sm border-0"
+      className="card m-2 p-2 shadow-sm border-0"
       style={{
         width: "20rem",
         borderRadius: "15px",
@@ -52,6 +101,7 @@ const ProductCard = ({ product, onViewProduct }) => {
         <p className="text-success fw-bold">Precio: ${product.price}</p>
 
         <div className="d-flex justify-content-center gap-4 my-3">
+          {/* Botón de favoritos */}
           <span
             className="material-icons"
             onClick={handleAddToFavorites}
@@ -67,6 +117,7 @@ const ProductCard = ({ product, onViewProduct }) => {
             {isFavorite ? "favorite" : "favorite_border"}
           </span>
 
+          {/* Botón de carrito */}
           <span
             className="material-icons"
             onClick={handleAddToCart}
@@ -105,7 +156,6 @@ const ProductCard = ({ product, onViewProduct }) => {
         </button>
       </div>
     </div>
-
   );
 };
 
