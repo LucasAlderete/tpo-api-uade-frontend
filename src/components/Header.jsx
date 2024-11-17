@@ -60,7 +60,7 @@ const Header = () => {
                   [Username]
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My Profile</Link></button></li>
+                  <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My profile</Link></button></li>
                   <li><button class="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
                 </ul>
               </div>
