@@ -51,7 +51,7 @@ const MyProfile = () => {
       <h3>Checkouts</h3>
       
       <div className="accordion" id="accordionCheckouts">
-        {orders.map((orders, index) => (
+        {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
               <button
