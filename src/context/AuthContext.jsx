@@ -1,40 +1,72 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../services/serviceAuth";
+import useServiceAuth from "../hooks/useServiceAuth";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-
-  const [token, setToken] = useState(() => {
-    const savedToken = localStorage.getItem("user");
-    return JSON.parse(savedToken) ?? null;
-  });
+export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
+  const { registerService, authenticateService } = useServiceAuth();
 
-  const login = async (username, password) => {
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("token");
     try {
-      const responseData = await authenticate(username, password);
-      setToken(responseData);
-      localStorage.setItem("token", JSON.stringify(responseData));
-      navigate("/home");
+      return JSON.parse(savedToken) ?? null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const register = async (username, email, password, birthday, name, surname) => {
+    try {
+      const responseData = await registerService(username, email, password, birthday, name, surname);
+      saveUserData(responseData);
+      succesToken(responseData);
     } catch (error) {
-      alert("credenciales incorrectas")
+      alert("usuario o mail ya en uso, pruebe nuevamente");
+    }
+  }
+
+  const login = async (email, password) => {
+    if (isAuthenticated()) {
+      navigate("/");
+    }
+    try {
+      const responseData = await authenticateService(email, password);
+      saveUserData(responseData);
+      succesToken(responseData);
+    } catch (error) {
+      alert("credenciales incorrectas");
     }
   };
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userData")
     navigate("/login");
   };
 
+  const isAuthenticated = () => {
+    return !!token;
+  }
+
+  const succesToken = (responseData) => {
+    setToken(responseData);
+    localStorage.setItem("token", JSON.stringify(responseData));
+    navigate("/");
+  }
+
+  const saveUserData = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+    const event = new CustomEvent("userDataChanged", { detail: userData });
+    window.dispatchEvent(event);
+  }
+
   return (
-    <AuthContext.Provider value={{ login, logout }}>
+    <AuthContext.Provider value={{ register, login, logout, isAuthenticated, token }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-export default AuthContext;

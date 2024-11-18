@@ -1,22 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../context/AuthContext"
 
-//AUTH CLIENT
-const authClient = axios.create( {
-  baseURL: "http://localhost:8080/api/",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
-
-authClient.interceptors.response.use(
-  (response) => { navigate("/home") },
-  (error) => { return Promise.reject(error) }
-);
-
-//API CLIENT
 const apiClient = axios.create( {
-  baseURL: "http://localhost:8080/api/",
+  baseURL: "http://localhost:3000/",
   headers: {
     "Content-Type": "application/json"
   }
@@ -28,11 +15,13 @@ apiClient.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       if (jwtDecode(token).exp < Date.now() / 1000) {
+        logout();
         useNavigate("/login");
         return Promise.reject(new Error("Token expired, redirecting to login."));
       }
       config.headers.Authorization = `Bearer ${token}`;
     } else {
+      logout();
       useNavigate("/login");
       return Promise.reject(new Error("No token found, redirecting to login."));
     }
@@ -45,11 +34,12 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status === 403) {
+    if (error.response.status === 403 || error.response.status === 401) {
+      logout();
       useNavigate("/login");
     }
     return Promise.reject(error);
   }
 )
 
-export {authClient, apiClient};
+export default apiClient;

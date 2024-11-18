@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
-import useAuth from "../hooks/useAuth";
 import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
 import { getNavigationDecored } from '../services/serviceNavigation.js';
 
 const Home = () => {
-  const { user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +35,7 @@ const Home = () => {
 
   return (
     <div className="container text-center my-5">
-      <h1>Bienvenido, {user?.name || 'Usuario'}</h1>
+      <h1>Bienvenido, Usuario</h1>
 
       {data.recently_viewed_products && (
         <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products}/>

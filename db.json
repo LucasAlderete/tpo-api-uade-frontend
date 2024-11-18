@@ -28,6 +28,15 @@
         "SI-GHI54321"
       ],
       "id": "5e46"
+    },
+    {
+      "id": "870f",
+      "username": "felipe-parrondo",
+      "email": "f@p.com",
+      "password": "1234",
+      "birthday": "1999-04-29",
+      "name": "Felipe",
+      "surname": "Parrondo"
     }
   ],
   "products": [
