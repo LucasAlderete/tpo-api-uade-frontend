@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
 import useAuth from "../hooks/useAuth";
 import ProductCarousel from "../components/ProductCarousel.jsx";

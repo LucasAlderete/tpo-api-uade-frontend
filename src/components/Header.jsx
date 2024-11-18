@@ -54,14 +54,14 @@ const Header = () => {
               </li>
               
             </ul>
-            <form class="d-flex" role="search">
-              <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <form className="d-flex" role="search">
+              <div className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   [Username]
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My profile</Link></button></li>
-                  <li><button class="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li><button className="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My profile</Link></button></li>
+                  <li><button className="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
                 </ul>
               </div>
             </form>
