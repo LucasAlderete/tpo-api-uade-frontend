@@ -253,3 +253,11 @@ footer a:hover {
     border-radius: 0;
     overflow-anchor: none;
 }
+
+.product-image-fixed {
+  width: 40vw; 
+  height: 70vh;
+  object-fit: contain;
+  object-position: center; 
+  background-color: #f8f9fa;
+}

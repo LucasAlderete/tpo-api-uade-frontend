@@ -386,157 +386,152 @@
     },
     {
       "id": "2",
-      "path": "/images/smarthpone.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_818667-MLU76042771243_042024-F.webp",
       "product": "2 | Crucial MX500"
     },
     {
       "id": "3",
-      "path": "/images/laptop.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_946928-MLA40283983437_122019-F.webp",
       "product": "3 | Seagate Barracuda 1TB"
     },
     {
       "id": "27",
-      "path": "/images/image27.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_935668-MLA80428455556_112024-F.webp",
       "product": "1 | Samsung 970 EVO Plus"
     },
     {
       "id": "28",
-      "path": "/images/image28.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_860331-MLA80688023609_112024-F.webp",
       "product": "1 | Samsung 970 EVO Plus"
     },
     {
       "id": "29",
-      "path": "/images/image29.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_700058-MLU76675811974_062024-F.webp",
       "product": "2 | Crucial MX500"
     },
     {
       "id": "30",
-      "path": "/images/image30.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_877337-MLU79021577006_092024-F.webp",
       "product": "3 | Seagate Barracuda 1TB"
     },
     {
       "id": "31",
-      "path": "/images/image31.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_624194-MLU73980481548_012024-F.webp",
       "product": "3 | Seagate Barracuda 1TB"
     },
     {
       "id": "32",
-      "path": "/images/image32.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_762056-MLU75116953203_032024-F.webp",
       "product": "3 | Seagate Barracuda 1TB"
     },
     {
       "id": "4",
-      "path": "/images/image4.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_938880-MLU78555809661_082024-F.webp",
       "product": "4 | Corsair CV550"
     },
     {
       "id": "5",
-      "path": "/images/image5.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_808998-MLU69145774293_042023-F.webp",
       "product": "5 | EVGA SuperNOVA 750 G5"
     },
     {
       "id": "6",
-      "path": "/images/image6.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_874064-MLU70654386268_072023-F.webp",
       "product": "6 | Thermaltake Smart BX1"
     },
     {
       "id": "7",
-      "path": "/images/image7.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_677012-MLA44918648414_022021-F.webp",
       "product": "7 | MSI B450 TOMAHAWK MAX"
     },
     {
       "id": "8",
-      "path": "/images/image8.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_842476-MLU54962348588_042023-F.webp",
       "product": "8 | Asus Z490-A Prime"
     },
     {
       "id": "9",
-      "path": "/images/image9.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_945081-MLB46159716710_052021-F.webp",
       "product": "9 | Gigabyte B550 AORUS PRO"
     },
     {
       "id": "10",
-      "path": "/images/image10.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_638772-MLU78229274807_082024-F.webp",
       "product": "10 | Asus VG248QE"
     },
     {
       "id": "11",
-      "path": "/images/image11.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_712790-MLU72825479961_112023-F.webp",
       "product": "11 | Samsung Odyssey G5"
     },
     {
       "id": "12",
-      "path": "/images/image12.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_800646-MLU72756398178_112023-F.webp",
       "product": "12 | LG 23MP68VQ"
     },
     {
       "id": "13",
-      "path": "/images/image13.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_747543-MLU72578974236_112023-F.webp",
       "product": "13 | Ryzen 5 3600"
     },
     {
       "id": "14",
-      "path": "/images/image14.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_751116-MLA78405339993_082024-F.webp",
       "product": "14 | Intel Core i7 10700K"
     },
     {
       "id": "15",
-      "path": "/images/image15.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_836829-MLU78939439810_092024-F.webp",
       "product": "15 | Ryzen 3 3200G"
     },
     {
-      "id": "16",
-      "path": "/images/image16.jpg",
-      "product": "16 | Zapatilla"
-    },
-    {
       "id": "17",
-      "path": "/images/image17.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_944288-MLA80037867791_102024-F.webp",
       "product": "17 | HyperX Alloy FPS Pro"
     },
     {
       "id": "18",
-      "path": "/images/image18.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_697642-MLA32148169261_092019-F.webp",
       "product": "18 | Logitech G305"
     },
     {
       "id": "19",
-      "path": "/images/image19.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_822682-MLA40837656193_022020-F.webp",
       "product": "19 | Razer Kraken X"
     },
     {
       "id": "20",
-      "path": "/images/image20.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_710395-MLA70922169260_082023-F.webp",
       "product": "20 | Mouse"
     },
     {
       "id": "21",
-      "path": "/images/image21.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_880481-MLU70023451781_062023-F.webp",
       "product": "21 | Nvidia RTX 3060"
     },
     {
       "id": "22",
-      "path": "/images/image22.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_600863-MLA41529380754_042020-F.webp",
       "product": "22 | AMD Radeon RX 5600XT"
     },
     {
       "id": "23",
-      "path": "/images/image23.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_749245-MLU74110433100_012024-F.webp",
       "product": "23 | Nvidia GTX 1650"
     },
     {
       "id": "24",
-      "path": "/images/image24.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_795500-MLU75151059574_032024-F.webp",
       "product": "24 | Corsair Vengeance LPX"
     },
     {
       "id": "25",
-      "path": "/images/image25.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_889680-MLU71549266401_092023-F.webp",
       "product": "25 | Kingston HyperX Fury"
     },
     {
       "id": "26",
-      "path": "/images/image26.jpg",
+      "path": "https://http2.mlstatic.com/D_NQ_NP_2X_728525-MLA74781554097_022024-F.webp",
       "product": "26 | Crucial Ballistix Sport"
     }
   ],
@@ -654,6 +649,22 @@
   "navigation": [
     {
       "id": "25",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "11",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "1",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "3",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "2",
       "status": "added to navigation history"
     }
   ],
