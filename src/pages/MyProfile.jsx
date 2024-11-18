@@ -88,7 +88,7 @@ const MyProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.items.map((item, itemIndex) => (
+                    {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>

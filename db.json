@@ -13,7 +13,6 @@
         "SI-ABC12345",
         "SI-DEF67890"
       ],
-      "id": "b124"
     },
     {
       "userId": 2,
@@ -36,7 +35,8 @@
       "name": "Smartphone",
       "price": 500,
       "description": "Latest model with high-end features.",
-      "stock": 100,
+
+      "stock": 3,
       "additionalInformation": "Warranty included.",
       "urlImageList": [
         1
@@ -64,7 +64,7 @@
       "name": "Wireless Mouse",
       "price": 30,
       "description": "Ergonomic wireless mouse.",
-      "stock": 200,
+      "stock": 2,
       "additionalInformation": "Battery included.",
       "urlImageList": [],
       "highlighted": false,
@@ -104,6 +104,107 @@
   "add-to-cart": {
     "status": "added to cart"
   },
+  "carts": [
+    {
+      "id": "1",
+      "total": 1000,
+      "user_id": 1,
+      "items": [
+        {
+          "id": 4,
+          "cart_id": "1",
+          "product_id": 1,
+          "price": 500,
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "total": 1200,
+      "user_id": 2,
+      "items": [
+        {
+          "id": 3,
+          "cart_id": 2,
+          "product_id": 2,
+          "price": 1200,
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "date": "2024-11-16T10:45:00",
+      "total": 530,
+      "user_id": 1,
+      "order_items": [
+        {
+          "id": 1,
+          "order_id": 1,
+          "product_id": 1,
+          "price": 500,
+          "quantity": 1
+        },
+        {
+          "id": 2,
+          "order_id": 1,
+          "product_id": 3,
+          "price": 30,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "date": "2024-11-16T12:30:00",
+      "total": 1200,
+      "user_id": 2,
+      "order_items": [
+        {
+          "id": 3,
+          "order_id": 2,
+          "product_id": 2,
+          "price": 1200,
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Electronics"
+    },
+    {
+      "id": "2",
+      "name": "Peripherals"
+    }
+  ],
+  "navigation": [
+    {
+      "id": "1",
+      "name": "Home",
+      "path": "/home"
+    },
+    {
+      "id": "2",
+      "name": "Products",
+      "path": "/products"
+    },
+    {
+      "id": "3",
+      "name": "Cart",
+      "path": "/cart"
+    },
+    {
+      "id": "4",
+      "name": "Orders",
+      "path": "/orders"
+    }
+  ],
   "favorites-add": {
     "status": "added to favorites"
   },
