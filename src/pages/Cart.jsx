@@ -113,7 +113,7 @@ function Cart({}) {
                     <Col xs={3} className="d-flex align-items-center">
                       <Button
                         variant="outline-secondary"
-                        onClick={() => decreaseProductQuantity(item.id)}
+                        onClick={() => decreaseProductQuantity(item.product_id)}
                       >
                         -
                       </Button>
