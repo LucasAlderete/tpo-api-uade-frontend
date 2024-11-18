@@ -2,7 +2,7 @@ import authClient from "../services/authClient"
 
 const useServiceAuth = () => {
 
-  /*
+  /* FOR BACKEND INTEGRATION
   const registerService = async (username, email, password, birthday, name, surname) => {
     const response = await authClient.post(
       "/register", {username, email, password, birthday, name, surname}
