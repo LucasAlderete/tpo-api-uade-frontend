@@ -12,7 +12,7 @@
       "favoriteProducts": [
         "SI-ABC12345",
         "SI-DEF67890"
-      ],
+      ]
     },
     {
       "userId": 2,
@@ -35,8 +35,7 @@
       "name": "Smartphone",
       "price": 500,
       "description": "Latest model with high-end features.",
-
-      "stock": 3,
+      "stock": 2,
       "additionalInformation": "Warranty included.",
       "urlImageList": [
         1
@@ -64,7 +63,7 @@
       "name": "Wireless Mouse",
       "price": 30,
       "description": "Ergonomic wireless mouse.",
-      "stock": 2,
+      "stock": 1,
       "additionalInformation": "Battery included.",
       "urlImageList": [],
       "highlighted": false,
@@ -107,17 +106,9 @@
   "carts": [
     {
       "id": "1",
-      "total": 1000,
+      "total": 0,
       "user_id": 1,
-      "items": [
-        {
-          "id": 4,
-          "cart_id": "1",
-          "product_id": 1,
-          "price": 500,
-          "quantity": 2
-        }
-      ]
+      "items": []
     },
     {
       "id": "2",
@@ -171,6 +162,28 @@
           "quantity": 1
         }
       ]
+    },
+    {
+      "id": "21",
+      "user_id": 1,
+      "date": "2024-11-18T18:09:34.849Z",
+      "order_items": [
+        {
+          "id": 4,
+          "order_id": "21",
+          "product_id": 3,
+          "price": 30,
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "order_id": "21",
+          "product_id": 1,
+          "price": 500,
+          "quantity": 1
+        }
+      ],
+      "total": 530
     }
   ],
   "categories": [
@@ -183,28 +196,7 @@
       "name": "Peripherals"
     }
   ],
-  "navigation": [
-    {
-      "id": "1",
-      "name": "Home",
-      "path": "/home"
-    },
-    {
-      "id": "2",
-      "name": "Products",
-      "path": "/products"
-    },
-    {
-      "id": "3",
-      "name": "Cart",
-      "path": "/cart"
-    },
-    {
-      "id": "4",
-      "name": "Orders",
-      "path": "/orders"
-    }
-  ],
+  "navigation": [],
   "favorites-add": {
     "status": "added to favorites"
   },
@@ -1015,7 +1007,5 @@
         ]
       }
     ]
-  },
-  "navigation": [
-  ]
+  }
 }

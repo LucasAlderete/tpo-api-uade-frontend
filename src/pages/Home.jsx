@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
-import cartService from '../services/serviceCart.js';
-import useAuth from "../hooks/useAuth";
-import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import useAuth from "../hooks/useAuth";
 import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
