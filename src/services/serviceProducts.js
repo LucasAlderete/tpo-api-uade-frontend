@@ -148,3 +148,9 @@ export const getFeaturedProducts = async () => {
     throw new Error('Error al obtener los productos destacados');
   }
 };
+
+export const getViewProduct_2 = async () => {
+  const response = await fetch("http://localhost:3100/view-product-2");
+  return response.json();
+};
+

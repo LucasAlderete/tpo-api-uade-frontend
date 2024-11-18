@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
   const { logout } = useAuth();
@@ -12,7 +12,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            Navbar
+            [NombreEcommerce]
           </a>
           <button
             className="navbar-toggler"
@@ -26,34 +26,45 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/pokemons"
-                >
-                  Pokemons
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/"
-                >
+                  className="nav-link active" aria-current="page" to="/">
                   Home
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/Login">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/Register">
+                  Register
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link" aria-current="page" to="/Cart">
+                  Cart
+                </Link>
+              </li>
+              
             </ul>
+            <form className="d-flex" role="search">
+              <div className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  [Username]
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li><button className="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My profile</Link></button></li>
+                  <li><button className="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
+                </ul>
+              </div>
+            </form>
           </div>
-          <button
-            className="btn btn-danger my-2 my-sm-0"
-            onClick={handleLogOut}
-            type="button"
-          >
-            Salir
-          </button>
         </div>
       </nav>
     </>

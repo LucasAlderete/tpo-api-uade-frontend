@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import { getProductById, addProductToDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 
-const AddProductPage = () => {
+const AddProduct = () => {
   const { error } = useContext(AuthContext);
   const [formValues, setFormValues] = useState({
     model: '',
@@ -139,4 +139,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default AddProduct;
