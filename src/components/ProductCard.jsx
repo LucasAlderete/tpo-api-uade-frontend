@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { addToCart } from '../services/serviceCart.js';
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
+  const navigate = useNavigate(); // Asegúrate de inicializar correctamente navigate
 
+  const handleViewProduct = () => {
+    navigate(`/product/${product.product_id}`); // Redirige a la página del detalle
+  };
   // Leer favoritos y carrito de localStorage al cargar el componente
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
@@ -101,7 +106,6 @@ const ProductCard = ({ product, onViewProduct }) => {
         <p className="text-success fw-bold">Precio: ${product.price}</p>
 
         <div className="d-flex justify-content-center gap-4 my-3">
-          {/* Botón de favoritos */}
           <span
             className="material-icons"
             onClick={handleAddToFavorites}
@@ -117,7 +121,6 @@ const ProductCard = ({ product, onViewProduct }) => {
             {isFavorite ? "favorite" : "favorite_border"}
           </span>
 
-          {/* Botón de carrito */}
           <span
             className="material-icons"
             onClick={handleAddToCart}
@@ -134,7 +137,7 @@ const ProductCard = ({ product, onViewProduct }) => {
           </span>
         </div>
         <button
-          onClick={() => onViewProduct(product)}
+          onClick={handleViewProduct}
           className="btn btn-primary mt-3 rounded-pill"
           style={{
             padding: "10px 20px",

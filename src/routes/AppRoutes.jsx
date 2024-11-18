@@ -6,6 +6,7 @@ import Home from "../pages/Home.jsx";
 import Register from "../pages/Register.jsx";
 import MyProfile from "../pages/MyProfile.jsx";
 import Cart from "../pages/Cart.jsx";
+import ProductDetail from "../pages/ProductDetail.jsx";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
           <Route path="/register" element={< Register/>} />
           <Route path="/my-profile" element={< MyProfile/>} />
           <Route path="/cart" element={< Cart/>} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
         </Routes>
       </main>
       <Footer />
