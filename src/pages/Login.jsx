@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import { authenticate } from "../services/serviceAuth"
+import useAuth from "../hooks/useAuth"
 
 const Login = () => {
 
