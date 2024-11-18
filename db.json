@@ -37,6 +37,15 @@
       "birthday": "1999-04-29",
       "name": "Felipe",
       "surname": "Parrondo"
+    },
+    {
+      "id": "ae2c",
+      "username": "lucrecio",
+      "email": "lucas@a.com",
+      "password": "1234",
+      "birthday": "1999-04-29",
+      "name": "Lucas",
+      "surname": "Alderete"
     }
   ],
   "products": [
@@ -657,23 +666,23 @@
   ],
   "navigation": [
     {
-      "id": "25",
-      "status": "added to navigation history"
-    },
-    {
-      "id": "11",
-      "status": "added to navigation history"
-    },
-    {
-      "id": "1",
+      "id": "2",
+      "user_id": "ae2c",
       "status": "added to navigation history"
     },
     {
       "id": "3",
+      "user_id": "ae2c",
       "status": "added to navigation history"
     },
     {
-      "id": "2",
+      "id": "11",
+      "user_id": "ae2c",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "21",
+      "user_id": "ae2c",
       "status": "added to navigation history"
     }
   ],

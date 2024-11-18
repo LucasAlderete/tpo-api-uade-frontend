@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../services/serviceProductDetail";
 import { postNavigation } from "../services/serviceNavigation";
@@ -7,11 +9,17 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
       const data = await getProductDetail(productId);
-      await postNavigation(productId);
+      
+      if (isAuthenticated()) {
+        const storedData = localStorage.getItem("userData");
+        const user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
+        await postNavigation(productId, user_id);
+      }
       setProduct(data);
       setLoading(false);
     };
