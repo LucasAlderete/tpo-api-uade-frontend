@@ -8,6 +8,7 @@ const useServiceAuth = () => {
       "/register", {username, email, password, birthday, name, surname}
     );
     return response.data;
+    //AGREGAR UN THROW SI NO ES EXITOSO
   };
   */
 
