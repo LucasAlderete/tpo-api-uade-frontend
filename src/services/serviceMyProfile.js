@@ -3,7 +3,7 @@ import axios from "axios";
 
 const myProfileService = {
     async getMyProfile() {
-      const response = await axios.get('http://localhost:3001/myProfile');
+      const response = await axios.get('http://localhost:3000/myProfile');
       //console.log(response.data);
       return response.data;
     }

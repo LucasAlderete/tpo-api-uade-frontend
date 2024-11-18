@@ -1,26 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
-import { addToCart } from '../services/serviceCart.js';
+import cartService from '../services/serviceCart.js';
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
+  const navigate = useNavigate(); 
 
+  const handleViewProduct = () => {
+    navigate(`/product/${product.product_id}`);
+  };
+  
+  useEffect(() => {
+    const fetchCart = async () => {
+      const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+      const cart = await cartService.getCart(1);
+      const items = cart.items;
+      console.log()
+
+      setIsFavorite(favorites.includes(product.product_id));
+
+      const item = items.find((item) => item.product_id === product.product_id);
+      if (item) {
+        setIsCart(true);
+      } else {
+        setIsCart(false);
+      }
+    }
+    fetchCart();
+  }, [product.product_id]);
+
+  
   const handleAddToFavorites = async () => {
-    const response = isFavorite ? await removeFromFavs(product.id) : await addToFavs(product.id);
-    if (response.success) setIsFavorite(!isFavorite);
-    else console.error(response.error || "Error al manejar favoritos.");
+    let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+
+    if (isFavorite) {
+      
+      const response = await removeFromFavs(product.product_id);
+      if (response.success) {
+        favorites = favorites.filter((id) => id !== product.product_id); // Usar product_id
+        setIsFavorite(false);
+      } else {
+        console.error(response.error || "Error al manejar favoritos.");
+        return;
+      }
+    } else {
+      
+      const response = await addToFavs(product.product_id);
+      if (response.success) {
+        favorites.push(product.product_id); 
+        setIsFavorite(true);
+      } else {
+        console.error(response.error || "Error al manejar favoritos.");
+        return;
+      }
+    }
+
+    localStorage.setItem('local-favorites', JSON.stringify(favorites));
   };
 
+  
   const handleAddToCart = async () => {
-    const response = await addToCart(product.id);
-    if (response.status) setIsCart(!isCart);
-    else console.error(response.error || "Error al manejar carrito.");
+    if (isCart) {
+      await cartService.removeProduct(1,product.product_id);
+      setIsCart(false);
+    } else {
+      const response = await cartService.addProduct(1,product.product_id);
+      if (response.success) {
+        setIsCart(true);
+      } else {
+        console.error(response.error || "Error al manejar carrito.");
+        return;
+      }
+    }
   };
 
   return (
     <div
-      className="card m-1 p-2 shadow-sm border-0"
+      className="card m-2 p-2 shadow-sm border-0"
       style={{
         width: "20rem",
         borderRadius: "15px",
@@ -83,7 +141,7 @@ const ProductCard = ({ product, onViewProduct }) => {
           </span>
         </div>
         <button
-          onClick={() => onViewProduct(product)}
+          onClick={handleViewProduct}
           className="btn btn-primary mt-3 rounded-pill"
           style={{
             padding: "10px 20px",
@@ -105,7 +163,6 @@ const ProductCard = ({ product, onViewProduct }) => {
         </button>
       </div>
     </div>
-
   );
 };
 

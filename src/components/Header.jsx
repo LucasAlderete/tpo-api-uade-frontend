@@ -11,7 +11,7 @@ const Header = () => {
 
   const [userData, setUserData] = useState(() => {
     const storedData = localStorage.getItem("userData");
-    return (storedData && isAuthenticated()) ? JSON.parse(storedData) : null;
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
 
   useEffect(() => {
@@ -47,69 +47,68 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link
-                  className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link active" aria-current="page" to="/">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link" aria-current="page" to="/cart">
+                <Link className="nav-link" aria-current="page" to="/cart">
                   Cart
                 </Link>
               </li>
-              
             </ul>
             <form className="d-flex" role="search">
-      <div className="nav-item dropdown">
-        <a
-          className="nav-link dropdown-toggle"
-          href="#"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {isAuthenticated() ? `${userData.name} ${userData.surname}` : "Guest"}
-        </a>
-        <ul className="dropdown-menu dropdown-menu-end">
-          {isAuthenticated() ? (
-            <>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/my-profile"
-                  aria-current="page"
+              <div className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  My Profile
-                </Link>
-              </li>
-              <li>
-                <button
-                  className="dropdown-item"
-                  type="button"
-                  onClick={handleLogOut}
-                >
-                  Log out
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link className="dropdown-item" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/register">
-                  Registrarse
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </div>
-    </form>
+                  {isAuthenticated()
+                    ? `${userData.name} ${userData.surname}`
+                    : "Guest"}
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  {isAuthenticated() ? (
+                    <>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/my-profile"
+                          aria-current="page"
+                        >
+                          My Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={handleLogOut}
+                        >
+                          Log out
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/login">
+                          Login
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/register">
+                          Registrarse
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            </form>
           </div>
         </div>
       </nav>

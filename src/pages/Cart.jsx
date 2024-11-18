@@ -3,8 +3,9 @@ import cartService from "../services/serviceCart";
 import ErrorPopup from "../components/ErrorPopup";
 import { Button, Container, Row, Col, Card } from "react-bootstrap";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
+import axios from "axios";
 
-function Cart({ userId = 1, productId = 1 }) {
+function Cart({}) {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -13,15 +14,7 @@ function Cart({ userId = 1, productId = 1 }) {
   const [popupSeverity, setPopupSeverity] = useState("info");
 
   useEffect(() => {
-    const cartData = {
-      items: [
-        { id: 1, name: "Laptop", price: 10500, quantity: 2, stock: 150, image: "https://via.placeholder.com/150" },
-        { id: 2, name: "Mouse", price: 5000, quantity: 1, stock: 2, image: "https://via.placeholder.com/150" }
-      ],
-      total: 15500
-    };
-    setItems(cartData.items);
-    setTotal(cartData.total);
+    getItems();
   }, []);
 
   const handlePopup = (title, message, severity) => {
@@ -31,152 +24,49 @@ function Cart({ userId = 1, productId = 1 }) {
     setPopupOpen(true);
   };
 
-  const updateQuantity = (productId, quantity) => {
-    setItems(prevItems => {
-      return prevItems.map(item => 
-        item.id === productId ? { ...item, quantity } : item
-      );
-    });
+  const getItems = async () => {
+    const cart = await cartService.getCart(1);
+    setItems(cart.items);
+    setTotal(cart.total);
+    if (!cart.success) handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
   };
 
-  const addProduct = (productId) => {
-    setItems(prevItems => {
-      return prevItems.map(item => {
-        if (item.id === productId) {
-          if (item.quantity < item.stock) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            handlePopup("Error", "No hay suficiente stock disponible.", "error");
-            return item;
-          }
-        }
-        return item;
-      });
-    });
-
-    setTotal(prevTotal => prevTotal + items.find(item => item.id === productId).price);
+  const addProduct = async (productId) => {
+    const response = await cartService.addProduct(1, productId);
+    await getItems();
+    if (!response.success) handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
   };
 
-  const decreaseProductQuantity = (productId) => {
-    setItems(prevItems => {
-      return prevItems.map(item => {
-        if (item.id === productId && item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      });
-    });
-
-
-    if ((prevTotal => prevTotal - items.find(item => item.id === productId).price) >= 0) {
-      setTotal(prevTotal => prevTotal - items.find(item => item.id === productId).price);
-    }
+  const decreaseProductQuantity = async (productId) => {
+    const response = await cartService.decreaseProductQuantity(1, productId);
+    await getItems();
+    if (!response.success) handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
   };
 
-  const removeProduct = (productId) => {
-    setItems(items.filter(item => item.id !== productId));  
-    setTotal(total - (items.find(item => item.id === productId).price * items.find(item => item.id === productId).quantity));  
-  };
-  
-
-  const emptyCart = () => {
-    setItems([]);
-    setTotal(0);
+  const removeProduct = async (productId) => {
+    const response = await cartService.removeProduct(1, productId);
+    await getItems();
+    if (!response.success) handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
   };
 
-  const handleCheckout = () => {
-    const outOfStockItems = items.filter(item => item.quantity > item.stock);
-    if (outOfStockItems.length > 0) {
-      handlePopup("Falta de Stock", `Faltan productos en stock: ${outOfStockItems.map(item => item.name).join(', ')}`, "warning");
-    } else {
-      const response = { success: true, products: [] };
+  const emptyCart = async () => {
+    const response = await cartService.emptyCart(1);
+    await getItems();
+    if (!response.success) handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
+  };
+
+  const checkout = async () => {
+    const response = await cartService.checkout(1);
+    await getItems();
+    if (response.success) {
       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
-      emptyCart();  
-      setTotal(0);
+    } else if (!response.success && response.status != 200) {
+      handlePopup("Error", "Error al realizar la compra. Intente nuevamente.", "error");
+    } else {
+      handlePopup("Falta de Stock", `Faltan productos en stock: ${response.products.join(', ')}`, "warning");
     }
   };
 
-  // useEffect(() => {
-  //   const fetchCart = async () => {
-  //     try {
-  //       const cartData = await cartService.getCart(userId);
-  //       setItems(cartData.items);
-  //       setTotal(cartData.total);
-  //     } catch (error) {
-  //       handlePopup(
-  //         "Error",
-  //         "Error al cargar el carrito. Intente nuevamente.",
-  //         "error"
-  //       );
-  //     }
-  //   };
-  //   fetchCart();
-  // }, [userId]);
-
-  // const handlePopup = (title, message, severity) => {
-  //   setPopupTitle(title);
-  //   setPopupMessage(message);
-  //   setPopupSeverity(severity);
-  //   setPopupOpen(true);
-  // };
-
-  // const addProduct = async (productId) => {
-  //   try {
-  //     await cartService.addProduct(userId, productId);
-  //     await refreshCart();
-  //   } catch (error) {
-  //     console.log(error)
-  //     handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
-  //   }
-  // };
-
-  // const decreaseProductQuantity = async (productId) => {
-  //   try {
-  //     await cartService.decreaseProductQuantity(userId, productId);
-  //     await refreshCart();
-  //   } catch (error) {
-  //     handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
-  //   }
-  // };
-
-  // const removeProduct = async (productId) => {
-  //   try {
-  //     await cartService.removeProduct(userId, productId);
-  //     await refreshCart();
-  //   } catch (error) {
-  //     handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
-  //   }
-  // };
-
-  // const emptyCart = async () => {
-  //   try {
-  //     await cartService.emptyCart(userId);
-  //     setItems([]);
-  //     await refreshCart();
-  //   } catch (error) {
-  //     handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
-  //   }
-  // };
-
-  // const handleCheckout = async () => {
-  //   try {
-  //     const response = await cartService.checkout(userId);
-  //     if (response.success) {
-  //       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
-  //       setItems([]);
-  //     } else {
-  //       handlePopup("Falta de Stock", `Faltan productos en stock: ${response.products.join(', ')}`, "warning");
-  //     }
-  //   } catch (error) {
-  //     handlePopup("Error", "Error al realizar la compra. Intente nuevamente.", "error");
-  //   }
-  // };
-
-  const refreshCart = async () => {
-    const cartData = await cartService.getCart(userId);
-    setItems(cartData.items);
-    setTotal(cartData.total);
-  };
 
   return (
     <Container
@@ -223,7 +113,7 @@ function Cart({ userId = 1, productId = 1 }) {
                     <Col xs={3} className="d-flex align-items-center">
                       <Button
                         variant="outline-secondary"
-                        onClick={() => decreaseProductQuantity(item.id)}
+                        onClick={() => decreaseProductQuantity(item.product_id)}
                       >
                         -
                       </Button>
@@ -235,14 +125,17 @@ function Cart({ userId = 1, productId = 1 }) {
                       </span>
                       <Button
                         variant="outline-secondary"
-                        onClick={() => addProduct(item.id)}
+                        onClick={() => addProduct(item.product_id)}
                       >
                         +
                       </Button>
                     </Col>
 
                     <Col xs={1} className="text-end">
-                      <Button variant="link" onClick={() => removeProduct(item.id)}>
+                      <Button
+                        variant="link"
+                        onClick={() => removeProduct(item.product_id)}
+                      >
                         <FaTrash size={18} style={{ color: "#ccc" }} />
                       </Button>
                     </Col>
@@ -290,7 +183,7 @@ function Cart({ userId = 1, productId = 1 }) {
               variant="primary"
               className="mt-4 w-100"
               disabled={items.length === 0}
-              onClick={handleCheckout}
+              onClick={checkout}
             >
               COMPRAR
             </Button>

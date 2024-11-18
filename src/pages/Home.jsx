@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getHome } from '../services/serviceHome.js';
 import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
-import ProductModal from "../components/ProductModal.jsx";
+import { getNavigationDecored } from '../services/serviceNavigation.js';
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalProduct, setModalProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await getHome();
-        setData(responseData);
+        const homeData = await getHome();
+
+        const recentlyViewedProducts = await getNavigationDecored();
+
+        setData({
+          ...homeData,
+          recently_viewed_products: recentlyViewedProducts, 
+        });
       } catch (error) {
-        console.error('Error al obtener los datos de la API:', error);
+        console.error("Error al obtener los datos:", error);
       } finally {
         setLoading(false);
       }
@@ -24,16 +28,6 @@ const Home = () => {
 
     fetchData();
   }, []);
-
-  const handleViewProduct = (product) => {
-    setModalProduct(product);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setModalProduct(null);
-  };
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -44,20 +38,16 @@ const Home = () => {
       <h1>Bienvenido, Usuario</h1>
 
       {data.recently_viewed_products && (
-        <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products} onViewProduct={handleViewProduct} />
+        <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products}/>
       )}
 
       {data.featured_products && (
-        <ProductCarousel title="Productos Destacados" products={data.featured_products} onViewProduct={handleViewProduct} />
+        <ProductCarousel title="Productos Destacados" products={data.featured_products} />
       )}
 
       {data.products && Object.keys(data.products).map((categoryName, index) => (
-        <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} onViewProduct={handleViewProduct} />
+        <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} />
       ))}
-
-      {showModal && modalProduct && (
-        <ProductModal product={modalProduct} show={showModal} onClose={closeModal} />
-      )}
     </div>
   );
 };

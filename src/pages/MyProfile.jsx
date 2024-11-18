@@ -55,7 +55,7 @@ const MyProfile = () => {
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
               <button
-                className="accordion-button"
+                className="accordion-button-2"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target={`#collapse-${orders.id}`}
@@ -88,7 +88,7 @@ const MyProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.items.map((item, itemIndex) => (
+                    {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
