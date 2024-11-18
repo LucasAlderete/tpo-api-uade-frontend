@@ -1,3 +1,5 @@
+import { getProductDetail } from "./serviceProductDetail";
+
 export const postNavigation = async (id) => {
     try {
         const exists = await existsInNavigation(id);
@@ -38,13 +40,7 @@ export const getNavigationDecored = async () => {
             .map(item => item.id);
 
         const productDetailsPromises = lastFour.map(id =>
-            fetch(`http://localhost:3000/product-detail/${id}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error al obtener el producto ${id}: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
+                getProductDetail(id)
                 .then(product => ({
                     ...product,
                     product_id: product.id,
@@ -59,7 +55,6 @@ export const getNavigationDecored = async () => {
         throw error;
     }
 };
-
 
 const existsInNavigation = async (id) => {
     const response = await fetch(`http://localhost:3000/navigation?id=${id}`);
