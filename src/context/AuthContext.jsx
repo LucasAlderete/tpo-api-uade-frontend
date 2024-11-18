@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useServiceAuth from "../hooks/useServiceAuth";
 
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const responseData = await registerService(username, email, password, birthday, name, surname);
       saveUserData(responseData);
-      succesToken(responseData);
+      successfulAuth(responseData);
     } catch (error) {
       alert("usuario o mail ya en uso, pruebe nuevamente");
     }
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const responseData = await authenticateService(email, password);
       saveUserData(responseData);
-      succesToken(responseData);
+      successfulAuth(responseData);
     } catch (error) {
       alert("credenciales incorrectas");
     }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     return !!token;
   }
 
-  const succesToken = (responseData) => {
+  const successfulAuth = (responseData) => {
     setToken(responseData);
     localStorage.setItem("token", JSON.stringify(responseData));
     navigate("/");
