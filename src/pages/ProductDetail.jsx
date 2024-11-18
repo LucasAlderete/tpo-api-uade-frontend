@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../services/serviceProductDetail";
+import { postNavigation } from "../services/serviceNavigation";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -10,6 +11,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const data = await getProductDetail(productId);
+      await postNavigation(productId);
       setProduct(data);
       setLoading(false);
     };
