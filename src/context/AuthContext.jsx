@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
       saveUserData(responseData);
       succesToken(responseData);
     } catch (error) {
-      console.log(error);
       alert("credenciales incorrectas");
     }
   };
