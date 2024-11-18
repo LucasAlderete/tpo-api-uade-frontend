@@ -1,26 +1,40 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../services/serviceAuth";
+import { registerService, authenticateService, serviceError } from "../services/serviceAuth";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-
-  const [token, setToken] = useState(() => {
-    const savedToken = localStorage.getItem("user");
-    return JSON.parse(savedToken) ?? null;
-  });
+export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const login = async (username, password) => {
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("user");
     try {
-      const responseData = await authenticate(username, password);
-      setToken(responseData);
-      localStorage.setItem("token", JSON.stringify(responseData));
+      return JSON.parse(savedToken) ?? null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const register = async (username, email, password, birthday, name, surname) => {
+    const responseData = await registerService(username, email, password, birthday, name, surname);
+    if (!serviceError) {
+      succesToken(responseData);
+    } else {
+      alert("hubo un error al registrarlo")
+    }
+  }
+
+  const login = async (username, password) => {
+    if (isAuthenticated) {
       navigate("/home");
-    } catch (error) {
-      alert("credenciales incorrectas")
+    }
+    const responseData = await authenticateService(email, password);
+    if (!serviceError) {
+      succesToken(responseData);
+    } else {
+      alert("credenciales incorrectas");
     }
   };
 
@@ -30,11 +44,19 @@ export function AuthProvider({ children }) {
     navigate("/login");
   };
 
+  const isAuthenticated = () => {
+    return !!token;
+  }
+
+  const succesToken = (responseData) => {
+    setToken(responseData);
+    localStorage.setItem("token", JSON.stringify(responseData));
+    navigate("/home");
+  }
+
   return (
-    <AuthContext.Provider value={{ login, logout }}>
+    <AuthContext.Provider value={{ register, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-export default AuthContext;

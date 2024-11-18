@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { register } from "../services/serviceAuth"
+import { registerService } from "../services/serviceAuth"
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-        register(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname);
+      registerService(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname);
     }
   };
 

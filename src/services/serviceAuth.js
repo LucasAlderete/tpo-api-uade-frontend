@@ -1,17 +1,30 @@
+import { useState } from "react";
 import { authClient } from "./apiClient"
 
-const authenticate = async (email, password) => {
-  const response = await authClient.post(
-    "/authenticate", {email, password}
-  );
-  return response.data;
+const [serviceError, setServiceError] = useState(null)
+
+const registerService = async (username, email, password, birthday, name, surname) => {
+  setServiceError(null)
+  try {
+    const response = await authClient.post(
+      "/register", {username, email, password, birthday, name, surname}
+    );
+    return response.data;
+  } catch (serviceError) {
+    setServiceError(serviceError);
+  }
 };
 
-const register = async (username, email, password, birthday, name, surname) => {
-  const response = await authClient.post(
-    "/register", {username, email, password, birthday, name, surname}
-  );
-  return response.data;
+const authenticateService = async (email, password) => {
+  setServiceError(null)
+  try {
+    const response = await authClient.post(
+      "/authenticate", {email, password}
+    );
+    return response.data;
+  } catch (serviceError) {
+    setServiceError(serviceError);
+  }
 };
 
-export {authenticate, register};
+export {registerService, authenticateService, serviceError};
