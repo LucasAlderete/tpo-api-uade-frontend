@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
+import { useContext, useState, useEffect } from "react";
 
 const Header = () => {
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logout();
   };
+
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return (storedData && isAuthenticated()) ? JSON.parse(storedData) : null;
+  });
+
+  useEffect(() => {
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
+  }, []);
 
   return (
     <>
@@ -36,35 +54,62 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link" aria-current="page" to="/Login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link" aria-current="page" to="/Register">
-                  Register
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link" aria-current="page" to="/Cart">
+                  className="nav-link" aria-current="page" to="/cart">
                   Cart
                 </Link>
               </li>
               
             </ul>
-            <form class="d-flex" role="search">
-              <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  [Username]
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><button class="dropdown-item" type="button"><Link className="nav-link" aria-current="page" to="/my-profile"> My profile</Link></button></li>
-                  <li><button class="dropdown-item" type="button" onClick={handleLogOut}>Log out</button></li>
-                </ul>
-              </div>
-            </form>
+            <form className="d-flex" role="search">
+      <div className="nav-item dropdown">
+        <a
+          className="nav-link dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {isAuthenticated() ? `${userData.name} ${userData.surname}` : "Guest"}
+        </a>
+        <ul className="dropdown-menu dropdown-menu-end">
+          {isAuthenticated() ? (
+            <>
+              <li>
+                <Link
+                  className="dropdown-item"
+                  to="/my-profile"
+                  aria-current="page"
+                >
+                  My Profile
+                </Link>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={handleLogOut}
+                >
+                  Log out
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link className="dropdown-item" to="/login">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/register">
+                  Registrarse
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+    </form>
           </div>
         </div>
       </nav>

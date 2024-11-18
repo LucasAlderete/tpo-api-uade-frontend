@@ -1,15 +1,16 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerService, authenticateService, serviceError } from "../services/serviceAuth";
+import useServiceAuth from "../hooks/useServiceAuth";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
+  const { registerService, authenticateService } = useServiceAuth();
 
   const [token, setToken] = useState(() => {
-    const savedToken = localStorage.getItem("user");
+    const savedToken = localStorage.getItem("token");
     try {
       return JSON.parse(savedToken) ?? null;
     } catch (e) {
@@ -18,22 +19,25 @@ export const AuthProvider = ({ children }) => {
   });
 
   const register = async (username, email, password, birthday, name, surname) => {
-    const responseData = await registerService(username, email, password, birthday, name, surname);
-    if (!serviceError) {
+    try {
+      const responseData = await registerService(username, email, password, birthday, name, surname);
+      saveUserData(responseData);
       succesToken(responseData);
-    } else {
-      alert("hubo un error al registrarlo")
+    } catch (error) {
+      alert("usuario o mail ya en uso, pruebe nuevamente");
     }
   }
 
-  const login = async (username, password) => {
-    if (isAuthenticated) {
-      navigate("/home");
+  const login = async (email, password) => {
+    if (isAuthenticated()) {
+      navigate("/");
     }
-    const responseData = await authenticateService(email, password);
-    if (!serviceError) {
+    try {
+      const responseData = await authenticateService(email, password);
+      saveUserData(responseData);
       succesToken(responseData);
-    } else {
+    } catch (error) {
+      console.log(error);
       alert("credenciales incorrectas");
     }
   };
@@ -41,6 +45,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userData")
     navigate("/login");
   };
 
@@ -51,7 +56,13 @@ export const AuthProvider = ({ children }) => {
   const succesToken = (responseData) => {
     setToken(responseData);
     localStorage.setItem("token", JSON.stringify(responseData));
-    navigate("/home");
+    navigate("/");
+  }
+
+  const saveUserData = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+    const event = new CustomEvent("userDataChanged", { detail: userData });
+    window.dispatchEvent(event);
   }
 
   return (
