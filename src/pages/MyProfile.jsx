@@ -2,25 +2,18 @@ import React, { useEffect, useState } from 'react';
 import myProfileService from '../services/serviceMyProfile';
 
 const MyProfile = () => {
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [birthday, setBirthday] = useState("")
-  const [name, setName] = useState("")
-  const [surname, setSurname] = useState("")
+  const [profileData, setProfileData] = useState({})
   const [orders, setOrders] = useState([])
 
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const myProfileData = await myProfileService.getMyProfile();
-        setUsername(myProfileData.username)
-        setEmail(myProfileData.email)
-        setBirthday(myProfileData.birthday)
-        setName(myProfileData.name)
-        setSurname(myProfileData.surname)
-        setOrders(myProfileData.ordersDto)
+        const data = await myProfileService.getMyProfile();
+        console.log(profileData);
+        setProfileData(data);
+        setOrders(data.ordersDto);
       } catch (error) {
-        // handlePopup("Error", "Error al cargar el perfil del usuario. Intente nuevamente.", "error");
+        console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
       }
     };
     fetchMyProfile();
@@ -36,19 +29,19 @@ const MyProfile = () => {
       <div className="card mb-5">
         <div className="card-body">
           <p className="card-text">
-            <strong>Name:</strong> {name}
+            <strong>Name:</strong> {profileData.name}
           </p>
           <p className="card-text">
-            <strong>Surname:</strong> {surname}
+            <strong>Surname:</strong> {profileData.surname}
           </p>
           <p className="card-text">
-            <strong>Username:</strong> {username}
+            <strong>Username:</strong> {profileData.username}
           </p>
           <p className="card-text">
-            <strong>Email:</strong> {email}
+            <strong>Email:</strong> {profileData.email}
           </p>
           <p className="card-text">
-            <strong>Birthday:</strong> {birthday}
+            <strong>Birthday:</strong> {profileData.birthday}
           </p>
         </div>
       </div>
@@ -58,7 +51,7 @@ const MyProfile = () => {
       <h3>Checkouts</h3>
       
       <div className="accordion" id="accordionCheckouts">
-        {orders.map((orders, index) => (
+        {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
               <button
