@@ -1,0 +1,663 @@
+{
+  "users": [
+    {
+      "userId": 1,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "hashed_password",
+      "birthday": "1990-05-20",
+      "name": "John",
+      "surname": "Doe",
+      "role": "USER",
+      "favoriteProducts": [
+        "SI-ABC12345",
+        "SI-DEF67890"
+      ],
+      "id": "5a5d"
+    },
+    {
+      "userId": 2,
+      "username": "jane_smith",
+      "email": "jane.smith@example.com",
+      "password": "hashed_password",
+      "birthday": "1992-08-15",
+      "name": "Jane",
+      "surname": "Smith",
+      "role": "ADMIN",
+      "favoriteProducts": [
+        "SI-GHI54321"
+      ],
+      "id": "8d04"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Smartphone",
+      "price": 500,
+      "description": "Latest model with high-end features.",
+      "stock": 3,
+      "additionalInformation": "Warranty included.",
+      "urlImageList": [
+        1
+      ],
+      "highlighted": true,
+      "category": 1,
+      "secureId": "SI-ABC12345"
+    },
+    {
+      "id": "2",
+      "name": "Laptop",
+      "price": 1200,
+      "description": "High-performance laptop for gaming and work.",
+      "stock": 50,
+      "additionalInformation": "2-year warranty included.",
+      "urlImageList": [
+        2
+      ],
+      "highlighted": false,
+      "category": 1,
+      "secureId": "SI-DEF67890"
+    },
+    {
+      "id": "3",
+      "name": "Wireless Mouse",
+      "price": 30,
+      "description": "Ergonomic wireless mouse.",
+      "stock": 2,
+      "additionalInformation": "Battery included.",
+      "urlImageList": [],
+      "highlighted": false,
+      "category": 1,
+      "secureId": "SI-GHI54321"
+    }
+  ],
+  "images": [
+    {
+      "id": "1",
+      "path": "/images/mouse.jpg",
+      "product": "SI-GHI54321"
+    },
+    {
+      "id": "2",
+      "path": "/images/smarthpone.jpg",
+      "product": "SI-ABC12345"
+    },
+    {
+      "id": "3",
+      "path": "/images/laptop.jpg",
+      "product": "SI-DEF67890"
+    }
+  ],
+  "view-product-2": {
+    "product_id": 2,
+    "name": "Crucial MX500",
+    "url_image": "https://images.watercoolinguk.co.uk/images/product_images/original/217/crucial-mx500-m2-ssd-sata-6g-1tb-sscc-073-67376-1.jpg",
+    "description": "Disco SSD Crucial",
+    "price": 10000,
+    "images": [],
+    "category_name": "Almacenamiento",
+    "stock": 100,
+    "additional_information": "SSD, 500GB",
+    "highlighted": true
+  },
+  "add-to-cart": {
+    "status": "added to cart"
+  },
+  "carts": [
+    {
+      "id": "1",
+      "total": 1000,
+      "user_id": 1,
+      "items": [
+        {
+          "id": 4,
+          "cart_id": "1",
+          "product_id": 1,
+          "price": 500,
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "total": 1200,
+      "user_id": 2,
+      "items": [
+        {
+          "id": 3,
+          "cart_id": 2,
+          "product_id": 2,
+          "price": 1200,
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "date": "2024-11-16T10:45:00",
+      "total": 530,
+      "user_id": 1,
+      "order_items": [
+        {
+          "id": 1,
+          "order_id": 1,
+          "product_id": 1,
+          "price": 500,
+          "quantity": 1
+        },
+        {
+          "id": 2,
+          "order_id": 1,
+          "product_id": 3,
+          "price": 30,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "date": "2024-11-16T12:30:00",
+      "total": 1200,
+      "user_id": 2,
+      "order_items": [
+        {
+          "id": 3,
+          "order_id": 2,
+          "product_id": 2,
+          "price": 1200,
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Electronics"
+    },
+    {
+      "id": "2",
+      "name": "Peripherals"
+    }
+  ],
+  "navigation": [
+    {
+      "id": "1",
+      "name": "Home",
+      "path": "/home"
+    },
+    {
+      "id": "2",
+      "name": "Products",
+      "path": "/products"
+    },
+    {
+      "id": "3",
+      "name": "Cart",
+      "path": "/cart"
+    },
+    {
+      "id": "4",
+      "name": "Orders",
+      "path": "/orders"
+    }
+  ],
+  "favorites-add": {
+    "status": "added to favorites"
+  },
+  "favorites-remove": {
+    "status": "remove from favorites"
+  },
+  "home": {
+    "products": {
+      "almacenamiento": [
+        {
+          "product_id": 1,
+          "name": "Samsung 970 EVO Plus",
+          "url_image": null,
+          "description": "Disco SSD Samsung",
+          "price": 15000,
+          "images": [],
+          "category_name": "Almacenamiento",
+          "stock": 80,
+          "additional_information": "SSD, 1TB",
+          "highlighted": false
+        },
+        {
+          "product_id": 2,
+          "name": "Crucial MX500",
+          "url_image": "https://images.watercoolinguk.co.uk/images/product_images/original/217/crucial-mx500-m2-ssd-sata-6g-1tb-sscc-073-67376-1.jpg",
+          "description": "Disco SSD Crucial",
+          "price": 10000,
+          "images": [],
+          "category_name": "Almacenamiento",
+          "stock": 100,
+          "additional_information": "SSD, 500GB",
+          "highlighted": true
+        },
+        {
+          "product_id": 3,
+          "name": "Seagate Barracuda 1TB",
+          "url_image": null,
+          "description": "Disco Duro Seagate",
+          "price": 5000,
+          "images": [],
+          "category_name": "Almacenamiento",
+          "stock": 120,
+          "additional_information": "HDD, 1TB",
+          "highlighted": false
+        }
+      ],
+      "fuente": [
+        {
+          "product_id": 4,
+          "name": "Corsair CV550",
+          "url_image": null,
+          "description": "Fuente Corsair",
+          "price": 8000,
+          "images": [],
+          "category_name": "Fuente",
+          "stock": 40,
+          "additional_information": "550W, 80+ Bronze",
+          "highlighted": false
+        },
+        {
+          "product_id": 5,
+          "name": "EVGA SuperNOVA 750 G5",
+          "url_image": null,
+          "description": "Fuente EVGA",
+          "price": 12000,
+          "images": [],
+          "category_name": "Fuente",
+          "stock": 30,
+          "additional_information": "750W, 80+ Gold",
+          "highlighted": true
+        },
+        {
+          "product_id": 6,
+          "name": "Thermaltake Smart BX1",
+          "url_image": null,
+          "description": "Fuente Thermaltake",
+          "price": 10000,
+          "images": [],
+          "category_name": "Fuente",
+          "stock": 50,
+          "additional_information": "650W, 80+ Bronze",
+          "highlighted": false
+        }
+      ],
+      "motherboard": [
+        {
+          "product_id": 7,
+          "name": "MSI B450 TOMAHAWK MAX",
+          "url_image": null,
+          "description": "Motherboard MSI",
+          "price": 15000,
+          "images": [],
+          "category_name": "Motherboard",
+          "stock": 45,
+          "additional_information": "AM4, ATX",
+          "highlighted": false
+        },
+        {
+          "product_id": 8,
+          "name": "Asus Z490-A Prime",
+          "url_image": null,
+          "description": "Motherboard Asus",
+          "price": 25000,
+          "images": [],
+          "category_name": "Motherboard",
+          "stock": 20,
+          "additional_information": "Z490, ATX",
+          "highlighted": true
+        },
+        {
+          "product_id": 9,
+          "name": "Gigabyte B550 AORUS PRO",
+          "url_image": null,
+          "description": "Motherboard Gigabyte",
+          "price": 20000,
+          "images": [],
+          "category_name": "Motherboard",
+          "stock": 30,
+          "additional_information": "B550, ATX",
+          "highlighted": false
+        }
+      ],
+      "monitor": [
+        {
+          "product_id": 10,
+          "name": "Asus VG248QE",
+          "url_image": null,
+          "description": "Monitor Gamer Asus",
+          "price": 30000,
+          "images": [],
+          "category_name": "Monitor",
+          "stock": 35,
+          "additional_information": "24\", 144Hz",
+          "highlighted": false
+        },
+        {
+          "product_id": 11,
+          "name": "Samsung Odyssey G5",
+          "url_image": null,
+          "description": "Monitor Gamer Samsung",
+          "price": 40000,
+          "images": [],
+          "category_name": "Monitor",
+          "stock": 20,
+          "additional_information": "27\", 165Hz",
+          "highlighted": true
+        },
+        {
+          "product_id": 12,
+          "name": "LG 23MP68VQ",
+          "url_image": null,
+          "description": "Monitor LG",
+          "price": 20000,
+          "images": [],
+          "category_name": "Monitor",
+          "stock": 50,
+          "additional_information": "23\", 75Hz",
+          "highlighted": false
+        }
+      ],
+      "procesador": [
+        {
+          "product_id": 13,
+          "name": "Ryzen 5 3600",
+          "url_image": null,
+          "description": "Procesador AMD Ryzen 5",
+          "price": 25000,
+          "images": [],
+          "category_name": "Procesador",
+          "stock": 50,
+          "additional_information": "3.6 GHz, 6 cores",
+          "highlighted": false
+        },
+        {
+          "product_id": 14,
+          "name": "Intel Core i7 10700K",
+          "url_image": null,
+          "description": "Procesador Intel i7",
+          "price": 35000,
+          "images": [],
+          "category_name": "Procesador",
+          "stock": 29,
+          "additional_information": "3.8 GHz, 8 cores",
+          "highlighted": true
+        },
+        {
+          "product_id": 15,
+          "name": "Ryzen 3 3200G",
+          "url_image": null,
+          "description": "Procesador AMD Ryzen 3",
+          "price": 15000,
+          "images": [],
+          "category_name": "Procesador",
+          "stock": 19,
+          "additional_information": "3.4 GHz, 4 cores",
+          "highlighted": false
+        },
+        {
+          "product_id": 16,
+          "name": "Zapatilla",
+          "url_image": null,
+          "description": "asadasdasdsafaf",
+          "price": 52,
+          "images": [],
+          "category_name": "Procesador",
+          "stock": 9,
+          "additional_information": "AJDSKAFSAKSFK",
+          "highlighted": false
+        }
+      ],
+      "perifericos": [
+        {
+          "product_id": 17,
+          "name": "HyperX Alloy FPS Pro",
+          "url_image": null,
+          "description": "Teclado HyperX",
+          "price": 5000,
+          "images": [],
+          "category_name": "Perifericos",
+          "stock": 60,
+          "additional_information": "Teclado Mecánico",
+          "highlighted": false
+        },
+        {
+          "product_id": 18,
+          "name": "Logitech G305",
+          "url_image": null,
+          "description": "Mouse Logitech",
+          "price": 3000,
+          "images": [],
+          "category_name": "Perifericos",
+          "stock": 80,
+          "additional_information": "Mouse Inalámbrico",
+          "highlighted": true
+        },
+        {
+          "product_id": 19,
+          "name": "Razer Kraken X",
+          "url_image": null,
+          "description": "Auriculares Razer",
+          "price": 2000,
+          "images": [],
+          "category_name": "Perifericos",
+          "stock": 100,
+          "additional_information": "Auriculares",
+          "highlighted": false
+        },
+        {
+          "product_id": 20,
+          "name": "Mouse",
+          "url_image": null,
+          "description": "asadasdasdsafaf",
+          "price": 52,
+          "images": [
+            "/path3",
+            "/path2",
+            "/path1"
+          ],
+          "category_name": "Perifericos",
+          "stock": 1,
+          "additional_information": "AJDSKAFSAKSFK",
+          "highlighted": false
+        }
+      ],
+      "gpu": [
+        {
+          "product_id": 21,
+          "name": "Nvidia RTX 3060",
+          "url_image": null,
+          "description": "Tarjeta Gráfica Nvidia",
+          "price": 75000,
+          "images": [],
+          "category_name": "GPU",
+          "stock": 25,
+          "additional_information": "8GB GDDR6",
+          "highlighted": true
+        },
+        {
+          "product_id": 22,
+          "name": "AMD Radeon RX 5600XT",
+          "url_image": null,
+          "description": "Tarjeta Gráfica AMD",
+          "price": 65000,
+          "images": [],
+          "category_name": "GPU",
+          "stock": 40,
+          "additional_information": "6GB GDDR6",
+          "highlighted": false
+        },
+        {
+          "product_id": 23,
+          "name": "Nvidia GTX 1650",
+          "url_image": null,
+          "description": "Tarjeta Gráfica Nvidia",
+          "price": 50000,
+          "images": [],
+          "category_name": "GPU",
+          "stock": 60,
+          "additional_information": "4GB GDDR5",
+          "highlighted": false
+        }
+      ],
+      "ram": [
+        {
+          "product_id": 24,
+          "name": "Corsair Vengeance LPX",
+          "url_image": null,
+          "description": "Memoria RAM Corsair",
+          "price": 8000,
+          "images": [],
+          "category_name": "RAM",
+          "stock": 100,
+          "additional_information": "DDR4, 8GB",
+          "highlighted": false
+        },
+        {
+          "product_id": 25,
+          "name": "Kingston HyperX Fury",
+          "url_image": null,
+          "description": "Memoria RAM Kingston",
+          "price": 12000,
+          "images": [],
+          "category_name": "RAM",
+          "stock": 73,
+          "additional_information": "DDR4, 16GB",
+          "highlighted": true
+        },
+        {
+          "product_id": 26,
+          "name": "Crucial Ballistix Sport",
+          "url_image": null,
+          "description": "Memoria RAM Crucial",
+          "price": 6000,
+          "images": [],
+          "category_name": "RAM",
+          "stock": 150,
+          "additional_information": "DDR3, 4GB",
+          "highlighted": false
+        }
+      ]
+    },
+    "recently_viewed_products": [
+      {
+        "product_id": 27,
+        "name": "Gigabyte B550 AORUS PRO",
+        "url_image": null,
+        "description": "Motherboard Gigabyte",
+        "price": 20000,
+        "images": [],
+        "category_name": "Motherboard",
+        "stock": 30,
+        "additional_information": "B550, ATX",
+        "highlighted": false
+      }
+    ],
+    "featured_products": [
+      {
+        "product_id": 28,
+        "name": "Intel Core i7 10700K",
+        "url_image": null,
+        "description": "Procesador Intel i7",
+        "price": 35000,
+        "images": [],
+        "category_name": "Procesador",
+        "stock": 29,
+        "additional_information": "3.8 GHz, 8 cores",
+        "highlighted": true
+      },
+      {
+        "product_id": 29,
+        "name": "Kingston HyperX Fury",
+        "url_image": null,
+        "description": "Memoria RAM Kingston",
+        "price": 12000,
+        "images": [],
+        "category_name": "RAM",
+        "stock": 73,
+        "additional_information": "DDR4, 16GB",
+        "highlighted": true
+      },
+      {
+        "product_id": 30,
+        "name": "Nvidia RTX 3060",
+        "url_image": null,
+        "description": "Tarjeta Gráfica Nvidia",
+        "price": 75000,
+        "images": [],
+        "category_name": "GPU",
+        "stock": 25,
+        "additional_information": "8GB GDDR6",
+        "highlighted": true
+      },
+      {
+        "product_id": 31,
+        "name": "Samsung Odyssey G5",
+        "url_image": null,
+        "description": "Monitor Gamer Samsung",
+        "price": 40000,
+        "images": [],
+        "category_name": "Monitor",
+        "stock": 20,
+        "additional_information": "27\", 165Hz",
+        "highlighted": true
+      },
+      {
+        "product_id": 32,
+        "name": "EVGA SuperNOVA 750 G5",
+        "url_image": null,
+        "description": "Fuente EVGA",
+        "price": 12000,
+        "images": [],
+        "category_name": "Fuente",
+        "stock": 30,
+        "additional_information": "750W, 80+ Gold",
+        "highlighted": true
+      },
+      {
+        "product_id": 33,
+        "name": "Asus Z490-A Prime",
+        "url_image": null,
+        "description": "Motherboard Asus",
+        "price": 25000,
+        "images": [],
+        "category_name": "Motherboard",
+        "stock": 20,
+        "additional_information": "Z490, ATX",
+        "highlighted": true
+      },
+      {
+        "product_id": 34,
+        "name": "Logitech G305",
+        "url_image": null,
+        "description": "Mouse Logitech",
+        "price": 3000,
+        "images": [],
+        "category_name": "Perifericos",
+        "stock": 80,
+        "additional_information": "Mouse Inalámbrico",
+        "highlighted": true
+      },
+      {
+        "product_id": 35,
+        "name": "Crucial MX500",
+        "url_image": null,
+        "description": "Disco SSD Crucial",
+        "price": 10000,
+        "images": [],
+        "category_name": "Almacenamiento",
+        "stock": 100,
+        "additional_information": "SSD, 500GB",
+        "highlighted": true
+      }
+    ],
+    "recommended_products": null
+  }
+}
