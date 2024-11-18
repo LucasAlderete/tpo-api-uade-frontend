@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getProductDetail } from "../services/serviceProductDetail";
 
 const ProductDetail = () => {
-  const { productId } = useParams(); // Obtener el ID del producto desde la URL
-  const [product, setProduct] = useState(null); // Estado para guardar el producto
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const { productId } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const getViewProduct_2 = async (id) => {
-    const response = await fetch("http://localhost:3000/view-product-2");
-    return response.json();
-  };
   useEffect(() => {
     const fetchProduct = async () => {
-      const data = await getViewProduct_2(productId); // Llamar al servicio con el ID
+      const data = await getProductDetail(productId);
       setProduct(data);
-      setLoading(false); // Terminar la carga
+      setLoading(false);
     };
 
     fetchProduct();
-  }, [productId]); // Vuelve a ejecutar si `productId` cambia
+  }, [productId]);
 
   if (loading) {
     return <div className="text-center mt-5">Cargando producto...</div>;
@@ -44,7 +41,6 @@ const ProductDetail = () => {
           <p className="fw-bold">Precio: ${product.price}</p>
           <p>Stock disponible: {product.stock}</p>
           <p>{product.additional_information}</p>
-          {/* Aquí puedes agregar más información y acciones */}
         </div>
       </div>
     </div>

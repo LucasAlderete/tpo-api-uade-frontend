@@ -3,14 +3,11 @@ import { getHome } from '../services/serviceHome.js';
 import useAuth from "../hooks/useAuth";
 import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
-import ProductModal from "../components/ProductModal.jsx";
 
 const Home = () => {
   const { user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalProduct, setModalProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,10 +53,6 @@ const Home = () => {
       {data.products && Object.keys(data.products).map((categoryName, index) => (
         <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} onViewProduct={handleViewProduct} />
       ))}
-
-      {showModal && modalProduct && (
-        <ProductModal product={modalProduct} show={showModal} onClose={closeModal} />
-      )}
     </div>
   );
 };

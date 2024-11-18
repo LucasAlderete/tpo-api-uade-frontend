@@ -6,26 +6,26 @@ import { useNavigate } from "react-router-dom";
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
-  const navigate = useNavigate(); // Asegúrate de inicializar correctamente navigate
+  const navigate = useNavigate(); 
 
   const handleViewProduct = () => {
-    navigate(`/product/${product.product_id}`); // Redirige a la página del detalle
+    navigate(`/product/${product.product_id}`);
   };
-  // Leer favoritos y carrito de localStorage al cargar el componente
+  
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
     const cart = JSON.parse(localStorage.getItem('local-cart')) || [];
 
-    setIsFavorite(favorites.includes(product.product_id)); // Usar product_id
-    setIsCart(cart.includes(product.product_id)); // Usar product_id
+    setIsFavorite(favorites.includes(product.product_id));
+    setIsCart(cart.includes(product.product_id)); 
   }, [product.product_id]);
 
-  // Guardar cambios en favoritos
+  
   const handleAddToFavorites = async () => {
     let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
 
     if (isFavorite) {
-      // Quitar de favoritos
+      
       const response = await removeFromFavs(product.product_id);
       if (response.success) {
         favorites = favorites.filter((id) => id !== product.product_id); // Usar product_id
@@ -35,10 +35,10 @@ const ProductCard = ({ product, onViewProduct }) => {
         return;
       }
     } else {
-      // Agregar a favoritos
+      
       const response = await addToFavs(product.product_id);
       if (response.success) {
-        favorites.push(product.product_id); // Usar product_id
+        favorites.push(product.product_id); 
         setIsFavorite(true);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
@@ -49,19 +49,18 @@ const ProductCard = ({ product, onViewProduct }) => {
     localStorage.setItem('local-favorites', JSON.stringify(favorites));
   };
 
-  // Guardar cambios en carrito
+  
   const handleAddToCart = async () => {
     let cart = JSON.parse(localStorage.getItem('local-cart')) || [];
 
     if (isCart) {
-      // Quitar del carrito
-      cart = cart.filter((id) => id !== product.product_id); // Usar product_id
+      cart = cart.filter((id) => id !== product.product_id); 
       setIsCart(false);
     } else {
-      // Agregar al carrito
+      
       const response = await addToCart(product.product_id);
       if (response.status) {
-        cart.push(product.product_id); // Usar product_id
+        cart.push(product.product_id); 
         setIsCart(true);
       } else {
         console.error(response.error || "Error al manejar carrito.");
