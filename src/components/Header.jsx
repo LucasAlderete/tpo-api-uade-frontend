@@ -52,11 +52,6 @@ const Header = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/my-favorites">
-                  Favoritos
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/cart">
                   Carrito
                 </Link>
@@ -84,7 +79,16 @@ const Header = () => {
                           to="/my-profile"
                           aria-current="page"
                         >
-                          My Profile
+                          Mi Perfil
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/my-favorites"
+                          aria-current="page"
+                        >
+                          Mis Favoritos 
                         </Link>
                       </li>
                       <li>
