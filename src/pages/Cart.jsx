@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import cartService from "../services/serviceCart";
+import useServiceCart from "../hooks/useServiceCart";
 import ErrorPopup from "../components/ErrorPopup";
 import { Button, Container, Row, Col, Card } from "react-bootstrap";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
@@ -41,38 +41,38 @@ function Cart({}) {
   };
 
   const getItems = async () => {
-    const cart = await cartService.getCart(userData.id);
+    const cart = await useServiceCart().getCart(userData.id);
     setItems(cart.items);
     setTotal(cart.total);
     if (!cart.success) handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
   };
 
   const addProduct = async (productId) => {
-    const response = await cartService.addProduct(userData.id, productId);
+    const response = await useServiceCart().addProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
   };
 
   const decreaseProductQuantity = async (productId) => {
-    const response = await cartService.decreaseProductQuantity(userData.id, productId);
+    const response = await useServiceCart().decreaseProductQuantity(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
   };
 
   const removeProduct = async (productId) => {
-    const response = await cartService.removeProduct(userData.id, productId);
+    const response = await useServiceCart().removeProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
   };
 
   const emptyCart = async () => {
-    const response = await cartService.emptyCart(userData.id);
+    const response = await useServiceCart().emptyCart(userData.id);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
   };
 
   const checkout = async () => {
-    const response = await cartService.checkout(userData.id);
+    const response = await useServiceCart().checkout(userData.id);
     await getItems();
     if (response.success) {
       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");

@@ -1,6 +1,6 @@
 import {useContext, useState, useEffect } from 'react';
 import { add, remove, getAllByUser } from '../services/serviceFavs.js';
-import cartService from '../services/serviceCart.js';
+import useServiceCart from "../hooks/useServiceCart";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -28,7 +28,7 @@ const ProductCard = ({ product, onViewProduct }) => {
     const fetchCart = async () => {
       const favorites = await getAllByUser(user_id);
       console.log("favorites", favorites);
-      const cart = await cartService.getCart(user_id);
+      const cart = await useServiceCart().getCart(user_id);
       const items = cart.items;
 
       const isFavorite = favorites.some(
@@ -77,10 +77,10 @@ const ProductCard = ({ product, onViewProduct }) => {
   
   const handleAddToCart = async () => {
     if (isCart) {
-      await cartService.removeProduct(user_id, product.product_id);
+      await useServiceCart().removeProduct(user_id, product.product_id);
       setIsCart(false);
     } else {
-      const response = await cartService.addProduct(user_id, product.product_id);
+      const response = await useServiceCart().addProduct(user_id, product.product_id);
       if (response.success) {
         setIsCart(true);
       } else {
