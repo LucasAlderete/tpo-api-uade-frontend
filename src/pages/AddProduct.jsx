@@ -3,18 +3,19 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
-import { getProductById, addProductToDb, uploadImage, updateProductInDb } from '../services/serviceProducts'; 
+import { getProductById, addProductToDb, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 import {AuthContext} from '../context/AuthContext';
 
 const AddProduct = () => {
   const { error } = useContext(AuthContext);
   const [formValues, setFormValues] = useState({
-    model: '',
-    category: '',
+    name: '',
+    category_name: '',
     description: '',
     price: 0,
-    stockTotal: 0,
+    stock: 0,
+    url_image_list: []
   });
 
   const [images, setImages] = useState([]);
@@ -31,13 +32,17 @@ const AddProduct = () => {
       getProductById(productId)
         .then((product) => {
           setFormValues({
-            model: product.model,
-            category: product.category,
+            name: product.name,
+            category_name: product.category_name,
             description: product.description,
             price: product.price,
-            stockTotal: product.stock,
+            stock: product.stock,
           });
-          setImages(product.url_image_list || []);
+          setImages(
+            product.url_image_list?.map((id) => ({
+              id, 
+            })) || []
+          );
         })
         .catch((error) => console.error("Error al obtener el producto:", error));
     }
@@ -65,37 +70,26 @@ const AddProduct = () => {
   };
 
   const handleImageChange = async (e) => {
-    const files = Array.from(e.target.files);
+    const urls = Array.from(e.target.value);
   
     try {
-      const imageIds = await Promise.all(
-        files.map((file) => uploadImage(file, formValues.secureId))
-      );
-  
-      // Actualizar el estado con los nuevos IDs de imágenes
+      
       setFormValues((prev) => ({
         ...prev,
-        urlImageList: [...prev.urlImageList, ...imageIds],
+        url_imageList: [...prev.url_image_list, ...urls],
       }));
     } catch (error) {
       console.error("Error al manejar las imágenes:", error);
     }
   };
 
-  const handleStockChange = (value) => {
-    setFormValues({
-      ...formValues,
-      stockTotal: value, 
-    });
-  };
-
   const isFormValid = () => {
     return (
-      formValues.model.trim() !== '' && 
-      formValues.category.trim() !== '' &&
+      formValues.name.trim() !== '' && 
+      formValues.category_name.trim() !== '' &&
       formValues.description.trim() !== '' &&
       formValues.price > 0 && 
-      formValues.stockTotal > 0 && 
+      formValues.stock > 0 && 
       images 
     );
   };
@@ -104,7 +98,7 @@ const AddProduct = () => {
     e.preventDefault();
     const productData = {
       ...formValues,
-      urlImageList: images, 
+      url_image_list: images, 
     };
   
     try {
@@ -112,10 +106,11 @@ const AddProduct = () => {
         await updateProductInDb(productId, productData);
         console.log("Producto actualizado con éxito.");
       } else {
+        console.log(productData);
         await addProductToDb(productData);
         console.log("Producto agregado con éxito.");
       }
-      navigate("/"); 
+      navigate("/product-management"); 
     } catch (error) {
       console.error("Error al guardar el producto", error);
     }
@@ -137,7 +132,6 @@ const AddProduct = () => {
         isEditing={isEditMode}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}
-        handleStockChange={handleStockChange}
         handleRemoveImage={handleRemoveImage}
       />
 

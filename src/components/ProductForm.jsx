@@ -1,10 +1,9 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import FormField from './FormField';
 import TextAreaField from './TextAreaField';
-import StockInput from './StockInput';
 import PropTypes from 'prop-types';
 
-const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChange, handleStockChange, handleRemoveImage, images }) => {
+const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChange, handleRemoveImage, images }) => {
 
  return (
    <Form className="product-form">
@@ -35,13 +34,12 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
           </div>
         )}
 
-        {/* Campo para ingresar URLs de imágenes si es un nuevo producto */}
         {!isEditing && (
           <div className="url-upload">
             <input
               type="text"
               placeholder="Ingresa una o más URLs, separadas por coma"
-              onChange={handleImageChange} // Esta función debe manejar el cambio de URLs
+              onChange={handleImageChange} 
             />
             <Button onClick={handleImageChange}>Agregar imágenes</Button>
           </div>
@@ -55,8 +53,8 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
          <FormField
            label="Modelo"
            type="text"
-           name="model"
-           value={formValues.model}
+           name="name"
+           value={formValues.name}
            onChange={handleInputChange}
            placeholder="Ingresa el nombre del modelo"
          />
@@ -65,8 +63,8 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
          <FormField
            label="Categoría"
            type="text"
-           name="category"
-           value={formValues.category}
+           name="category_name"
+           value={formValues.category_name}
            onChange={handleInputChange}
            placeholder="Ingresa una categoría"
          />
@@ -97,26 +95,33 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
 
 
      <h4>Stock de producto</h4>
-     <StockInput
-       stockItems={formValues.stockTotal}
-       handleStockChange={handleStockChange} 
-     />
+      <Row className="mt-3 mb-4">
+        <Col md={6}>
+          <FormField
+            label="Stock"
+            type="number"
+            name="stock"
+            value={formValues.stock}
+            onChange={handleInputChange}
+            placeholder="Ingresa la cantidad en stock"
+          />
+        </Col>
+        </Row>
    </Form>
  );
 };
 
 ProductForm.propTypes = {
   formValues: PropTypes.shape({
-    model: PropTypes.string.isRequired, 
-    category: PropTypes.string.isRequired, 
-    description: PropTypes.string.isRequired, 
-    price: PropTypes.number.isRequired, 
-    stockTotal: PropTypes.number.isRequired, 
+    name: PropTypes.string, 
+    category_name: PropTypes.string, 
+    description: PropTypes.string, 
+    price: PropTypes.number, 
+    stock: PropTypes.number, 
   }).isRequired,
   isEditing: PropTypes.bool,
   handleInputChange: PropTypes.func.isRequired, 
-  handleImageChange: PropTypes.func.isRequired, 
-  handleStockChange: PropTypes.func.isRequired,
+  handleImageChange: PropTypes.func.isRequired,
   handleRemoveImage: PropTypes.func.isRequired, 
   images: PropTypes.arrayOf( 
     PropTypes.shape({

@@ -17,17 +17,14 @@ axiosWithInterceptor.interceptors.request.use((config) => {
 
 
 
-export const addProductToDb = async ({productData, productId}) => {
+export const addProductToDb = async (productData) => {
   try {
-    console.log(productId)
-    if (!productId) {
-      const productWithId = { ...productData, id: uuidv4() };
-      const response = await axios.post(API_URL, productWithId);
-      return response.data;
-    } else {
-      const response = await axios.patch(`${API_URL}/${productId}`, productData);
-      return response.data;
-    }
+
+    console.log(productData);
+    const productWithId = { ...productData, id: uuidv4() };
+    const response = await axios.post(API_URL, productWithId);
+    return response.data;
+
   } catch (error) {
     console.error('Error:', error.response ? error.response.data : error.message);
     throw new Error('Error al agregar o modificar producto');

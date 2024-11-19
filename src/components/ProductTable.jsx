@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ProductTable = ({ products, onProductDeleted }) => (
   <div>
-    {products.length === 0 ? (
+    {Array.isArray(products) && products.length === 0 ? (
       <Alert variant="info">
         No hay productos disponibles.
       </Alert>

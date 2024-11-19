@@ -86,11 +86,7 @@ ProductRow.propTypes = {
         stock: PropTypes.number.isRequired,
         images: PropTypes.array,
         additional_information: PropTypes.string.isRequired,
-        url_image_list: PropTypes.arrayOf(
-          PropTypes.shape({
-            path: PropTypes.string.isRequired,
-          })
-        ),
+        url_image_list: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     onProductDeleted: PropTypes.func.isRequired,
 };
