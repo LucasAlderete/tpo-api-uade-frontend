@@ -27,14 +27,12 @@ const ProductCard = ({ product }) => {
   useEffect(() => {
     const fetchCart = async () => {
       const favorites = await getAllByUser(user_id);
-      console.log("favorites", favorites);
       const cart = await useServiceCart().getCart(user_id);
       const items = cart.items;
 
       const isFavorite = favorites.some(
         (favorite) => favorite.product_id == product.product_id && favorite.user_id == user_id
       );
-      console.log("isFavorite", isFavorite);
       setIsFavorite(isFavorite);
 
       const item = items.find((item) => item.product_id === product.product_id);

@@ -11,7 +11,8 @@ const Register = () => {
     password: "",
     birthday: "",
     name: "",
-    surname: ""
+    surname: "",
+    role: "USER"
   });
 
   const [errors, setErrors] = useState({});
@@ -39,7 +40,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      register(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname);
+      register(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname, formData.role);
     }
   };
 
