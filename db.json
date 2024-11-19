@@ -382,25 +382,6 @@
       "stock": 32,
       "additional_information": "AJDSKAFSAKSFK",
       "highlighted": false
-    },
-    {
-      "name": "Research and Studies",
-      "category_name": "Futurama",
-      "description": "asdafsaf",
-      "price": 12,
-      "stock": 1,
-      "url_image_list": [],
-      "id": "3b718fc4-2dd6-4330-ada1-ef074c74556a"
-    },
-    {
-      "id": "3548527d-82cc-4322-a0b8-7b1c553b9e2e",
-      "name": "Mansad",
-      "category_name": "Futurama",
-      "description": "asdasdsafa",
-      "price": 90,
-      "stock": 890,
-      "url_image_list": [],
-      "new": true
     }
   ],
   "images": [
