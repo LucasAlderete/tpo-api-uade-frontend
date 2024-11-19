@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import { useEffect, useState } from 'react';
-import myProfileService from '../services/serviceMyProfile';
-=======
 import { useEffect, useState, useContext } from 'react';
 import serviceMyProfile from '../services/serviceMyProfile';
 import ProfileCard from '../components/ProfileCard';
 import { AuthContext } from "../context/AuthContext";
 import {getTodosProductos} from '../services/serviceProducts'
->>>>>>> main
 
 const MyProfile = () => {
   const [orders, setOrders] = useState([])
