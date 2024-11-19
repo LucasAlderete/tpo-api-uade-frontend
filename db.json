@@ -48,6 +48,16 @@
       "name": "Lucas",
       "surname": "Alderete",
       "role": "USER"
+    },
+    {
+      "id": "c2a8",
+      "username": "LucasPistolesi",
+      "email": "lp@gmail.com",
+      "password": "1234",
+      "birthday": "2003-11-07",
+      "name": "Lucas",
+      "surname": "Pistolesi",
+      "role": "USER"
     }
   ],
   "products": [
@@ -237,7 +247,7 @@
       "description": "Procesador Intel i7",
       "price": 35000,
       "category_name": "Procesador",
-      "stock": 24,
+      "stock": 23,
       "additional_information": "3.8 GHz, 8 cores",
       "highlighted": true
     },
@@ -592,6 +602,24 @@
       "user_id": "ae2c",
       "total": 0,
       "items": []
+    },
+    {
+      "id": "f67e",
+      "user_id": "c2a8",
+      "total": 0,
+      "items": []
+    },
+    {
+      "id": "4380",
+      "user_id": "c2a8",
+      "total": 0,
+      "items": []
+    },
+    {
+      "id": "4990",
+      "user_id": "c2a8",
+      "total": 0,
+      "items": []
     }
   ],
   "orders": [
@@ -653,6 +681,28 @@
         }
       ],
       "total": 115000
+    },
+    {
+      "id": 4,
+      "user_id": "c2a8",
+      "date": "2024-11-19T21:47:59.940Z",
+      "order_items": [
+        {
+          "id": 6,
+          "order_id": 4,
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 3
+        },
+        {
+          "id": 7,
+          "order_id": 5,
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "total": 71000
     }
   ],
   "home": {
