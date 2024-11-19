@@ -70,7 +70,7 @@ export const getCategoria = async (categoria) => {
 
 export const getTodosProductos = async () => {
   try {
-    const response = await axios.get(`${API_URL}/productos`);
+    const response = await axios.get(`${API_URL}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener todos los productos', error);

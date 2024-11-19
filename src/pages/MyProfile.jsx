@@ -1,16 +1,31 @@
 import { useEffect, useState, useContext } from 'react';
-import myProfileService from '../services/serviceMyProfile';
+import serviceMyProfile from '../services/serviceMyProfile';
 import ProfileCard from '../components/ProfileCard';
 import { AuthContext } from "../context/AuthContext";
-
+import {getTodosProductos} from '../services/serviceProducts'
 
 const MyProfile = () => {
   const [orders, setOrders] = useState([])
   const { isAuthenticated } = useContext(AuthContext);
+  const [data, setData] = useState(null);
   const [userData, setUserData] = useState(() => {
     const storedData = localStorage.getItem("userData");
     return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTodosProductos();
+        setData(data);
+        console.log("aaaaaaaaaaaaa", data.find(producto => producto.id == 1).name)
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  
 
   // Obtengo usuario
   useEffect(() => {
@@ -28,8 +43,8 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const data = await myProfileService.ordersById();
-        myProfileService.productNameById();
+        const data = await serviceMyProfile.ordersById();
+        //console.log(await serviceMyProfile.ProductIdList());
         setOrders(data);
         //console.log(data)
       } catch (error) {
@@ -87,7 +102,7 @@ const MyProfile = () => {
                     {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
-                        <td>{item.product}</td>
+                        <td>{data.find(producto => producto.id == item.product_id).name}</td>
                         <td>{item.quantity}</td>
                         <td>${item.price * item.quantity}</td>
                       </tr>
