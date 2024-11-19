@@ -600,20 +600,26 @@
     {
       "id": "a197",
       "user_id": "ae2c",
-      "total": 40000,
+      "total": 12000,
       "items": [
         {
           "id": 7,
           "cart_id": "a197",
-          "product_id": "11",
-          "price": 40000,
+          "product_id": "25",
+          "price": 12000,
           "quantity": 1
         }
       ]
     },
     {
-      "id": "165c",
-      "user_id": "a967",
+      "id": "b576",
+      "user_id": 0,
+      "total": 0,
+      "items": []
+    },
+    {
+      "id": "d62f",
+      "user_id": 0,
       "total": 0,
       "items": []
     }
@@ -1137,11 +1143,107 @@
       "name": "Electronics"
     },
     {
-      "id": "2",
-      "name": "Peripherals"
-    }
-  ],
-  "navigation": [
+      "id": "211111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:27:22.700Z",
+      "order_items": [
+        {
+          "id": 9,
+          "order_id": "211111111111",
+          "product_id": 21,
+          "price": 75000,
+          "quantity": 1
+        }
+      ],
+      "total": 75000
+    },
+    {
+      "id": "2111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:27:40.798Z",
+      "order_items": []
+    },
+    {
+      "id": "21111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:31:48.728Z",
+      "order_items": []
+    },
+    {
+      "id": "211111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:32:02.651Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:32:12.446Z",
+      "order_items": [
+        {
+          "id": 10,
+          "order_id": "2111111111111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "21111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:33:26.007Z",
+      "order_items": [
+        {
+          "id": 11,
+          "order_id": "21111111111111111",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "total": 35000
+    },
+    {
+      "id": "211111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:33:52.792Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:34:07.757Z",
+      "order_items": []
+    },
+    {
+      "id": "21111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:34:33.126Z",
+      "order_items": [
+        {
+          "id": 12,
+          "order_id": "21111111111111111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "211111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:35:31.958Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:49:38.791Z",
+      "order_items": []
+    },
     {
       "id": "2",
       "user_id": "ae2c",
@@ -1164,8 +1266,7 @@
     },
     {
       "id": "21",
-      "user_id": "5e46",
-      "status": "added to navigation history"
+      "user_id": "5e46"
     },
     {
       "id": "1",
@@ -1173,12 +1274,6 @@
       "status": "added to navigation history"
     }
   ],
-  "favorites-add": {
-    "status": "added to favorites"
-  },
-  "favorites-remove": {
-    "status": "remove from favorites"
-  },
   "home": {
     "products": {
       "almacenamiento": [
@@ -1627,5 +1722,18 @@
       }
     ],
     "recommended_products": null
-  }
+  },
+  "navigation": [
+    {
+      "id": "25",
+      "user_id": "ae2c"
+    }
+  ],
+  "favorites": [
+    {
+      "id": "ebf389b6-132d-47f6-a321-572cdd98fe00",
+      "product_id": "25",
+      "user_id": "ae2c"
+    }
+  ]
 }

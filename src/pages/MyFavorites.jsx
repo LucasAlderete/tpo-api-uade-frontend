@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import CategorySection from "../components/CategorySection.jsx";
-import { getNavigationDecoredByUserid } from '../services/serviceNavigation.js';
+import { getAllByUser } from '../services/serviceFavs.js';
 
 const MyFavorites = () => {
 
@@ -12,15 +12,15 @@ const MyFavorites = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let recentlyViewedProducts = null;
+        let favorites = null;
         if (isAuthenticated()) {  
           const storedData = localStorage.getItem("userData");
           const user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
-          recentlyViewedProducts = await getNavigationDecoredByUserid(user_id);
+          favorites = await getAllByUser(user_id);
         }
 
         setData({
-          recently_viewed_products: recentlyViewedProducts, 
+          favorites: favorites, 
         });
       } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -38,7 +38,7 @@ const MyFavorites = () => {
     return (
       <>
         <div className="container text-center my-5">
-            <CategorySection key="0" categoryName="Mis Favoritos" products={data.recently_viewed_products} />
+            <CategorySection key="0" categoryName="Mis Favoritos" products={data.favorites} />
         </div>
       </>
     );
