@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <div className="container text-center my-5">
-      {data.recently_viewed_products && (
+      {data.recently_viewed_products && data.recently_viewed_products.length > 0 && (
         <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products}/>
       )}
       {data.featured_products && (

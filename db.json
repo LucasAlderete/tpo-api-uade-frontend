@@ -606,7 +606,7 @@
   ],
   "orders": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": "ae2c",
       "date": "2024-11-19T20:05:22.995Z",
       "order_items": [
@@ -628,7 +628,7 @@
       "total": 198000
     },
     {
-      "id": 2,
+      "id": "2",
       "user_id": "ae2c",
       "date": "2024-11-19T20:05:32.649Z",
       "order_items": [
@@ -1116,14 +1116,6 @@
   },
   "navigation": [
     {
-      "id": "25",
-      "user_id": "ae2c"
-    },
-    {
-      "id": "21",
-      "user_id": "ae2c"
-    },
-    {
       "id": "11",
       "user_id": "ae2c"
     }
@@ -1147,6 +1139,11 @@
     {
       "id": "aab6723b-efa1-400f-8bcb-ad9288ed2bae",
       "product_id": 2,
+      "user_id": "ae2c"
+    },
+    {
+      "id": "5b288bc9-565e-4d37-b1c9-08849dd08628",
+      "product_id": "11",
       "user_id": "ae2c"
     }
   ]
