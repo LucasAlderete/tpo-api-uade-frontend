@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext, useState, useEffect } from "react";
 
 const Header = () => {
-  const { logout, isAuthenticated } = useContext(AuthContext);
+  const { logout, isAuthenticated, isAdmin } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logout();
@@ -91,6 +91,15 @@ const Header = () => {
                           Mis Favoritos 
                         </Link>
                       </li>
+                      {isAdmin() ? <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/product-management"
+                          aria-current="page"
+                        >
+                          Gestión de Productos
+                        </Link>
+                      </li>: <></>}
                       <li>
                         <button
                           className="dropdown-item text-danger"
