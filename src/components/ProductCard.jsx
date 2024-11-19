@@ -4,7 +4,7 @@ import useServiceCart from "../hooks/useServiceCart";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const ProductCard = ({ product, onViewProduct }) => {
+const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);

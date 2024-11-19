@@ -50,22 +50,6 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Samsung 970 EVO Plus",
-      "url_image_list": [
-        1,
-        27,
-        28
-      ],
-      "description": "Disco SSD Samsung",
-      "price": 15000,
-      "images": [],
-      "category_name": "Almacenamiento",
-      "stock": 1,
-      "additional_information": "SSD, 1TB",
-      "highlighted": false
-    },
-    {
       "id": "2",
       "name": "Crucial MX500",
       "description": "Disco SSD Crucial",
@@ -77,7 +61,8 @@
       "category_name": "Almacenamiento",
       "stock": 99,
       "additional_information": "SSD, 500GB",
-      "highlighted": true
+      "highlighted": true,
+      "new": false
     },
     {
       "id": "3",
@@ -93,20 +78,22 @@
       "category_name": "Almacenamiento",
       "stock": 115,
       "additional_information": "HDD, 1TB",
-      "highlighted": false
+      "highlighted": false,
+      "new": false
     },
     {
-      "id": "4",
       "name": "Corsair CV550",
-      "url_image_list": [
-        4
-      ],
+      "category_name": "Fuente",
       "description": "Fuente Corsair",
       "price": 8000,
-      "category_name": "Fuente",
-      "stock": 40,
-      "additional_information": "550W, 80+ Bronze",
-      "highlighted": false
+      "stock": 5,
+      "new": false,
+      "url_image_list": [
+        {
+          "id": 4
+        }
+      ],
+      "id": "4"
     },
     {
       "id": "5",
@@ -252,19 +239,6 @@
       "highlighted": false
     },
     {
-      "id": "16",
-      "name": "Zapatilla",
-      "url_image_list": [
-        16
-      ],
-      "description": "asadasdasdsafaf",
-      "price": 52,
-      "category_name": "Procesador",
-      "stock": 9,
-      "additional_information": "AJDSKAFSAKSFK",
-      "highlighted": false
-    },
-    {
       "id": "17",
       "name": "HyperX Alloy FPS Pro",
       "url_image_list": [
@@ -301,19 +275,6 @@
       "category_name": "Perifericos",
       "stock": 100,
       "additional_information": "Auriculares",
-      "highlighted": false
-    },
-    {
-      "id": "20",
-      "name": "Mouse",
-      "url_image_list": [
-        20
-      ],
-      "description": "asadasdasdsafaf",
-      "price": 52,
-      "category_name": "Perifericos",
-      "stock": 1,
-      "additional_information": "AJDSKAFSAKSFK",
       "highlighted": false
     },
     {
@@ -394,6 +355,38 @@
       "stock": 150,
       "additional_information": "DDR3, 4GB",
       "highlighted": false
+    },
+    {
+      "id": "20",
+      "name": "Mouse",
+      "url_image_list": [
+        20
+      ],
+      "description": "asadasdasdsafaf",
+      "price": 52,
+      "category_name": "Perifericos",
+      "stock": 32,
+      "additional_information": "AJDSKAFSAKSFK",
+      "highlighted": false
+    },
+    {
+      "name": "Research and Studies",
+      "category_name": "Futurama",
+      "description": "asdafsaf",
+      "price": 12,
+      "stock": 1,
+      "url_image_list": [],
+      "id": "3b718fc4-2dd6-4330-ada1-ef074c74556a"
+    },
+    {
+      "id": "3548527d-82cc-4322-a0b8-7b1c553b9e2e",
+      "name": "Mansad",
+      "category_name": "Futurama",
+      "description": "asdasdsafa",
+      "price": 90,
+      "stock": 890,
+      "url_image_list": [],
+      "new": true
     }
   ],
   "images": [

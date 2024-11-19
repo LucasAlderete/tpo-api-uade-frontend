@@ -17,17 +17,14 @@ axiosWithInterceptor.interceptors.request.use((config) => {
 
 
 
-export const addProductToDb = async ({productData, productId}) => {
+export const addProductToDb = async (productData) => {
   try {
-    console.log(productId)
-    if (!productId) {
-      const productWithId = { ...productData, id: uuidv4() };
-      const response = await axios.post(API_URL, productWithId);
-      return response.data;
-    } else {
-      const response = await axios.patch(`${API_URL}/${productId}`, productData);
-      return response.data;
-    }
+
+    console.log(productData);
+    const productWithId = { ...productData, id: uuidv4() };
+    const response = await axios.post(API_URL, productWithId);
+    return response.data;
+
   } catch (error) {
     console.error('Error:', error.response ? error.response.data : error.message);
     throw new Error('Error al agregar o modificar producto');
@@ -99,16 +96,6 @@ export const getVisitados = async (user) => {
   }
 }
 
-export const addProductToDB = async (productData) => {
-  try {
-    const response = await axiosWithInterceptor.put(API_URL, productData);
-    return response.data; 
-  } catch (error) {
-    console.error('Error al agregar el producto a la tienda', error);
-    throw error;
-  }
-};
-
 export const fetchProductsFromDb = async () => {
   try {
     const response = await axiosWithInterceptor.get(`${API_URL}`);
@@ -153,4 +140,30 @@ export const getViewProduct_2 = async () => {
   const response = await fetch("http://localhost:3100/view-product-2");
   return response.json();
 };
+
+export const uploadImage = async (imageFile) => {
+
+  try {
+    const image = { ...imageFile, id: uuidv4() };
+    const response = await axios.post(`http://localhost:3100/images`, image);
+    return response.data;
+  
+  } catch (error) {
+    console.error('Error:', error.response ? error.response.data : error.message);
+    throw new Error('Error al agregar o modificar imagen');
+  }
+};
+
+export const updateProductInDb = async (productId, productData) => {
+  try {
+    const response = await axios.put(`${API_URL}/${productId}`, productData);
+
+    return response.data; 
+  } catch (error) {
+    console.error("Error en updateProductInDb:", error);
+    throw error; 
+  }
+};
+
+
 

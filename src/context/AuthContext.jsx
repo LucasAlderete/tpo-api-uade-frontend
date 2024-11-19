@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useServiceAuth from "../hooks/useServiceAuth";
+import PropTypes from 'prop-types';
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const savedToken = localStorage.getItem("token");
     try {
       return JSON.parse(savedToken) ?? null;
-    } catch (e) {
+    } catch {
       return null;
     }
   });
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       const responseData = await registerService(username, email, password, birthday, name, surname);
       saveUserData(responseData);
       successfulAuth(responseData);
-    } catch (error) {
+    } catch {
       alert("usuario o mail ya en uso, pruebe nuevamente");
     }
   }
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       const responseData = await authenticateService(email, password);
       saveUserData(responseData);
       successfulAuth(responseData);
-    } catch (error) {
+    } catch {
       alert("credenciales incorrectas");
     }
   };
@@ -70,3 +71,7 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node, 
+};
