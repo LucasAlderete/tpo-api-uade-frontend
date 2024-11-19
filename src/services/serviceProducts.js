@@ -166,4 +166,14 @@ export const updateProductInDb = async (productId, productData) => {
 };
 
 
-
+export const getProductosNuevos = async () => {
+  try {
+    const response = await axios.get(`${API_URL}`);
+    const productos = response.data;
+    console.log("FILTRO:", productos.filter(product => product.new && product.new == true));
+    return productos.filter(product => product.new && product.new == true);
+    
+  } catch (error) {
+    throw new Error('Error al obtener todos los productos', error);
+  }
+};
