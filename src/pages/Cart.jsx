@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import cartService from "../services/serviceCart";
+import React, { useState, useEffect, useContext } from "react";
+import useServiceCart from "../hooks/useServiceCart";
 import ErrorPopup from "../components/ErrorPopup";
 import { Button, Container, Row, Col, Card } from "react-bootstrap";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
-import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+
 
 function Cart({}) {
   const [items, setItems] = useState([]);
@@ -12,9 +13,24 @@ function Cart({}) {
   const [popupTitle, setPopupTitle] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
   const [popupSeverity, setPopupSeverity] = useState("info");
+  const { isAuthenticated } = useContext(AuthContext);
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
+  });
+
 
   useEffect(() => {
     getItems();
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
   }, []);
 
   const handlePopup = (title, message, severity) => {
@@ -25,38 +41,38 @@ function Cart({}) {
   };
 
   const getItems = async () => {
-    const cart = await cartService.getCart(1);
+    const cart = await useServiceCart().getCart(userData.id);
     setItems(cart.items);
     setTotal(cart.total);
     if (!cart.success) handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
   };
 
   const addProduct = async (productId) => {
-    const response = await cartService.addProduct(1, productId);
+    const response = await useServiceCart().addProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
   };
 
   const decreaseProductQuantity = async (productId) => {
-    const response = await cartService.decreaseProductQuantity(1, productId);
+    const response = await useServiceCart().decreaseProductQuantity(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
   };
 
   const removeProduct = async (productId) => {
-    const response = await cartService.removeProduct(1, productId);
+    const response = await useServiceCart().removeProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
   };
 
   const emptyCart = async () => {
-    const response = await cartService.emptyCart(1);
+    const response = await useServiceCart().emptyCart(userData.id);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
   };
 
   const checkout = async () => {
-    const response = await cartService.checkout(1);
+    const response = await useServiceCart().checkout(userData.id);
     await getItems();
     if (response.success) {
       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
@@ -71,9 +87,23 @@ function Cart({}) {
   return (
     <Container
       fluid
-      className="cart-page py-5 vh-100 d-flex align-items-center"
+      className="cart-page py-5 vh-100 d-flex flex-column align-items-center"
     >
-      <Row className="justify-content-center w-100">
+      <Row className=" justify-content-center mb-2 pt-4">
+      <Col md={8} className="text-center mb-5 w-100">
+        <h3
+          className="fw-bold text-dark mb-4"
+          style={{
+            borderBottom: "2px solid #007bff",
+            paddingBottom: "5px",
+            fontSize: "1.5rem",
+          }}
+        >
+          CARRITO
+        </h3>
+      </Col>
+    </Row>
+    <Row className="justify-content-center w-100 flex-grow-1">
         <Col md={8} className="d-flex flex-column align-items-center">
           {items.length === 0 ? (
             <Card className="text-center p-5 empty-cart-card w-100 bg-dark text-light align-items-center">
@@ -95,7 +125,7 @@ function Cart({}) {
                         src={item.image}
                         alt={item.name}
                         className="img-fluid"
-                        style={{ maxWidth: "100%" }}
+                        style={{ width: "100px", height: "100px" }}
                       />
                     </Col>
                     <Col xs={5}>
@@ -159,7 +189,7 @@ function Cart({}) {
           md={4}
           className="order-summary d-flex flex-column align-items-center"
         >
-          <div className="p-4 w-100 bg-dark order-summary">
+          <div className="p-4 w-100 bg-dark order-summary order-card">
             <h5>RESUMEN DE PEDIDO</h5>
             <hr />
             {items.map((item, index) => (

@@ -1,17 +1,56 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import myProfileService from '../services/serviceMyProfile';
+=======
+import { useEffect, useState, useContext } from 'react';
+import serviceMyProfile from '../services/serviceMyProfile';
+import ProfileCard from '../components/ProfileCard';
+import { AuthContext } from "../context/AuthContext";
+import {getTodosProductos} from '../services/serviceProducts'
+>>>>>>> main
 
 const MyProfile = () => {
-  const [profileData, setProfileData] = useState({})
   const [orders, setOrders] = useState([])
+  const { isAuthenticated } = useContext(AuthContext);
+  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTodosProductos();
+        setData(data);
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+
+  // Obtengo usuario
+  useEffect(() => {
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const data = await myProfileService.getMyProfile();
-        console.log(profileData);
-        setProfileData(data);
-        setOrders(data.ordersDto);
+        const data = await serviceMyProfile.ordersById();
+        //console.log(await serviceMyProfile.ProductIdList());
+        setOrders(data);
+        //console.log(data)
       } catch (error) {
         console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
       }
@@ -22,35 +61,13 @@ const MyProfile = () => {
   return (
 
     <div className="container mt-5">
-
-      {/*Datos*/}
-
-      <h3>My Profile</h3>
-      <div className="card mb-5">
-        <div className="card-body">
-          <p className="card-text">
-            <strong>Name:</strong> {profileData.name}
-          </p>
-          <p className="card-text">
-            <strong>Surname:</strong> {profileData.surname}
-          </p>
-          <p className="card-text">
-            <strong>Username:</strong> {profileData.username}
-          </p>
-          <p className="card-text">
-            <strong>Email:</strong> {profileData.email}
-          </p>
-          <p className="card-text">
-            <strong>Birthday:</strong> {profileData.birthday}
-          </p>
-        </div>
-      </div>
-
-      {/*Checkouts*/}
-
-      <h3>Checkouts</h3>
+      <h3>Mi Perfil</h3>
+      <ProfileCard profile={userData} />
       
-      <div className="accordion" id="accordionCheckouts">
+      <h3>Checkouts</h3>
+      {(orders && orders.length === 0)
+      ?"Todavia no se cargaron ordenes"
+      : <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
@@ -74,26 +91,26 @@ const MyProfile = () => {
               <div className="accordion-body">
                  {/* Información de la orden */}
             
-                <p><strong>Date:</strong> {orders.date}</p>
-                <p><strong>Final Price:</strong> ${orders.total}</p>
+                <p><strong>Fecha:</strong> {orders.date}</p>
+                <p><strong>Precio Final:</strong> ${orders.total}</p>
 
                  {/*Tabla de items*/}
                 <table className="table">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Price</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio</th>
                     </tr>
                   </thead>
                   <tbody>
                     {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
-                        <td>{item.product}</td>
+                        <td>{data.find(producto => producto.id == item.product_id).name}</td>
                         <td>{item.quantity}</td>
-                        <td>${item.price}</td>
+                        <td>${item.price * item.quantity}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -102,7 +119,8 @@ const MyProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
+      
     </div>
   );
 }

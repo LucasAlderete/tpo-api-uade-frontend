@@ -50,7 +50,8 @@ button:focus-visible {
 /* cart */
 .cart-page {
   min-width: 100vh;
-  background-color: #2a2a2a;
+  background-color: #fdfdfd;
+  /* background-color: #2a2a2a; */
   color: white;
   display: block;
   align-items: center;
@@ -68,6 +69,10 @@ button:focus-visible {
   border-radius: 8px;
   position: relative;
   font-family: 'Courier New', Courier, monospace;
+}
+
+.order-card {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .order-summary h5 {
@@ -106,36 +111,6 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
 }
-
-/* 
-.cart-page {
-  background-color: #1f1f1f;
-}
-
-.cart-items-card {
-  background-color: #2a2a2a;
-  color: #ccc;
-  border-radius: 8px;
-}
-
-.cart-item {
-  border-bottom: 1px solid #444;
-}
-
-.empty-cart-btn,
-.empty-cart-btn:hover {
-  color: #fff;
-}
-
-button.btn-outline-secondary {
-  color: #ccc;
-  border-color: #555;
-}
-
-button.btn-outline-secondary:hover {
-  background-color: #555;
-  color: #fff;
-} */
 
 
 @media (prefers-color-scheme: light) {
@@ -199,14 +174,15 @@ button:hover {
 .card {
   border: none;
   border-radius: 12px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
+
 
 .navbar {
   background-color: var(--primary-color);
