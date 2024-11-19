@@ -3,17 +3,21 @@ import axios from "axios";
 
 const myProfileService = {
     async getMyProfile() {
-      const response = await axios.get('http://localhost:3000/myProfile');
-      //console.log(response.data);
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const response = await axios.get(`http://localhost:3000/orders?user_id=${userData.userId}`);
+      //console.log(response.data)
+      response.data.map(order => {
+        order.order_items.map(item=> {
+          
+          const detailsResponse = async (id) => await(await fetch(`http://localhost:3000/products/${id}`)).json();
+          console.log(detailsResponse)
+          return detailsResponse(item.product_id).name;
+        })
+      });
+      console.log(response.data);
+      console.log(userData);
       return response.data;
     }
   };
-
-//const myProfileService = {
-//  async getMyProfileById() {
-//    const response = await apiClient.get(`/my-profile?userId=1`);
-//    return response.data[0]; // seleccionamos el primer elemento
-//  }
-//};
 
 export default myProfileService;

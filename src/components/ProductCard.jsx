@@ -8,7 +8,11 @@ const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
-  const [user_id, setUserId] = useState(null); 
+  const [user_id, setUserId] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData ? JSON.parse(storedData).id : 0;
+  });
+  
 
   const navigate = useNavigate(); 
   
@@ -19,17 +23,18 @@ const ProductCard = ({ product, onViewProduct }) => {
       setUserId(id);
     }
   }, [isAuthenticated]);
-
+  
   useEffect(() => {
     const fetchCart = async () => {
       const favorites = await getAllByUser(user_id);
       console.log("favorites", favorites);
-      const cart = await cartService.getCart(1);
+      const cart = await cartService.getCart(user_id);
       const items = cart.items;
 
       const isFavorite = favorites.some(
-        (favorite) => favorite.product_id === product.product_id && favorite.user_id === user_id
+        (favorite) => favorite.product_id == product.product_id && favorite.user_id == user_id
       );
+      console.log("isFavorite", isFavorite);
       setIsFavorite(isFavorite);
 
       const item = items.find((item) => item.product_id === product.product_id);
@@ -50,6 +55,7 @@ const ProductCard = ({ product, onViewProduct }) => {
 
     if (isFavorite) {
       const response = await remove(product.product_id, user_id);
+      console.log("handleAddToFavorites", response);
       if (response) {
         setIsFavorite(false);
       } else {
@@ -71,10 +77,10 @@ const ProductCard = ({ product, onViewProduct }) => {
   
   const handleAddToCart = async () => {
     if (isCart) {
-      await cartService.removeProduct(1,product.product_id);
+      await cartService.removeProduct(user_id, product.product_id);
       setIsCart(false);
     } else {
-      const response = await cartService.addProduct(1,product.product_id);
+      const response = await cartService.addProduct(user_id, product.product_id);
       if (response.success) {
         setIsCart(true);
       } else {
