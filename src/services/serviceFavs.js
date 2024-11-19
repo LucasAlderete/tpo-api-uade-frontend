@@ -26,7 +26,7 @@ export const remove = async (product_id, user_id) => {
         const response = await fetch(`http://localhost:3000/favorites/${fav[0].id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json'  
             }
         });
     
