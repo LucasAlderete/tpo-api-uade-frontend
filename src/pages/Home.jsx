@@ -54,7 +54,7 @@ const Home = () => {
       {data.products && Object.keys(data.products).map((categoryName, index) => (
         <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} />
       ))}
-      {data.nuevos && Object.keys([0]).map((index) => (
+      {data.nuevos && data.nuevos.length >0 && Object.keys([0]).map((index) => (
         <CategorySection key={index} categoryName="Productos Nuevos" products={data.nuevos} />
       ))}
     </div>
