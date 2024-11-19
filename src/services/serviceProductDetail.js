@@ -10,10 +10,11 @@ export const getProductDetail = async (id) => {
         return imageData.path;
       })
     );
-
+    
     return {
       ...product,
       images: imagePaths,
+      url_image: imagePaths && imagePaths[0] ? imagePaths[0] : null
     };
   } catch (error) {
     console.error("Error fetching product detail or images:", error);
