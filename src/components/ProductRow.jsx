@@ -10,8 +10,8 @@ const ProductRow = ({ product, onProductDeleted }) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();  
 
-  const totalStock = product?.stock?.length > 0
-    ? product?.stock?.reduce((acc, stock) => acc + parseInt(stock.stock, 10), 0)
+  const totalStock = product?.stock
+    ? product.stock
     : 'Sin stock';
 
   const handleShowModal = () => setShowModal(true);
@@ -78,15 +78,15 @@ const ProductRow = ({ product, onProductDeleted }) => {
 
 ProductRow.propTypes = {
     product: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired, 
-        category_name: PropTypes.string.isRequired, 
-        description: PropTypes.string.isRequired, 
-        price: PropTypes.number.isRequired, 
-        stock: PropTypes.number.isRequired,
+        id: PropTypes.string,
+        name: PropTypes.string, 
+        category_name: PropTypes.string, 
+        description: PropTypes.string, 
+        price: PropTypes.number, 
+        stock: PropTypes.number,
         images: PropTypes.array,
-        additional_information: PropTypes.string.isRequired,
-        url_image_list: PropTypes.arrayOf(PropTypes.string),
+        additional_information: PropTypes.string,
+        url_image_list: PropTypes.arrayOf(PropTypes.number),
     }).isRequired,
     onProductDeleted: PropTypes.func.isRequired,
 };

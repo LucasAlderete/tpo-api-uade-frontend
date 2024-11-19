@@ -15,7 +15,8 @@ const AddProduct = () => {
     description: '',
     price: 0,
     stock: 0,
-    url_image_list: []
+    url_image_list: [],
+    new: true
   });
 
   const [images, setImages] = useState([]);
@@ -37,6 +38,7 @@ const AddProduct = () => {
             description: product.description,
             price: product.price,
             stock: product.stock,
+            new: product.new,
           });
           setImages(
             product.url_image_list?.map((id) => ({
@@ -76,7 +78,7 @@ const AddProduct = () => {
       
       setFormValues((prev) => ({
         ...prev,
-        url_imageList: [...prev.url_image_list, ...urls],
+        url_image_list: [...prev.url_image_list, ...urls],
       }));
     } catch (error) {
       console.error("Error al manejar las imágenes:", error);
@@ -103,10 +105,10 @@ const AddProduct = () => {
   
     try {
       if (isEditMode) {
+        console.log(productData);
         await updateProductInDb(productId, productData);
         console.log("Producto actualizado con éxito.");
       } else {
-        console.log(productData);
         await addProductToDb(productData);
         console.log("Producto agregado con éxito.");
       }

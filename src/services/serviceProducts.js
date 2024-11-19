@@ -96,16 +96,6 @@ export const getVisitados = async (user) => {
   }
 }
 
-export const addProductToDB = async (productData) => {
-  try {
-    const response = await axiosWithInterceptor.put(API_URL, productData);
-    return response.data; 
-  } catch (error) {
-    console.error('Error al agregar el producto a la tienda', error);
-    throw error;
-  }
-};
-
 export const fetchProductsFromDb = async () => {
   try {
     const response = await axiosWithInterceptor.get(`${API_URL}`);
@@ -166,13 +156,7 @@ export const uploadImage = async (imageFile) => {
 
 export const updateProductInDb = async (productId, productData) => {
   try {
-    const response = await axiosWithInterceptor.put(`${API_URL}/products/${productId}`, {
-      body: JSON.stringify(productData),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error al actualizar el producto: ${response.statusText}`);
-    }
+    const response = await axios.put(`${API_URL}/${productId}`, productData);
 
     return response.data; 
   } catch (error) {
@@ -180,5 +164,6 @@ export const updateProductInDb = async (productId, productData) => {
     throw error; 
   }
 };
+
 
 

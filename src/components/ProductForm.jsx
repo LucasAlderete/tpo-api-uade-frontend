@@ -125,8 +125,8 @@ ProductForm.propTypes = {
   handleRemoveImage: PropTypes.func.isRequired, 
   images: PropTypes.arrayOf( 
     PropTypes.shape({
-      id: PropTypes.number.isRequired, 
-      path: PropTypes.string.isRequired, 
+      id: PropTypes.number, 
+      path: PropTypes.string, 
     })
   ),
 };
