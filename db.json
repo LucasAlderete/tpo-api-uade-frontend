@@ -36,7 +36,8 @@
       "password": "1234",
       "birthday": "1999-04-29",
       "name": "Felipe",
-      "surname": "Parrondo"
+      "surname": "Parrondo",
+      "role": "USER"
     },
     {
       "id": "ae2c",
@@ -45,7 +46,8 @@
       "password": "1234",
       "birthday": "1999-04-29",
       "name": "Lucas",
-      "surname": "Alderete"
+      "surname": "Alderete",
+      "role": "USER"
     }
   ],
   "products": [
