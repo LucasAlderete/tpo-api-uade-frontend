@@ -28,7 +28,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar sticky-top navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             Venta Gamer
