@@ -93,7 +93,7 @@ const Header = () => {
                       </li>
                       <li>
                         <button
-                          className="dropdown-item"
+                          className="dropdown-item text-danger"
                           type="button"
                           onClick={handleLogOut}
                         >
