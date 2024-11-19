@@ -7,28 +7,30 @@ import { AuthContext } from "../context/AuthContext";
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
-  const navigate = useNavigate(); 
   const { isAuthenticated } = useContext(AuthContext);
+  const [user_id, setUserId] = useState(null); 
 
-  const handleViewProduct = () => {
-    navigate(`/product/${product.product_id}`);
-  };
+  const navigate = useNavigate(); 
   
   useEffect(() => {
-
-    let user_id = 0;
-    if (isAuthenticated()) {  
+    if (isAuthenticated()) {
       const storedData = localStorage.getItem("userData");
-      user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
+      const id = storedData ? JSON.parse(storedData).id : 0;
+      setUserId(id);
     }
+  }, [isAuthenticated]);
 
+  useEffect(() => {
     const fetchCart = async () => {
-      const favorites = getAllByUser(user_id);
+      const favorites = await getAllByUser(user_id);
       console.log("favorites", favorites);
       const cart = await cartService.getCart(1);
       const items = cart.items;
 
-      setIsFavorite(favorites.includes(product.product_id));
+      const isFavorite = favorites.some(
+        (favorite) => favorite.product_id === product.product_id && favorite.user_id === user_id
+      );
+      setIsFavorite(isFavorite);
 
       const item = items.find((item) => item.product_id === product.product_id);
       if (item) {
@@ -40,17 +42,15 @@ const ProductCard = ({ product, onViewProduct }) => {
     fetchCart();
   }, [product.product_id]);
 
+  const handleViewProduct = () => {
+    navigate(`/product/${product.product_id}`);
+  };
   
   const handleAddToFavorites = async () => {
-    let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
-
-
 
     if (isFavorite) {
-      
       const response = await remove(product.product_id, user_id);
       if (response) {
-        favorites = favorites.filter((id) => id !== product.product_id);
         setIsFavorite(false);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
@@ -60,15 +60,12 @@ const ProductCard = ({ product, onViewProduct }) => {
       
       const response = await add(product.product_id, user_id);
       if (response) {
-        favorites.push(product.product_id); 
         setIsFavorite(true);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
         return;
       }
     }
-
-    localStorage.setItem('local-favorites', JSON.stringify(favorites));
   };
 
   
