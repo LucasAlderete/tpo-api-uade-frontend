@@ -3,18 +3,18 @@ import authClient from "../services/authClient"
 const useServiceAuth = () => {
 
   /* FOR BACKEND INTEGRATION
-  const registerService = async (username, email, password, birthday, name, surname) => {
+  const registerService = async (username, email, password, birthday, name, surname, role) => {
     const response = await authClient.post(
-      "/register", {username, email, password, birthday, name, surname}
+      "/register", {username, email, password, birthday, name, surname, role}
     );
     return response.data;
     //AGREGAR UN THROW SI NO ES EXITOSO
   };
   */
 
-  const registerService = async (username, email, password, birthday, name, surname) => {
+  const registerService = async (username, email, password, birthday, name, surname, role) => {
     const response = await authClient.post(
-      "/users", {username, email, password, birthday, name, surname}
+      "/users", {username, email, password, birthday, name, surname, role}
     );
     return response.data;
   };
