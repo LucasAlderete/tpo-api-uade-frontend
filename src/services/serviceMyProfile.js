@@ -1,26 +1,32 @@
 import axios from "axios";
 
-const myProfileService = {
+const serviceMyProfile = {
 
     async ordersById() {
+
       const userData = JSON.parse(localStorage.getItem('userData'));
       const orders = await axios.get(`http://localhost:3000/orders?user_id=${userData.id}`);
-      console.log("Usuario:", userData);
-      console.log("Lista ordenes de usuario:", orders.data);
+      //console.log("Usuario:", userData);
+      //console.log("Lista ordenes de usuario:", orders.data);
       return orders.data;
     },
+    
+    async productNameById(id) {
+      const product_id = await axios.get(`http://localhost:3000/products/${id}`)
+      return product_id.data.name;
+    },
 
-    async productNameById() {
-      this.ordersById().map(order => {
+    async ProductIdList() {
+      let lista = [];
+      const orderList = await this.ordersById();
+      orderList.map(order => {
         order.order_items.map(item=> {
-          const productDetails = async () => {
-            return await axios.get(`http://localhost:3000/products/${item.product_id}`);
-          }
-          console.log("nombre del producto:", productDetails().data);
+          lista.push(item.product_id)
         })
       });
+      return lista;
     }
 
   };
 
-export default myProfileService;
+export default serviceMyProfile;
