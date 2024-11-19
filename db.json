@@ -50,25 +50,6 @@
   ],
   "products": [
     {
-<<<<<<< HEAD
-=======
-      "id": "1",
-      "name": "Samsung 970 EVO Plus",
-      "url_image_list": [
-        1,
-        27,
-        28
-      ],
-      "description": "Disco SSD Samsung",
-      "price": 15000,
-      "images": [],
-      "category_name": "Almacenamiento",
-      "stock": 1,
-      "additional_information": "SSD, 1TB",
-      "highlighted": false
-    },
-    {
->>>>>>> main
       "id": "2",
       "name": "Crucial MX500",
       "description": "Disco SSD Crucial",
