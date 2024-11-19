@@ -87,9 +87,23 @@ function Cart({}) {
   return (
     <Container
       fluid
-      className="cart-page py-5 vh-100 d-flex align-items-center"
+      className="cart-page py-5 vh-100 d-flex flex-column align-items-center"
     >
-      <Row className="justify-content-center w-100">
+      <Row className=" justify-content-center mb-2 pt-4">
+      <Col md={8} className="text-center mb-5 w-100">
+        <h3
+          className="fw-bold text-dark mb-4"
+          style={{
+            borderBottom: "2px solid #007bff",
+            paddingBottom: "5px",
+            fontSize: "1.5rem",
+          }}
+        >
+          CARRITO
+        </h3>
+      </Col>
+    </Row>
+    <Row className="justify-content-center w-100 flex-grow-1">
         <Col md={8} className="d-flex flex-column align-items-center">
           {items.length === 0 ? (
             <Card className="text-center p-5 empty-cart-card w-100 bg-dark text-light align-items-center">
@@ -175,7 +189,7 @@ function Cart({}) {
           md={4}
           className="order-summary d-flex flex-column align-items-center"
         >
-          <div className="p-4 w-100 bg-dark order-summary">
+          <div className="p-4 w-100 bg-dark order-summary order-card">
             <h5>RESUMEN DE PEDIDO</h5>
             <hr />
             {items.map((item, index) => (

@@ -71,6 +71,10 @@ button:focus-visible {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.order-card {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
 .order-summary h5 {
   font-size: 1.2rem;
   text-align: center;
@@ -170,14 +174,15 @@ button:hover {
 .card {
   border: none;
   border-radius: 12px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
+
 
 .navbar {
   background-color: var(--primary-color);
