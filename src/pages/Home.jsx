@@ -4,6 +4,7 @@ import { getHome } from '../services/serviceHome.js';
 import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
 import { getNavigationDecoredByUserid } from '../services/serviceNavigation.js';
+import { getProductosNuevos } from '../services/serviceProducts.js'
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -21,10 +22,12 @@ const Home = () => {
           const user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
           recentlyViewedProducts = await getNavigationDecoredByUserid(user_id);
         }
+        const nuevos = await getProductosNuevos();
 
         setData({
           ...homeData,
-          recently_viewed_products: recentlyViewedProducts, 
+          recently_viewed_products: recentlyViewedProducts,
+          nuevos 
         });
       } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -50,6 +53,9 @@ const Home = () => {
       )}
       {data.products && Object.keys(data.products).map((categoryName, index) => (
         <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} />
+      ))}
+      {data.nuevos && Object.keys(data.nuevos).map((categoryName, index) => (
+        <CategorySection key={index} categoryName="Productos Nuevos" products={data.nuevos} />
       ))}
     </div>
   );

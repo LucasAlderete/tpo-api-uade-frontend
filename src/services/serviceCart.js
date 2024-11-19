@@ -288,7 +288,6 @@ const checkout = async (userId) => {
       }
     }
   } catch (error) {
-    console.log(error)
     return {success: false, status: 'error'};
   }
 }
