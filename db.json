@@ -195,7 +195,7 @@
       "description": "Monitor Gamer Samsung",
       "price": 40000,
       "category_name": "Monitor",
-      "stock": 19,
+      "stock": 18,
       "additional_information": "27\", 165Hz",
       "highlighted": true
     },
@@ -325,7 +325,7 @@
       "description": "Tarjeta Gráfica Nvidia",
       "price": 75000,
       "category_name": "GPU",
-      "stock": 11,
+      "stock": 8,
       "additional_information": "8GB GDDR6",
       "highlighted": true
     },
@@ -377,7 +377,7 @@
       "description": "Memoria RAM Kingston",
       "price": 12000,
       "category_name": "RAM",
-      "stock": 34,
+      "stock": 26,
       "additional_information": "DDR4, 16GB",
       "highlighted": true
     },
@@ -608,68 +608,29 @@
     {
       "id": "1",
       "user_id": "ae2c",
-      "date": "2024-11-19T19:22:54.659Z",
+      "date": "2024-11-19T20:05:22.995Z",
       "order_items": [
         {
           "id": 1,
           "order_id": 1,
           "product_id": "25",
           "price": 12000,
-          "quantity": 10
+          "quantity": 4
         },
         {
           "id": 2,
           "order_id": 2,
-          "product_id": 2,
-          "price": 1200,
-          "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "21",
-      "user_id": "5e46",
-      "date": "2024-11-19T04:21:03.735Z",
-      "order_items": []
-    },
-    {
-      "id": "211",
-      "user_id": "5e46",
-      "date": "2024-11-19T04:21:15.787Z",
-      "order_items": []
-    },
-    {
-      "id": "2111",
-      "user_id": "5e46",
-      "date": "2024-11-19T04:21:24.389Z",
-      "order_items": []
-    },
-    {
-      "id": "21111",
-      "user_id": "5e46",
-      "date": "2024-11-19T04:21:35.201Z",
-      "order_items": [
-        {
-          "id": 4,
-          "order_id": "21111",
-          "product_id": 25,
-          "price": 12000,
-          "quantity": 1
-        },
-        {
-          "id": 4,
-          "order_id": "21111",
-          "product_id": 14,
-          "price": 35000,
-          "quantity": 5
+          "product_id": "21",
+          "price": 75000,
+          "quantity": 2
         }
       ],
-      "total": 295000
+      "total": 198000
     },
     {
       "id": "2",
       "user_id": "ae2c",
-      "date": "2024-11-19T19:23:03.673Z",
+      "date": "2024-11-19T20:05:32.649Z",
       "order_items": [
         {
           "id": 3,
@@ -680,6 +641,28 @@
         }
       ],
       "total": 48000
+    },
+    {
+      "id": 3,
+      "user_id": "ae2c",
+      "date": "2024-11-19T20:05:41.369Z",
+      "order_items": [
+        {
+          "id": 4,
+          "order_id": 3,
+          "product_id": "21",
+          "price": 75000,
+          "quantity": 1
+        },
+        {
+          "id": 5,
+          "order_id": 4,
+          "product_id": "11",
+          "price": 40000,
+          "quantity": 1
+        }
+      ],
+      "total": 115000
     }
   ],
   "home": {
