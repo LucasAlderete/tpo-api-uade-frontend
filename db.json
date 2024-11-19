@@ -130,7 +130,7 @@
       "description": "Fuente Thermaltake",
       "price": 10000,
       "category_name": "Fuente",
-      "stock": 50,
+      "stock": 49,
       "additional_information": "650W, 80+ Bronze",
       "highlighted": false
     },
@@ -325,7 +325,7 @@
       "description": "Tarjeta Gráfica Nvidia",
       "price": 75000,
       "category_name": "GPU",
-      "stock": 25,
+      "stock": 11,
       "additional_information": "8GB GDDR6",
       "highlighted": true
     },
@@ -377,7 +377,7 @@
       "description": "Memoria RAM Kingston",
       "price": 12000,
       "category_name": "RAM",
-      "stock": 73,
+      "stock": 51,
       "additional_information": "DDR4, 16GB",
       "highlighted": true
     },
@@ -559,8 +559,8 @@
   "carts": [
     {
       "id": "1",
-      "total": 47000,
-      "user_id": 1,
+      "total": 57000,
+      "user_id": "a967",
       "items": [
         {
           "id": 4,
@@ -572,25 +572,50 @@
         {
           "id": 5,
           "cart_id": "1",
-          "product_id": 14,
-          "price": 35000,
+          "product_id": 3,
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "id": 6,
+          "cart_id": "1",
+          "product_id": 11,
+          "price": 40000,
           "quantity": 1
         }
       ]
     },
     {
       "id": "2",
-      "total": 1200,
-      "user_id": 2,
+      "total": 0,
+      "user_id": "5e46",
+      "items": []
+    },
+    {
+      "id": "3",
+      "total": 0,
+      "user_id": "870f",
+      "items": []
+    },
+    {
+      "id": "a197",
+      "user_id": "ae2c",
+      "total": 40000,
       "items": [
         {
-          "id": 3,
-          "cart_id": 2,
-          "product_id": 2,
-          "price": 1200,
+          "id": 7,
+          "cart_id": "a197",
+          "product_id": "11",
+          "price": 40000,
           "quantity": 1
         }
       ]
+    },
+    {
+      "id": "165c",
+      "user_id": "a967",
+      "total": 0,
+      "items": []
     }
   ],
   "orders": [
@@ -635,23 +660,475 @@
       "id": "2",
       "user_id": "a967",
       "date": "2024-11-18T18:09:34.849Z",
+      "id": "21",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:21:03.735Z",
+      "order_items": []
+    },
+    {
+      "id": "211",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:21:15.787Z",
+      "order_items": []
+    },
+    {
+      "id": "2111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:21:24.389Z",
+      "order_items": []
+    },
+    {
+      "id": "21111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:21:35.201Z",
       "order_items": [
         {
           "id": 4,
-          "order_id": "21",
-          "product_id": 3,
-          "price": 30,
+          "order_id": "21111",
+          "product_id": 25,
+          "price": 12000,
           "quantity": 1
         },
         {
           "id": 4,
-          "order_id": "21",
-          "product_id": 1,
-          "price": 500,
+          "order_id": "21111",
+          "product_id": 14,
+          "price": 35000,
           "quantity": 1
         }
       ],
-      "total": 530
+      "total": 47000
+    },
+    {
+      "id": "211111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:22:03.943Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:22:14.417Z",
+      "order_items": [
+        {
+          "id": 5,
+          "order_id": "2111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "21111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:24:56.632Z",
+      "order_items": [
+        {
+          "id": 6,
+          "order_id": "21111111",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        },
+        {
+          "id": 6,
+          "order_id": "21111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 47000
+    },
+    {
+      "id": "211111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:25:14.715Z",
+      "order_items": [
+        {
+          "id": 7,
+          "order_id": "211111111",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "total": 35000
+    },
+    {
+      "id": "2111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:26:43.630Z",
+      "order_items": [
+        {
+          "id": 8,
+          "order_id": "2111111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "21111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:26:51.245Z",
+      "order_items": []
+    },
+    {
+      "id": "211111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:27:22.700Z",
+      "order_items": [
+        {
+          "id": 9,
+          "order_id": "211111111111",
+          "product_id": 21,
+          "price": 75000,
+          "quantity": 1
+        }
+      ],
+      "total": 75000
+    },
+    {
+      "id": "2111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:27:40.798Z",
+      "order_items": []
+    },
+    {
+      "id": "21111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:31:48.728Z",
+      "order_items": []
+    },
+    {
+      "id": "211111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:32:02.651Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:32:12.446Z",
+      "order_items": [
+        {
+          "id": 10,
+          "order_id": "2111111111111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "21111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:33:26.007Z",
+      "order_items": [
+        {
+          "id": 11,
+          "order_id": "21111111111111111",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "total": 35000
+    },
+    {
+      "id": "211111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:33:52.792Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:34:07.757Z",
+      "order_items": []
+    },
+    {
+      "id": "21111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:34:33.126Z",
+      "order_items": [
+        {
+          "id": 12,
+          "order_id": "21111111111111111111",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "211111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:35:31.958Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:49:38.791Z",
+      "order_items": []
+    },
+    {
+      "id": "2111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:49:38.799Z",
+      "order_items": [
+        {
+          "id": 13,
+          "order_id": "21111111111111111111101",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 2
+        }
+      ],
+      "total": 70000
+    },
+    {
+      "id": "21111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:50:01.336Z",
+      "order_items": []
+    },
+    {
+      "id": "21111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:50:01.342Z",
+      "order_items": [
+        {
+          "id": 14,
+          "order_id": "211111111111111111111101",
+          "product_id": 21,
+          "price": 75000,
+          "quantity": 1
+        }
+      ],
+      "total": 75000
+    },
+    {
+      "id": "211111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:50:15.528Z",
+      "order_items": []
+    },
+    {
+      "id": "211111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:50:15.535Z",
+      "order_items": [
+        {
+          "id": 15,
+          "order_id": "2111111111111111111111101",
+          "product_id": 25,
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "2111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:51:55.466Z",
+      "order_items": [
+        {
+          "id": 16,
+          "order_id": "21111111111111111111111101",
+          "product_id": 21,
+          "price": 75000,
+          "quantity": 1
+        }
+      ],
+      "total": 75000
+    },
+    {
+      "id": "21111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:52:06.706Z",
+      "order_items": [
+        {
+          "id": 17,
+          "order_id": "211111111111111111111111101",
+          "product_id": 3,
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "id": 18,
+          "order_id": "211111111111111111111111111",
+          "product_id": 5,
+          "price": 12000,
+          "quantity": 4
+        }
+      ],
+      "total": 53000
+    },
+    {
+      "id": "211111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:52:26.294Z",
+      "order_items": [
+        {
+          "id": 19,
+          "order_id": "2111111111111111111111111101",
+          "product_id": 4,
+          "price": 8000,
+          "quantity": 1
+        },
+        {
+          "id": 20,
+          "order_id": "2111111111111111111111111111",
+          "product_id": 2,
+          "price": 10000,
+          "quantity": 1
+        }
+      ],
+      "total": 18000
+    },
+    {
+      "id": "2111111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:52:43.231Z",
+      "order_items": [
+        {
+          "id": 21,
+          "order_id": "21111111111111111111111111101",
+          "product_id": 6,
+          "price": 10000,
+          "quantity": 1
+        },
+        {
+          "id": 22,
+          "order_id": "21111111111111111111111111111",
+          "product_id": 5,
+          "price": 12000,
+          "quantity": 3
+        },
+        {
+          "id": 23,
+          "order_id": "21111111111111111111111111121",
+          "product_id": 4,
+          "price": 8000,
+          "quantity": 1
+        }
+      ],
+      "total": 54000
+    },
+    {
+      "id": "21111111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T04:55:47.503Z",
+      "order_items": [
+        {
+          "id": 24,
+          "order_id": "211111111111111111111111111101",
+          "product_id": "21",
+          "price": 75000,
+          "quantity": 2
+        }
+      ],
+      "total": 150000
+    },
+    {
+      "id": "211111111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T15:00:45.571Z",
+      "order_items": [
+        {
+          "id": 25,
+          "order_id": "2111111111111111111111111111101",
+          "product_id": "21",
+          "price": 75000,
+          "quantity": 1
+        }
+      ],
+      "total": 75000
+    },
+    {
+      "id": "2111111111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T15:29:45.201Z",
+      "order_items": [
+        {
+          "id": 26,
+          "order_id": "21111111111111111111111111111101",
+          "product_id": "21",
+          "price": 75000,
+          "quantity": 3
+        }
+      ],
+      "total": 225000
+    },
+    {
+      "id": "21111111111111111111111111111111",
+      "user_id": "5e46",
+      "date": "2024-11-19T15:31:28.628Z",
+      "order_items": [
+        {
+          "id": 27,
+          "order_id": "211111111111111111111111111111101",
+          "product_id": 14,
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "total": 35000
+    },
+    {
+      "id": "211111111111111111111111111111111",
+      "user_id": "ae2c",
+      "date": "2024-11-19T15:41:36.714Z",
+      "order_items": [
+        {
+          "id": 28,
+          "order_id": "2111111111111111111111111111111101",
+          "product_id": "25",
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
+    },
+    {
+      "id": "2111111111111111111111111111111111",
+      "user_id": "ae2c",
+      "date": "2024-11-19T15:41:42.363Z",
+      "order_items": [
+        {
+          "id": 29,
+          "order_id": "21111111111111111111111111111111101",
+          "product_id": "1",
+          "price": 15000,
+          "quantity": 3
+        }
+      ],
+      "total": 45000
+    },
+    {
+      "id": "21111111111111111111111111111111111",
+      "user_id": "ae2c",
+      "date": "2024-11-19T15:48:26.002Z",
+      "order_items": [
+        {
+          "id": 30,
+          "order_id": "211111111111111111111111111111111101",
+          "product_id": "25",
+          "price": 12000,
+          "quantity": 1
+        }
+      ],
+      "total": 12000
     }
   ],
   "categories": [
@@ -676,22 +1153,22 @@
       "status": "added to navigation history"
     },
     {
-      "id": "21",
-      "user_id": "ae2c",
-      "status": "added to navigation history"
-    },
-    {
       "id": "25",
       "user_id": "ae2c",
       "status": "added to navigation history"
     },
     {
-      "id": "1",
+      "id": "11",
       "user_id": "ae2c",
       "status": "added to navigation history"
     },
     {
-      "id": "11",
+      "id": "21",
+      "user_id": "5e46",
+      "status": "added to navigation history"
+    },
+    {
+      "id": "1",
       "user_id": "ae2c",
       "status": "added to navigation history"
     }
