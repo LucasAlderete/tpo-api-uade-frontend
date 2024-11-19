@@ -50,7 +50,8 @@ button:focus-visible {
 /* cart */
 .cart-page {
   min-width: 100vh;
-  background-color: #2a2a2a;
+  background-color: #fdfdfd;
+  /* background-color: #2a2a2a; */
   color: white;
   display: block;
   align-items: center;
@@ -106,36 +107,6 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
 }
-
-/* 
-.cart-page {
-  background-color: #1f1f1f;
-}
-
-.cart-items-card {
-  background-color: #2a2a2a;
-  color: #ccc;
-  border-radius: 8px;
-}
-
-.cart-item {
-  border-bottom: 1px solid #444;
-}
-
-.empty-cart-btn,
-.empty-cart-btn:hover {
-  color: #fff;
-}
-
-button.btn-outline-secondary {
-  color: #ccc;
-  border-color: #555;
-}
-
-button.btn-outline-secondary:hover {
-  background-color: #555;
-  color: #fff;
-} */
 
 
 @media (prefers-color-scheme: light) {
