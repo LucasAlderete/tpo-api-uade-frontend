@@ -26,7 +26,7 @@ const StockInput = ({ stockTotal, handleStockChange }) => {
   };
 
 StockInput.propTypes = {
-  stockTotal: PropTypes.number.isRequired,
+  stockTotal: PropTypes.number,
   handleStockChange: PropTypes.func.isRequired,
 };
 

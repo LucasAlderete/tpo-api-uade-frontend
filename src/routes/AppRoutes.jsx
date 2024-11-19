@@ -9,6 +9,7 @@ import Cart from "../pages/Cart.jsx";
 import ProductDetail from "../pages/ProductDetail.jsx";
 import AddProduct from "../pages/AddProduct.jsx";
 import MyFavorites from "../pages/MyFavorites.jsx";
+import ProductManagementPage from "../pages/ProductsManagement.jsx";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
           <Route path="/cart" element={< Cart/>} />
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/my-favorites" element={<MyFavorites />} />
+          <Route path="/product-management" element={<ProductManagementPage />} />
         </Routes>
       </main>
       <Footer />

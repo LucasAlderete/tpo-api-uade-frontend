@@ -72,10 +72,6 @@ export const AuthProvider = ({ children }) => {
   );
 }
 
-AuthProvider.defaultProps = {
-  children: null,
-}
-
 AuthProvider.propTypes = {
   children: PropTypes.node, 
 };

@@ -5,7 +5,7 @@ import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
 import { getProductById, addProductToDb, uploadImage, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
-import AuthContext from '../context/AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 const AddProduct = () => {
   const { error } = useContext(AuthContext);
@@ -17,7 +17,7 @@ const AddProduct = () => {
     stockTotal: 0,
   });
 
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false); 
 
   const location = useLocation();
@@ -37,7 +37,7 @@ const AddProduct = () => {
             price: product.price,
             stockTotal: product.stock,
           });
-          setImages(product.urlImageList || []);
+          setImages(product.url_image_list || []);
         })
         .catch((error) => console.error("Error al obtener el producto:", error));
     }
@@ -85,7 +85,7 @@ const AddProduct = () => {
   const handleStockChange = (value) => {
     setFormValues({
       ...formValues,
-      stockTotal: value,  
+      stockTotal: value, 
     });
   };
 
@@ -104,7 +104,7 @@ const AddProduct = () => {
     e.preventDefault();
     const productData = {
       ...formValues,
-      urlImageList: images, // Asegúrate de que sea un array
+      urlImageList: images, 
     };
   
     try {
@@ -115,14 +115,14 @@ const AddProduct = () => {
         await addProductToDb(productData);
         console.log("Producto agregado con éxito.");
       }
-      navigate("/products"); // Redirige a la lista de productos
+      navigate("/"); 
     } catch (error) {
       console.error("Error al guardar el producto", error);
     }
   };
 
   const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index)); // Eliminar la imagen seleccionada
+    setImages(images.filter((_, i) => i !== index)); 
   };
 
 
@@ -134,6 +134,7 @@ const AddProduct = () => {
       <ProductForm
         formValues={formValues}
         images={images}
+        isEditing={isEditMode}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}
         handleStockChange={handleStockChange}

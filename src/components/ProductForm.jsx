@@ -4,35 +4,50 @@ import TextAreaField from './TextAreaField';
 import StockInput from './StockInput';
 import PropTypes from 'prop-types';
 
-const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleStockChange, handleRemoveImage, images }) => {
+const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChange, handleStockChange, handleRemoveImage, images }) => {
 
  return (
    <Form className="product-form">
      <h4>Detalle de producto</h4>
 
      <Form.Group className="mb-3 text-start">
-  <Form.Label>Imágenes del modelo</Form.Label>
-  <div className="image-upload">
-    {images.map((url, index) => (
-      <div key={index} className="image-preview-container">
-        <img src={url} alt={`Preview ${index + 1}`} className="image-preview mb-3" />
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={() => handleRemoveImage(index)}
-        >
-          Eliminar
-        </Button>
+      <Form.Label>Imágenes del modelo</Form.Label>
+      <div className="image-upload">
+        {/* Mostrar las imágenes existentes */}
+        {images.length > 0 && !isEditing && (
+          <div className="existing-images">
+            {images.map((image, index) => (
+              <div key={image.id} className="image-preview-container">
+                <img
+                  src={image.path}
+                  alt={`Preview ${index + 1}`}
+                  className="image-preview mb-3"
+                />
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  Eliminar
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Campo para ingresar URLs de imágenes si es un nuevo producto */}
+        {!isEditing && (
+          <div className="url-upload">
+            <input
+              type="text"
+              placeholder="Ingresa una o más URLs, separadas por coma"
+              onChange={handleImageChange} // Esta función debe manejar el cambio de URLs
+            />
+            <Button onClick={handleImageChange}>Agregar imágenes</Button>
+          </div>
+        )}
       </div>
-    ))}
-    <Form.Control
-      type="file"
-      accept="image/*"
-      onChange={handleImageChange}
-      className="shadow-sm"
-    />
-  </div>
-</Form.Group>
+    </Form.Group>
 
      
      <Row>
@@ -90,27 +105,23 @@ const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleS
  );
 };
 
-ProductForm.defaultProps = {
-  images: [], 
-};
-
 ProductForm.propTypes = {
   formValues: PropTypes.shape({
-    model: PropTypes.string.isRequired, // Nombre del modelo del producto
-    category: PropTypes.string.isRequired, // Categoría del producto
-    description: PropTypes.string.isRequired, // Descripción del producto
-    price: PropTypes.number.isRequired, // Precio del producto
-    stockTotal: PropTypes.number.isRequired, // Total del stock disponible
-    urlImageList: PropTypes.arrayOf(PropTypes.number).isRequired, // Lista de IDs de imágenes asociadas
+    model: PropTypes.string.isRequired, 
+    category: PropTypes.string.isRequired, 
+    description: PropTypes.string.isRequired, 
+    price: PropTypes.number.isRequired, 
+    stockTotal: PropTypes.number.isRequired, 
   }).isRequired,
-  handleInputChange: PropTypes.func.isRequired, // Función para manejar cambios en los campos del formulario
-  handleImageChange: PropTypes.func.isRequired, // Función para manejar el cambio de imágenes
+  isEditing: PropTypes.bool,
+  handleInputChange: PropTypes.func.isRequired, 
+  handleImageChange: PropTypes.func.isRequired, 
   handleStockChange: PropTypes.func.isRequired,
-  handleRemoveImage: PropTypes.func.isRequired, // Función para manejar los cambios en el stock
-  images: PropTypes.arrayOf( // Lista de imágenes disponibles (opcional, para obtener paths)
+  handleRemoveImage: PropTypes.func.isRequired, 
+  images: PropTypes.arrayOf( 
     PropTypes.shape({
-      id: PropTypes.number.isRequired, // ID de la imagen
-      path: PropTypes.string.isRequired, // Ruta de la imagen en el servidor
+      id: PropTypes.number.isRequired, 
+      path: PropTypes.string.isRequired, 
     })
   ),
 };
