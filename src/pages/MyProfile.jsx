@@ -61,7 +61,9 @@ const MyProfile = () => {
       <ProfileCard profile={userData} />
       
       <h3>Checkouts</h3>
-      {!orders? "Todavia no se cargaron ordenes": <div className="accordion" id="accordionCheckouts">
+      {(orders && orders.length === 0)
+      ?"Todavia no se cargaron ordenes"
+      : <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
