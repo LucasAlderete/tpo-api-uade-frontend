@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import cartService from "../services/serviceCart";
 import ErrorPopup from "../components/ErrorPopup";
 import { Button, Container, Row, Col, Card } from "react-bootstrap";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
-import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+
 
 function Cart({}) {
   const [items, setItems] = useState([]);
@@ -12,9 +13,24 @@ function Cart({}) {
   const [popupTitle, setPopupTitle] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
   const [popupSeverity, setPopupSeverity] = useState("info");
+  const { isAuthenticated } = useContext(AuthContext);
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
+  });
+
 
   useEffect(() => {
     getItems();
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
   }, []);
 
   const handlePopup = (title, message, severity) => {
@@ -25,38 +41,38 @@ function Cart({}) {
   };
 
   const getItems = async () => {
-    const cart = await cartService.getCart(1);
+    const cart = await cartService.getCart(userData.id);
     setItems(cart.items);
     setTotal(cart.total);
     if (!cart.success) handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
   };
 
   const addProduct = async (productId) => {
-    const response = await cartService.addProduct(1, productId);
+    const response = await cartService.addProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
   };
 
   const decreaseProductQuantity = async (productId) => {
-    const response = await cartService.decreaseProductQuantity(1, productId);
+    const response = await cartService.decreaseProductQuantity(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
   };
 
   const removeProduct = async (productId) => {
-    const response = await cartService.removeProduct(1, productId);
+    const response = await cartService.removeProduct(userData.id, productId);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
   };
 
   const emptyCart = async () => {
-    const response = await cartService.emptyCart(1);
+    const response = await cartService.emptyCart(userData.id);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
   };
 
   const checkout = async () => {
-    const response = await cartService.checkout(1);
+    const response = await cartService.checkout(userData.id);
     await getItems();
     if (response.success) {
       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
@@ -95,7 +111,7 @@ function Cart({}) {
                         src={item.image}
                         alt={item.name}
                         className="img-fluid"
-                        style={{ maxWidth: "100%" }}
+                        style={{ width: "100px", height: "100px" }}
                       />
                     </Col>
                     <Col xs={5}>

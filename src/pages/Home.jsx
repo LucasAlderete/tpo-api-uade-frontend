@@ -45,11 +45,9 @@ const Home = () => {
       {data.recently_viewed_products && (
         <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products}/>
       )}
-
       {data.featured_products && (
         <ProductCarousel title="Productos Destacados" products={data.featured_products} />
       )}
-
       {data.products && Object.keys(data.products).map((categoryName, index) => (
         <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} />
       ))}

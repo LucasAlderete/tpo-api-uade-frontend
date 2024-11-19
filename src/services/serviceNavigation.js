@@ -9,7 +9,7 @@ export const postNavigation = async (id, user_id) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id, user_id, status: "added to navigation history" }),
+            body: JSON.stringify({ id, user_id}),
         });
 
         if (!response.ok) {

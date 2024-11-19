@@ -1,19 +1,26 @@
 import axios from "axios";
-//import { apiClient } from "./apiClient";
 
 const myProfileService = {
-    async getMyProfile() {
-      const response = await axios.get('http://localhost:3000/myProfile');
-      //console.log(response.data);
-      return response.data;
-    }
-  };
 
-//const myProfileService = {
-//  async getMyProfileById() {
-//    const response = await apiClient.get(`/my-profile?userId=1`);
-//    return response.data[0]; // seleccionamos el primer elemento
-//  }
-//};
+    async ordersById() {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const orders = await axios.get(`http://localhost:3000/orders?user_id=${userData.id}`);
+      console.log("Usuario:", userData);
+      console.log("Lista ordenes de usuario:", orders.data);
+      return orders.data;
+    },
+
+    async productNameById() {
+      this.ordersById().map(order => {
+        order.order_items.map(item=> {
+          const productDetails = async () => {
+            return await axios.get(`http://localhost:3000/products/${item.product_id}`);
+          }
+          console.log("nombre del producto:", productDetails().data);
+        })
+      });
+    }
+
+  };
 
 export default myProfileService;

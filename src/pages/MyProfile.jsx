@@ -1,17 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import myProfileService from '../services/serviceMyProfile';
+import ProfileCard from '../components/ProfileCard';
+import { AuthContext } from "../context/AuthContext";
+
 
 const MyProfile = () => {
-  const [profileData, setProfileData] = useState({})
   const [orders, setOrders] = useState([])
+  const { isAuthenticated } = useContext(AuthContext);
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
+  });
+
+  // Obtengo usuario
+  useEffect(() => {
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const data = await myProfileService.getMyProfile();
-        console.log(profileData);
-        setProfileData(data);
-        setOrders(data.ordersDto);
+        const data = await myProfileService.ordersById();
+        myProfileService.productNameById();
+        setOrders(data);
+        //console.log(data)
       } catch (error) {
         console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
       }
@@ -22,35 +42,11 @@ const MyProfile = () => {
   return (
 
     <div className="container mt-5">
-
-      {/*Datos*/}
-
       <h3>My Profile</h3>
-      <div className="card mb-5">
-        <div className="card-body">
-          <p className="card-text">
-            <strong>Name:</strong> {profileData.name}
-          </p>
-          <p className="card-text">
-            <strong>Surname:</strong> {profileData.surname}
-          </p>
-          <p className="card-text">
-            <strong>Username:</strong> {profileData.username}
-          </p>
-          <p className="card-text">
-            <strong>Email:</strong> {profileData.email}
-          </p>
-          <p className="card-text">
-            <strong>Birthday:</strong> {profileData.birthday}
-          </p>
-        </div>
-      </div>
-
-      {/*Checkouts*/}
-
-      <h3>Checkouts</h3>
+      <ProfileCard profile={userData} />
       
-      <div className="accordion" id="accordionCheckouts">
+      <h3>Checkouts</h3>
+      {!orders? "Todavia no se cargaron ordenes": <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
@@ -102,7 +98,8 @@ const MyProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
+      
     </div>
   );
 }

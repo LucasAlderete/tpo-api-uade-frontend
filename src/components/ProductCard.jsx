@@ -1,25 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
+import {useContext, useState, useEffect } from 'react';
+import { add, remove, getAllByUser } from '../services/serviceFavs.js';
 import cartService from '../services/serviceCart.js';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
-  const navigate = useNavigate(); 
+  const { isAuthenticated } = useContext(AuthContext);
+  const [user_id, setUserId] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData ? JSON.parse(storedData).id : 0;
+  });
+  
 
-  const handleViewProduct = () => {
-    navigate(`/product/${product.product_id}`);
-  };
+  const navigate = useNavigate(); 
+  
+  useEffect(() => {
+    if (isAuthenticated()) {
+      const storedData = localStorage.getItem("userData");
+      const id = storedData ? JSON.parse(storedData).id : 0;
+      setUserId(id);
+    }
+  }, [isAuthenticated]);
   
   useEffect(() => {
     const fetchCart = async () => {
-      const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
-      const cart = await cartService.getCart(1);
+      const favorites = await getAllByUser(user_id);
+      console.log("favorites", favorites);
+      const cart = await cartService.getCart(user_id);
       const items = cart.items;
-      console.log()
 
-      setIsFavorite(favorites.includes(product.product_id));
+      const isFavorite = favorites.some(
+        (favorite) => favorite.product_id == product.product_id && favorite.user_id == user_id
+      );
+      console.log("isFavorite", isFavorite);
+      setIsFavorite(isFavorite);
 
       const item = items.find((item) => item.product_id === product.product_id);
       if (item) {
@@ -31,15 +47,16 @@ const ProductCard = ({ product, onViewProduct }) => {
     fetchCart();
   }, [product.product_id]);
 
+  const handleViewProduct = () => {
+    navigate(`/product/${product.product_id}`);
+  };
   
   const handleAddToFavorites = async () => {
-    let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
 
     if (isFavorite) {
-      
-      const response = await removeFromFavs(product.product_id);
-      if (response.success) {
-        favorites = favorites.filter((id) => id !== product.product_id); // Usar product_id
+      const response = await remove(product.product_id, user_id);
+      console.log("handleAddToFavorites", response);
+      if (response) {
         setIsFavorite(false);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
@@ -47,26 +64,23 @@ const ProductCard = ({ product, onViewProduct }) => {
       }
     } else {
       
-      const response = await addToFavs(product.product_id);
-      if (response.success) {
-        favorites.push(product.product_id); 
+      const response = await add(product.product_id, user_id);
+      if (response) {
         setIsFavorite(true);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
         return;
       }
     }
-
-    localStorage.setItem('local-favorites', JSON.stringify(favorites));
   };
 
   
   const handleAddToCart = async () => {
     if (isCart) {
-      await cartService.removeProduct(1,product.product_id);
+      await cartService.removeProduct(user_id, product.product_id);
       setIsCart(false);
     } else {
-      const response = await cartService.addProduct(1,product.product_id);
+      const response = await cartService.addProduct(user_id, product.product_id);
       if (response.success) {
         setIsCart(true);
       } else {
@@ -109,7 +123,7 @@ const ProductCard = ({ product, onViewProduct }) => {
         <p className="card-text text-muted">{product.description}</p>
         <p className="text-success fw-bold">Precio: ${product.price}</p>
 
-        <div className="d-flex justify-content-center gap-4 my-3">
+        {isAuthenticated() && (<div className="d-flex justify-content-center gap-4 my-3">
           <span
             className="material-icons"
             onClick={handleAddToFavorites}
@@ -139,7 +153,8 @@ const ProductCard = ({ product, onViewProduct }) => {
           >
             {isCart ? "shopping_cart_checkout" : "shopping_cart"}
           </span>
-        </div>
+          </div>)}
+
         <button
           onClick={handleViewProduct}
           className="btn btn-primary mt-3 rounded-pill"
