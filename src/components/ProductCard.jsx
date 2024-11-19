@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
+import {useContext, useState, useEffect } from 'react';
+import { add, remove, getAllByUser } from '../services/serviceFavs.js';
 import cartService from '../services/serviceCart.js';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const ProductCard = ({ product, onViewProduct }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
   const navigate = useNavigate(); 
+  const { isAuthenticated } = useContext(AuthContext);
 
   const handleViewProduct = () => {
     navigate(`/product/${product.product_id}`);
   };
   
   useEffect(() => {
+
+    let user_id = 0;
+    if (isAuthenticated()) {  
+      const storedData = localStorage.getItem("userData");
+      user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
+    }
+
     const fetchCart = async () => {
-      const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+      const favorites = getAllByUser(user_id);
+      console.log("favorites", favorites);
       const cart = await cartService.getCart(1);
       const items = cart.items;
-      console.log()
 
       setIsFavorite(favorites.includes(product.product_id));
 
@@ -35,11 +44,13 @@ const ProductCard = ({ product, onViewProduct }) => {
   const handleAddToFavorites = async () => {
     let favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
 
+
+
     if (isFavorite) {
       
-      const response = await removeFromFavs(product.product_id);
-      if (response.success) {
-        favorites = favorites.filter((id) => id !== product.product_id); // Usar product_id
+      const response = await remove(product.product_id, user_id);
+      if (response) {
+        favorites = favorites.filter((id) => id !== product.product_id);
         setIsFavorite(false);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
@@ -47,8 +58,8 @@ const ProductCard = ({ product, onViewProduct }) => {
       }
     } else {
       
-      const response = await addToFavs(product.product_id);
-      if (response.success) {
+      const response = await add(product.product_id, user_id);
+      if (response) {
         favorites.push(product.product_id); 
         setIsFavorite(true);
       } else {
@@ -109,7 +120,7 @@ const ProductCard = ({ product, onViewProduct }) => {
         <p className="card-text text-muted">{product.description}</p>
         <p className="text-success fw-bold">Precio: ${product.price}</p>
 
-        <div className="d-flex justify-content-center gap-4 my-3">
+        {isAuthenticated() && (<div className="d-flex justify-content-center gap-4 my-3">
           <span
             className="material-icons"
             onClick={handleAddToFavorites}
@@ -139,7 +150,8 @@ const ProductCard = ({ product, onViewProduct }) => {
           >
             {isCart ? "shopping_cart_checkout" : "shopping_cart"}
           </span>
-        </div>
+          </div>)}
+
         <button
           onClick={handleViewProduct}
           className="btn btn-primary mt-3 rounded-pill"
