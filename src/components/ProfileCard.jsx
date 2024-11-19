@@ -6,10 +6,10 @@ const ProfileCard = ({profile}) => {
         <div className="card mb-5">
             <div className="card-body">
                 <p className="card-text">
-                    <strong>Name:</strong> {profile.name}
+                    <strong>Nombre:</strong> {profile.name}
                 </p>
                 <p className="card-text">
-                    <strong>Surname:</strong> {profile.surname}
+                    <strong>Apellido:</strong> {profile.surname}
                 </p>
                 <p className="card-text">
                     <strong>Username:</strong> {profile.username}
@@ -18,7 +18,7 @@ const ProfileCard = ({profile}) => {
                     <strong>Email:</strong> {profile.email}
                 </p>
                 <p className="card-text">
-                    <strong>Birthday:</strong> {profile.birthday}
+                    <strong>Fecha de nacimiento:</strong> {profile.birthday}
                 </p>
             </div>
         </div>

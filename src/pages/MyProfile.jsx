@@ -57,7 +57,7 @@ const MyProfile = () => {
   return (
 
     <div className="container mt-5">
-      <h3>My Profile</h3>
+      <h3>Mi Perfil</h3>
       <ProfileCard profile={userData} />
       
       <h3>Checkouts</h3>
@@ -87,17 +87,17 @@ const MyProfile = () => {
               <div className="accordion-body">
                  {/* Información de la orden */}
             
-                <p><strong>Date:</strong> {orders.date}</p>
-                <p><strong>Final Price:</strong> ${orders.total}</p>
+                <p><strong>Fecha:</strong> {orders.date}</p>
+                <p><strong>Precio Final:</strong> ${orders.total}</p>
 
                  {/*Tabla de items*/}
                 <table className="table">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Price</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio</th>
                     </tr>
                   </thead>
                   <tbody>
