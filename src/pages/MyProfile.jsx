@@ -12,20 +12,7 @@ const MyProfile = () => {
     return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
 
-  useEffect(() => {
-    const fetchMyProfile = async () => {
-      try {
-        const data = await myProfileService.getMyProfile();
-        //console.log(profileData);
-        setOrders(data);
-        console.log(data)
-      } catch (error) {
-        console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
-      }
-    };
-    fetchMyProfile();
-  }, []);
-
+  // Obtengo usuario
   useEffect(() => {
     const handleUserDataChange = (event) => {
       setUserData(event.detail);
@@ -36,6 +23,20 @@ const MyProfile = () => {
     return () => {
       window.removeEventListener("userDataChanged", handleUserDataChange);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchMyProfile = async () => {
+      try {
+        const data = await myProfileService.ordersById();
+        myProfileService.productNameById();
+        setOrders(data);
+        //console.log(data)
+      } catch (error) {
+        console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
+      }
+    };
+    fetchMyProfile();
   }, []);
 
   return (
