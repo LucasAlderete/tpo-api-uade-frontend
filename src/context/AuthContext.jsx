@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  const register = async (username, email, password, birthday, name, surname) => {
+  const register = async (username, email, password, birthday, name, surname, role) => {
     try {
-      const responseData = await registerService(username, email, password, birthday, name, surname);
+      const responseData = await registerService(username, email, password, birthday, name, surname, role);
       saveUserData(responseData);
       successfulAuth(responseData);
     } catch (error) {
@@ -52,6 +52,16 @@ export const AuthProvider = ({ children }) => {
     return !!token;
   }
 
+  const isAdmin = () => {
+    try {
+      const userData = localStorage.getItem("userData");
+      const parsedData = JSON.parse(userData);
+      return (parsedData.role == "ADMIN")
+    } catch (error) {
+      return false;
+    }
+  }
+
   const successfulAuth = (responseData) => {
     setToken(responseData);
     localStorage.setItem("token", JSON.stringify(responseData));
@@ -65,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ register, login, logout, isAuthenticated, token }}>
+    <AuthContext.Provider value={{ register, login, logout, isAuthenticated, isAdmin, token }}>
       {children}
     </AuthContext.Provider>
   );
