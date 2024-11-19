@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import myProfileService from '../services/serviceMyProfile';
+import ProfileCard from '../components/ProfileCard';
 
 const MyProfile = () => {
   const [profileData, setProfileData] = useState({})
@@ -22,34 +23,10 @@ const MyProfile = () => {
   return (
 
     <div className="container mt-5">
-
-      {/*Datos*/}
-
       <h3>My Profile</h3>
-      <div className="card mb-5">
-        <div className="card-body">
-          <p className="card-text">
-            <strong>Name:</strong> {profileData.name}
-          </p>
-          <p className="card-text">
-            <strong>Surname:</strong> {profileData.surname}
-          </p>
-          <p className="card-text">
-            <strong>Username:</strong> {profileData.username}
-          </p>
-          <p className="card-text">
-            <strong>Email:</strong> {profileData.email}
-          </p>
-          <p className="card-text">
-            <strong>Birthday:</strong> {profileData.birthday}
-          </p>
-        </div>
-      </div>
-
-      {/*Checkouts*/}
-
-      <h3>Checkouts</h3>
+      <ProfileCard profile={profileData} />
       
+      <h3>Checkouts</h3>
       <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
@@ -88,7 +65,7 @@ const MyProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.order_items.map((item, itemIndex) => (
+                    {orders.items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
