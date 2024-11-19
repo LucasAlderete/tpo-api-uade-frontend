@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { getProductDetail } from './serviceProductDetail';
 
 export const add = async (product_id, user_id) => {
     if (await exists(product_id, user_id)) {
@@ -64,3 +65,19 @@ export const exists = async (product_id, user_id) => {
     let result = await get(product_id, user_id);
     return result && result.length > 0;
 };
+
+export const getAllDecoratedByUser = async (user_id) => {
+    const favs = await getAllByUser(user_id);
+
+    const productDetailsPromises = favs.map(fav =>
+            getProductDetail(fav.product_id)
+            .then(product => ({
+                ...product,
+                product_id: product.id,
+            }))
+    );
+
+    const productDetails = await Promise.all(productDetailsPromises);
+
+    return productDetails;
+}
