@@ -22,8 +22,8 @@ const getCart = async (userId) => {
         const productData = productResponses[index].data;
 
         let firstImageUrl = null;
-        if (productData.urlImageList && productData.urlImageList.length > 0) {
-          const firstImageId = productData.urlImageList[0];
+        if (productData.url_image_list && productData.url_image_list.length > 0) {
+          const firstImageId = productData.url_image_list[0];
           const imageResponse = await axios.get(
             `${API_URL}/images/${firstImageId}`
           );

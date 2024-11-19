@@ -15,6 +15,7 @@ function Cart({}) {
 
   useEffect(() => {
     getItems();
+    console.log(items)
   }, []);
 
   const handlePopup = (title, message, severity) => {
@@ -95,7 +96,7 @@ function Cart({}) {
                         src={item.image}
                         alt={item.name}
                         className="img-fluid"
-                        style={{ maxWidth: "100%" }}
+                        style={{ width: "100px", height: "100px" }}
                       />
                     </Col>
                     <Col xs={5}>
