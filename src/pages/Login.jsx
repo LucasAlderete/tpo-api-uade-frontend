@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import useAuth from "../hooks/useAuth"
+import { AuthContext } from "../context/AuthContext"
 
 const Login = () => {
+
+    const { login } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
     const handleSubmit = (e) => {
-      e.preventDefault();
-      authenticate(email, password)
+        e.preventDefault();
+        login(email, password)
     };
 
     return (
@@ -17,7 +19,7 @@ const Login = () => {
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
+                <label htmlFor="email" className="form-label">Direccion de email</label>
                 <input
                     type="email"
                     className="form-control"
@@ -28,7 +30,7 @@ const Login = () => {
                 />
                 </div>
                 <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label">Contraseña</label>
                 <input
                     type="password"
                     className="form-control"
@@ -38,10 +40,10 @@ const Login = () => {
                     required
                 />
                 </div>
-                <button type="submit" className="btn btn-primary w-100">Login</button>
+                <button type="submit" className="btn btn-primary w-100">Enviar</button>
             </form>
             <p className="mt-3 text-center">
-                Don’t have an account? <Link to="/register">Register here</Link>
+                Todavia no tenes cuenta? <Link to="/register">Registrate!</Link>
             </p>
         </div>
       );

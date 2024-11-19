@@ -1,45 +1,81 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../services/serviceAuth";
+import useServiceAuth from "../hooks/useServiceAuth";
 import PropTypes from 'prop-types';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-
-  const [token, setToken] = useState(() => {
-    const savedToken = localStorage.getItem("user");
-    return JSON.parse(savedToken) ?? null;
-  });
+export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
+  const { registerService, authenticateService } = useServiceAuth();
 
-  const login = async (username, password) => {
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("token");
     try {
-      const responseData = await authenticate(username, password);
-      setToken(responseData);
-      localStorage.setItem("token", JSON.stringify(token));
-      navigate("/home");
-    } catch{
-      alert("credenciales incorrectas")
+      return JSON.parse(savedToken) ?? null;
+    } catch {
+      return null;
+    }
+  });
+
+  const register = async (username, email, password, birthday, name, surname) => {
+    try {
+      const responseData = await registerService(username, email, password, birthday, name, surname);
+      saveUserData(responseData);
+      successfulAuth(responseData);
+    } catch {
+      alert("usuario o mail ya en uso, pruebe nuevamente");
+    }
+  }
+
+  const login = async (email, password) => {
+    if (isAuthenticated()) {
+      navigate("/");
+    }
+    try {
+      const responseData = await authenticateService(email, password);
+      saveUserData(responseData);
+      successfulAuth(responseData);
+    } catch {
+      alert("credenciales incorrectas");
     }
   };
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userData")
     navigate("/login");
   };
 
+  const isAuthenticated = () => {
+    return !!token;
+  }
+
+  const successfulAuth = (responseData) => {
+    setToken(responseData);
+    localStorage.setItem("token", JSON.stringify(responseData));
+    navigate("/");
+  }
+
+  const saveUserData = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+    const event = new CustomEvent("userDataChanged", { detail: userData });
+    window.dispatchEvent(event);
+  }
+
   return (
-    <AuthContext.Provider value={{ login, logout }}>
+    <AuthContext.Provider value={{ register, login, logout, isAuthenticated, token }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-AuthProvider.propTypes = {
-  children: PropTypes.node,
+AuthProvider.defaultProps = {
+  children: null,
 }
 
-export default AuthContext;
+AuthProvider.propTypes = {
+  children: PropTypes.node, 
+};

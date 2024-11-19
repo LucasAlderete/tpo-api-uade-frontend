@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { register } from "../services/serviceAuth"
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext"
 
 const Register = () => {
+
+  const { register } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -36,16 +39,16 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-        register(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname);
+      register(formData.username, formData.email, formData.password, formData.birthday, formData.name, formData.surname);
     }
   };
 
   return (
     <div className="container mt-5" style={{ maxWidth: "500px" }}>
-      <h2>Register</h2>
+      <h2>Registro</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">Username</label>
+          <label htmlFor="username" className="form-label">Usuario</label>
           <input
             type="text"
             className="form-control"
@@ -73,7 +76,7 @@ const Register = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label">Contraseña</label>
           <input
             type="password"
             className="form-control"
@@ -87,7 +90,7 @@ const Register = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="birthday" className="form-label">Birthday</label>
+          <label htmlFor="birthday" className="form-label">Fecha de nacimiento</label>
           <input
             type="date"
             className="form-control"
@@ -101,7 +104,7 @@ const Register = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
+          <label htmlFor="name" className="form-label">Nombre</label>
           <input
             type="text"
             className="form-control"
@@ -115,7 +118,7 @@ const Register = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="surname" className="form-label">Surname</label>
+          <label htmlFor="surname" className="form-label">Apellido</label>
           <input
             type="text"
             className="form-control"
@@ -128,7 +131,7 @@ const Register = () => {
           {errors.surname && <small className="text-danger">{errors.surname}</small>}
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">Register</button>
+        <button type="submit" className="btn btn-primary w-100">Enviar</button>
       </form>
     </div>
   );

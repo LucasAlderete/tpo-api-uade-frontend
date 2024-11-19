@@ -1,17 +1,15 @@
-export const postNavigation = async (id) => {
+import { getProductDetail } from "./serviceProductDetail";
+
+export const postNavigation = async (id, user_id) => {
     try {
-        const exists = await existsInNavigation(id);
-        if (exists) {
-            console.log(`El recurso con id ${id} ya existe en navigation.`);
-            return { message: "El recurso ya existe", id };
-        }
+        await deleteIfExists(id);
 
         const response = await fetch("http://localhost:3000/navigation", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id, status: "added to navigation history" }),
+            body: JSON.stringify({ id, user_id, status: "added to navigation history" }),
         });
 
         if (!response.ok) {
@@ -25,9 +23,9 @@ export const postNavigation = async (id) => {
     }
 };
 
-export const getNavigationDecored = async () => {
+export const getNavigationDecoredByUserid = async (user_id) => {
     try {
-        const navigationResponse = await fetch("http://localhost:3000/navigation");
+        const navigationResponse = await fetch("http://localhost:3000/navigation?user_id=" + user_id);
         if (!navigationResponse.ok) {
             throw new Error(`Error al obtener la navegación: ${navigationResponse.statusText}`);
         }
@@ -38,13 +36,7 @@ export const getNavigationDecored = async () => {
             .map(item => item.id);
 
         const productDetailsPromises = lastFour.map(id =>
-            fetch(`http://localhost:3000/product-detail/${id}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error al obtener el producto ${id}: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
+                getProductDetail(id)
                 .then(product => ({
                     ...product,
                     product_id: product.id,
@@ -60,12 +52,25 @@ export const getNavigationDecored = async () => {
     }
 };
 
-
-const existsInNavigation = async (id) => {
-    const response = await fetch(`http://localhost:3000/navigation?id=${id}`);
-    if (!response.ok) {
+const deleteIfExists = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/navigation/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log(`El recurso con id=${id} no existe.`);
+          return false;
+        }
         throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+  
+      console.log(`Recurso con id=${id} eliminado.`);
+      return true;
+    } catch (error) {
+      console.error("Error al intentar eliminar el recurso:", error);
+      throw error;
     }
-    const data = await response.json();
-    return data.length > 0;
-};
+  };
+  

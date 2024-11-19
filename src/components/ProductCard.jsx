@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
-import { addToCart } from '../services/serviceCart.js';
+import cartService from '../services/serviceCart.js';
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
@@ -14,11 +14,22 @@ const ProductCard = ({ product }) => {
   };
   
   useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
-    const cart = JSON.parse(localStorage.getItem('local-cart')) || [];
+    const fetchCart = async () => {
+      const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
+      const cart = await cartService.getCart(1);
+      const items = cart.items;
+      console.log()
 
-    setIsFavorite(favorites.includes(product.product_id));
-    setIsCart(cart.includes(product.product_id)); 
+      setIsFavorite(favorites.includes(product.product_id));
+
+      const item = items.find((item) => item.product_id === product.product_id);
+      if (item) {
+        setIsCart(true);
+      } else {
+        setIsCart(false);
+      }
+    }
+    fetchCart();
   }, [product.product_id]);
 
   
@@ -52,24 +63,18 @@ const ProductCard = ({ product }) => {
 
   
   const handleAddToCart = async () => {
-    let cart = JSON.parse(localStorage.getItem('local-cart')) || [];
-
     if (isCart) {
-      cart = cart.filter((id) => id !== product.product_id); 
+      await cartService.removeProduct(1,product.product_id);
       setIsCart(false);
     } else {
-      
-      const response = await addToCart(product.product_id);
-      if (response.status) {
-        cart.push(product.product_id); 
+      const response = await cartService.addProduct(1,product.product_id);
+      if (response.success) {
         setIsCart(true);
       } else {
         console.error(response.error || "Error al manejar carrito.");
         return;
       }
     }
-
-    localStorage.setItem('local-cart', JSON.stringify(cart));
   };
 
   return (
