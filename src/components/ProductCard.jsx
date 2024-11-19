@@ -12,12 +12,12 @@ const ProductCard = ({ product, onViewProduct }) => {
     navigate(`/product/${product.product_id}`);
   };
   
+  const userData = JSON.parse(localStorage.getItem('userData'));
   useEffect(() => {
     const fetchCart = async () => {
       const favorites = JSON.parse(localStorage.getItem('local-favorites')) || [];
-      const cart = await cartService.getCart(1);
+      const cart = await cartService.getCart(userData.id);
       const items = cart.items;
-      console.log()
 
       setIsFavorite(favorites.includes(product.product_id));
 
@@ -63,10 +63,10 @@ const ProductCard = ({ product, onViewProduct }) => {
   
   const handleAddToCart = async () => {
     if (isCart) {
-      await cartService.removeProduct(1,product.product_id);
+      await cartService.removeProduct(userData.id,product.product_id);
       setIsCart(false);
     } else {
-      const response = await cartService.addProduct(1,product.product_id);
+      const response = await cartService.addProduct(userData.id,product.product_id);
       if (response.success) {
         setIsCart(true);
       } else {

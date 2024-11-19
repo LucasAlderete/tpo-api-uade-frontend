@@ -215,7 +215,6 @@ const checkout = async (userId) => {
     }
     );
   
-    
 
     if (outOfStockItems.length > 0) {
       return {
@@ -244,35 +243,26 @@ const checkout = async (userId) => {
         }
       });
 
+      const newOrderItems = items.map((item, index) => ({
+        id: maxOrderItemId + index + 1,
+        order_id: maxOrderId + index + 1,
+        product_id: item.product_id,
+        price: item.price,
+        quantity: item.quantity,
+      }));
 
-      const orderResponse = await axios.post(`${API_URL}/orders`, {
+      const newTotal = newOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+
+      await axios.post(`${API_URL}/orders`, {
         id: maxOrderId + 1,
         user_id: userId,
         date: new Date().toISOString(),
-        order_items: []
+        order_items: newOrderItems,
+        total: newTotal,
       });
 
-      const orderId = orderResponse.data.id;
-
       for (const item of items) {
-        const newItem = {
-          id: maxOrderItemId + 1,
-          order_id: orderId,
-          product_id: item.product_id,
-          price: item.price,
-          quantity: item.quantity
-        };
-
-        const order = await axios.get(`${API_URL}/orders/${orderId}/`);
-        const orderItems = order.data.order_items;
-        const updatedOrderItems = [...orderItems, newItem];
-        const newTotal = updatedOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-        await axios.patch(`${API_URL}/orders/${orderId}`, {
-          order_items: updatedOrderItems,
-          total: newTotal
-        });
-
         const productResponse = await axios.get(`${API_URL}/products/${item.product_id}`);
         const product = productResponse.data;
         product.stock -= item.quantity;
@@ -288,7 +278,6 @@ const checkout = async (userId) => {
       }
     }
   } catch (error) {
-    console.log(error)
     return {success: false, status: 'error'};
   }
 }
