@@ -50,6 +50,20 @@
   ],
   "products": [
     {
+      "id": 1,
+      "name": "Samsung 970 EVO Plus",
+      "url_image": null,
+      "description": "Disco SSD Samsung",
+      "price": 15000,
+      "images": [
+        1
+      ],
+      "category_name": "Almacenamiento",
+      "stock": 80,
+      "additional_information": "SSD, 1TB",
+      "highlighted": false
+    },
+    {
       "id": "2",
       "name": "Crucial MX500",
       "description": "Disco SSD Crucial",
@@ -662,18 +676,6 @@
     "products": {
       "almacenamiento": [
         {
-          "product_id": 1,
-          "name": "Samsung 970 EVO Plus",
-          "url_image": null,
-          "description": "Disco SSD Samsung",
-          "price": 15000,
-          "images": [],
-          "category_name": "Almacenamiento",
-          "stock": 80,
-          "additional_information": "SSD, 1TB",
-          "highlighted": false
-        },
-        {
           "product_id": 2,
           "name": "Crucial MX500",
           "url_image": "https://images.watercoolinguk.co.uk/images/product_images/original/217/crucial-mx500-m2-ssd-sata-6g-1tb-sscc-073-67376-1.jpg",
@@ -699,18 +701,6 @@
         }
       ],
       "fuente": [
-        {
-          "product_id": 4,
-          "name": "Corsair CV550",
-          "url_image": null,
-          "description": "Fuente Corsair",
-          "price": 8000,
-          "images": [],
-          "category_name": "Fuente",
-          "stock": 40,
-          "additional_information": "550W, 80+ Bronze",
-          "highlighted": false
-        },
         {
           "product_id": 5,
           "name": "EVGA SuperNOVA 750 G5",
@@ -897,22 +887,6 @@
           "category_name": "Perifericos",
           "stock": 100,
           "additional_information": "Auriculares",
-          "highlighted": false
-        },
-        {
-          "product_id": 20,
-          "name": "Mouse",
-          "url_image": null,
-          "description": "asadasdasdsafaf",
-          "price": 52,
-          "images": [
-            "/path3",
-            "/path2",
-            "/path1"
-          ],
-          "category_name": "Perifericos",
-          "stock": 1,
-          "additional_information": "AJDSKAFSAKSFK",
           "highlighted": false
         }
       ],
@@ -1115,28 +1089,18 @@
   ],
   "favorites": [
     {
-      "id": "ebf389b6-132d-47f6-a321-572cdd98fe00",
-      "product_id": "25",
+      "id": "89aba2e1-8158-4dba-8d68-68b651467a6e",
+      "product_id": 25,
       "user_id": "ae2c"
     },
     {
-      "id": "553e686e-8de1-4f61-8a48-49b325852eb0",
+      "id": "65f7de09-d302-4e4f-93e4-03a068295de8",
       "product_id": 21,
       "user_id": "ae2c"
     },
     {
-      "id": "986737ff-7e0f-4743-8cfa-7227b998ca14",
-      "product_id": 3,
-      "user_id": "ae2c"
-    },
-    {
-      "id": "aab6723b-efa1-400f-8bcb-ad9288ed2bae",
-      "product_id": 2,
-      "user_id": "ae2c"
-    },
-    {
-      "id": "5b288bc9-565e-4d37-b1c9-08849dd08628",
-      "product_id": "11",
+      "id": "4f22f686-b2b2-49bf-92f8-2981067aff65",
+      "product_id": 14,
       "user_id": "ae2c"
     }
   ]
