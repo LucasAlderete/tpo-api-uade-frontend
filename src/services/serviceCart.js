@@ -9,7 +9,16 @@ const getCart = async (userId) => {
         user_id: userId,
       },
     });
+
     const cartData = response.data[0];
+
+    if(response.data.length === 0) {
+      await axios.post(`${API_URL}/carts`, {
+        user_id: userId,
+        total: 0,
+        items: []
+      });
+    }
 
     const productRequests = cartData.items.map((item) =>
       axios.get(`${API_URL}/products/${item.product_id}`)
