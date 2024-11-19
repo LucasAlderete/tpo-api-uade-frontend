@@ -18,7 +18,6 @@ const MyProfile = () => {
       try {
         const data = await getTodosProductos();
         setData(data);
-        console.log("aaaaaaaaaaaaa", data.find(producto => producto.id == 1).name)
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
