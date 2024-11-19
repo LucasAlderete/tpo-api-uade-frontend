@@ -104,7 +104,7 @@ const MyProfile = () => {
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{data.find(producto => producto.id == item.product_id).name}</td>
                         <td>{item.quantity}</td>
-                        <td>${item.price}</td>
+                        <td>${item.price * item.quantity}</td>
                       </tr>
                     ))}
                   </tbody>
