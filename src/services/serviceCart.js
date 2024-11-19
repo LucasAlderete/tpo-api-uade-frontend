@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:3000';
 
-const getCart = async (userId) => {
+export const getCart = async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/carts/` , {
       params: {
@@ -40,13 +40,13 @@ const getCart = async (userId) => {
     );
 
     return {id:cartData.id, items: enrichedItems, total: cartData.total, success: true};
-  } catch (error) {
+  } catch {
     return {success: false};
   }
 };
 
 
-const addProduct = async (userId, productId) => {
+export const addToCart = async (userId, productId) => {
   try {
     const cartResponse = await axios.get(`${API_URL}/carts/` , {
       params: {
@@ -107,7 +107,7 @@ const addProduct = async (userId, productId) => {
 
     }
     return {success: true};
-  } catch (error) {
+  } catch {
     return {success: false};
   }
 };
@@ -141,7 +141,7 @@ const decreaseProductQuantity = async (userId, productId) => {
       }
     }
     return {success: true};
-  } catch (error) {
+  } catch {
     return {success: false};
   }
 }
@@ -160,7 +160,7 @@ const emptyCart = async (userId) => {
     });
 
     return {success: true};
-  } catch (error) {
+  } catch {
     return {success: false};
   }
 }
@@ -187,7 +187,7 @@ const removeProduct = async (userId, productId) => {
     }
 
     return {success: true};
-  } catch (error) {
+  } catch {
     return {success: false};
   }
 }
@@ -296,7 +296,7 @@ const checkout = async (userId) => {
 
 export default {
   getCart,
-  addProduct,
+  addToCart,
   decreaseProductQuantity,
   emptyCart,
   removeProduct,

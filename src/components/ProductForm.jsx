@@ -1,34 +1,40 @@
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import FormField from './FormField';
 import TextAreaField from './TextAreaField';
 import StockInput from './StockInput';
 import PropTypes from 'prop-types';
 
-const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleStockChange, image }) => {
+const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleStockChange, handleRemoveImage, images }) => {
 
  return (
    <Form className="product-form">
      <h4>Detalle de producto</h4>
 
-
      <Form.Group className="mb-3 text-start">
-       <Form.Label>Imagen del modelo</Form.Label>
-       <div className="image-upload">
-         {image ? (
-           <img src={image} alt="Preview" className="image-preview mb-3" />
-         ) : (
-           <div className="placeholder mb-3">No se ha seleccionado imagen</div>
-         )}
-         <Form.Control
-           type="file"
-           accept="image/*"
-           onChange={handleImageChange}
-           className="shadow-sm"
-         />
-       </div>
-     </Form.Group>
+  <Form.Label>Imágenes del modelo</Form.Label>
+  <div className="image-upload">
+    {images.map((url, index) => (
+      <div key={index} className="image-preview-container">
+        <img src={url} alt={`Preview ${index + 1}`} className="image-preview mb-3" />
+        <Button
+          variant="danger"
+          size="sm"
+          onClick={() => handleRemoveImage(index)}
+        >
+          Eliminar
+        </Button>
+      </div>
+    ))}
+    <Form.Control
+      type="file"
+      accept="image/*"
+      onChange={handleImageChange}
+      className="shadow-sm"
+    />
+  </div>
+</Form.Group>
 
-
+     
      <Row>
        <Col md={6}>
          <FormField
@@ -72,20 +78,6 @@ const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleS
            placeholder="Ingresa el precio"
          />
        </Col>
-       <Col md={6}>
-         <FormField
-           label="¿Es un producto destacado?"
-           type="select"
-           name="featured"
-           value={formValues.featured}
-           onChange={handleInputChange}
-           placeholder="Selecciona una opción"
-           options={[
-             { value: true, label: 'Sí' },
-             { value: false, label: 'No' }
-           ]}
-         />
-       </Col>
      </Row>
 
 
@@ -98,21 +90,29 @@ const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleS
  );
 };
 
+ProductForm.defaultProps = {
+  images: [], 
+};
+
 ProductForm.propTypes = {
   formValues: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    model: PropTypes.string,
-    category: PropTypes.string,
-    price: PropTypes.number,
-    featured: PropTypes.boolean,
-    stockTotal: PropTypes.number
-    // Agrega más propiedades según los campos de tu formulario
+    model: PropTypes.string.isRequired, // Nombre del modelo del producto
+    category: PropTypes.string.isRequired, // Categoría del producto
+    description: PropTypes.string.isRequired, // Descripción del producto
+    price: PropTypes.number.isRequired, // Precio del producto
+    stockTotal: PropTypes.number.isRequired, // Total del stock disponible
+    urlImageList: PropTypes.arrayOf(PropTypes.number).isRequired, // Lista de IDs de imágenes asociadas
   }).isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  handleImageChange: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired, // Función para manejar cambios en los campos del formulario
+  handleImageChange: PropTypes.func.isRequired, // Función para manejar el cambio de imágenes
   handleStockChange: PropTypes.func.isRequired,
-  image: PropTypes.instanceOf(File) // Si esperas una imagen como archivo de tipo File
+  handleRemoveImage: PropTypes.func.isRequired, // Función para manejar los cambios en el stock
+  images: PropTypes.arrayOf( // Lista de imágenes disponibles (opcional, para obtener paths)
+    PropTypes.shape({
+      id: PropTypes.number.isRequired, // ID de la imagen
+      path: PropTypes.string.isRequired, // Ruta de la imagen en el servidor
+    })
+  ),
 };
 
 

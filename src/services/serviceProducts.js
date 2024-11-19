@@ -154,3 +154,34 @@ export const getViewProduct_2 = async () => {
   return response.json();
 };
 
+export const uploadImage = async (imageFile) => {
+
+  try {
+    const image = { ...imageFile, id: uuidv4() };
+    const response = await axios.post(`http://localhost:3100/images`, image);
+    return response.data;
+  
+  } catch (error) {
+    console.error('Error:', error.response ? error.response.data : error.message);
+    throw new Error('Error al agregar o modificar imagen');
+  }
+};
+
+export const updateProductInDb = async (productId, productData) => {
+  try {
+    const response = await axiosWithInterceptor.put(`${API_URL}/products/${productId}`, {
+      body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al actualizar el producto: ${response.statusText}`);
+    }
+
+    return response.data; 
+  } catch (error) {
+    console.error("Error en updateProductInDb:", error);
+    throw error; 
+  }
+};
+
+

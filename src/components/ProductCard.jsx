@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { addToFavs, removeFromFavs } from '../services/serviceFavs.js';
 import { addToCart } from '../services/serviceCart.js';
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
-const ProductCard = ({ product, onViewProduct }) => {
+const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
   const navigate = useNavigate(); 
@@ -159,6 +160,16 @@ const ProductCard = ({ product, onViewProduct }) => {
       </div>
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    product_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    url_image: PropTypes.string, 
+  }).isRequired,
 };
 
 export default ProductCard;

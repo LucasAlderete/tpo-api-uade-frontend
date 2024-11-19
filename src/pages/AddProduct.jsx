@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
-import { AuthContext } from '../context/AuthContext';
-import { getProductById, addProductToDb } from '../services/serviceProducts'; 
+import { getProductById, addProductToDb, uploadImage, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
+import AuthContext from '../context/AuthContext';
 
 const AddProduct = () => {
   const { error } = useContext(AuthContext);
@@ -13,12 +13,11 @@ const AddProduct = () => {
     model: '',
     category: '',
     description: '',
-    price: '',
-    stockTotal: [],
-    featured: false,
+    price: 0,
+    stockTotal: 0,
   });
 
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false); 
 
   const location = useLocation();
@@ -36,12 +35,11 @@ const AddProduct = () => {
             category: product.category,
             description: product.description,
             price: product.price,
-            stockTotal: product.stockTotal,
-            featured: product.featured,
+            stockTotal: product.stock,
           });
-          setImage(product.image);
+          setImages(product.urlImageList || []);
         })
-        .catch((error) => console.error('Error al obtener el producto:', error));
+        .catch((error) => console.error("Error al obtener el producto:", error));
     }
   }, [productId]);
 
@@ -66,16 +64,21 @@ const AddProduct = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      
-      reader.onloadend = () => {
-        setImage(reader.result); 
-      };
-      
-      reader.readAsDataURL(file);
+  const handleImageChange = async (e) => {
+    const files = Array.from(e.target.files);
+  
+    try {
+      const imageIds = await Promise.all(
+        files.map((file) => uploadImage(file, formValues.secureId))
+      );
+  
+      // Actualizar el estado con los nuevos IDs de imágenes
+      setFormValues((prev) => ({
+        ...prev,
+        urlImageList: [...prev.urlImageList, ...imageIds],
+      }));
+    } catch (error) {
+      console.error("Error al manejar las imágenes:", error);
     }
   };
 
@@ -87,29 +90,41 @@ const AddProduct = () => {
   };
 
   const isFormValid = () => {
-    return formValues.model && formValues.category && formValues.description && formValues.price && formValues.featured && formValues.stockTotal.length > 0 && image;
+    return (
+      formValues.model.trim() !== '' && 
+      formValues.category.trim() !== '' &&
+      formValues.description.trim() !== '' &&
+      formValues.price > 0 && 
+      formValues.stockTotal > 0 && 
+      images 
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const productData = {
       ...formValues,
-      image: image, 
+      urlImageList: images, // Asegúrate de que sea un array
     };
-
+  
     try {
       if (isEditMode) {
-        await addProductToDb({productData, productId}); 
-        console.log('Se actualizó el producto con éxito.');
+        await updateProductInDb(productId, productData);
+        console.log("Producto actualizado con éxito.");
       } else {
-        await addProductToDb({productData}); 
-        console.log('Se agregó un nuevo producto.');
+        await addProductToDb(productData);
+        console.log("Producto agregado con éxito.");
       }
-      navigate('/product-management'); 
+      navigate("/products"); // Redirige a la lista de productos
     } catch (error) {
-      console.error('No se pudo guardar el producto', error);
+      console.error("Error al guardar el producto", error);
     }
   };
+
+  const handleRemoveImage = (index) => {
+    setImages(images.filter((_, i) => i !== index)); // Eliminar la imagen seleccionada
+  };
+
 
   return (
     <div className="container mt-5">
@@ -118,10 +133,11 @@ const AddProduct = () => {
       <p>{isEditMode ? 'Modifica los detalles del producto.' : 'Completa la siguiente información para agregar un producto a tu tienda.'}</p>
       <ProductForm
         formValues={formValues}
-        image={image}
+        images={images}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}
-        handleStockChange={handleStockChange} 
+        handleStockChange={handleStockChange}
+        handleRemoveImage={handleRemoveImage}
       />
 
       <div className="d-flex justify-content-end mt-4">
