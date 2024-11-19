@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import myProfileService from '../services/serviceMyProfile';
 import ProfileCard from '../components/ProfileCard';
+import { AuthContext } from "../context/AuthContext";
+
 
 const MyProfile = () => {
-  const [profileData, setProfileData] = useState({})
   const [orders, setOrders] = useState([])
+  const { isAuthenticated } = useContext(AuthContext);
+  const [userData, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userData");
+    return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
+  });
 
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
         const data = await myProfileService.getMyProfile();
-        console.log(profileData);
-        setProfileData(data);
-        setOrders(data.ordersDto);
+        //console.log(profileData);
+        setOrders(data);
+        console.log(data)
       } catch (error) {
         console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
       }
@@ -20,14 +26,26 @@ const MyProfile = () => {
     fetchMyProfile();
   }, []);
 
+  useEffect(() => {
+    const handleUserDataChange = (event) => {
+      setUserData(event.detail);
+    };
+
+    window.addEventListener("userDataChanged", handleUserDataChange);
+
+    return () => {
+      window.removeEventListener("userDataChanged", handleUserDataChange);
+    };
+  }, []);
+
   return (
 
     <div className="container mt-5">
       <h3>My Profile</h3>
-      <ProfileCard profile={profileData} />
+      <ProfileCard profile={userData} />
       
       <h3>Checkouts</h3>
-      <div className="accordion" id="accordionCheckouts">
+      {!orders? "Todavia no se cargaron ordenes": <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
             <h2 className="accordion-header" id={`heading-${orders.id}`}>
@@ -65,7 +83,7 @@ const MyProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.items.map((item, itemIndex) => (
+                    {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
@@ -79,7 +97,8 @@ const MyProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
+      
     </div>
   );
 }
