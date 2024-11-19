@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       const userData = localStorage.getItem("userData");
       const parsedData = JSON.parse(userData);
       return (parsedData.role == "ADMIN")
-    } catch (error) {
+    } catch {
       return false;
     }
   }

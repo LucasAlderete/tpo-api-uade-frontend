@@ -9,7 +9,7 @@ import { fetchProductsFromDb } from '../services/serviceProducts';
 
 const ProductManagementPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext); 
+  const { isAuthenticated, isAdmin } = useContext(AuthContext); 
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]); 
@@ -18,7 +18,7 @@ const ProductManagementPage = () => {
 
   const fetchProducts = async () => {
     try {
-        if(isAuthenticated){
+        if(isAuthenticated() && isAdmin()){
             const productList = await fetchProductsFromDb();
             setProducts(productList);
             setFilteredProducts(productList);
