@@ -21,7 +21,8 @@ const useApiClient = () => {
   apiClient.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem("token");
-      if (token && isTokenValid(token)) {
+      // if (token && isTokenValid(token)) {
+      if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
         return Promise.reject(new Error("Invalid or expired token, redirecting to login."));
@@ -31,7 +32,7 @@ const useApiClient = () => {
     (error) => Promise.reject(error)
   );
 
-  return apiClient;
-};
+  return {apiClient};
+}
 
 export default useApiClient;
