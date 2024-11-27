@@ -5,7 +5,15 @@ const ProductCarousel = ({ title, products, onViewProduct }) => {
   
     return (
       <div className="mb-5">
-        <h3>{title}</h3>
+        <h3 className="fw-bold text-dark mb-4"
+          style={{
+            borderBottom: "2px solid #007bff",
+            display: "inline-block",
+            paddingBottom: "5px",
+            fontSize: "1.5rem",
+          }}
+          >{title}
+        </h3>
         <div id={`${title.replace(/\s+/g, '-')}-carousel`} className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => {
