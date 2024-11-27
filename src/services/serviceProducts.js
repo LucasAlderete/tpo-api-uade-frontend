@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import useApiClient from '../hooks/useApiClient';
 
 const API_URL = 'http://localhost:3000/products';
 
@@ -175,5 +176,19 @@ export const getProductosNuevos = async () => {
     
   } catch (error) {
     throw new Error('Error al obtener todos los productos', error);
+  }
+};
+
+export const addImageToDb = async (image) => {
+  try {
+    //const { apiClient } = useApiClient();
+
+    console.log(image);
+
+    const response = await axios.post(`http://localhost:3000/images`, image);
+    return response.data;
+  } catch (error) {
+    console.error("Error al agregar la imagen:", error);
+    throw error;
   }
 };

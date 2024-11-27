@@ -62,7 +62,7 @@
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Samsung 970 EVO Plus",
       "url_image": null,
       "description": "Disco SSD Samsung",
@@ -587,9 +587,17 @@
     },
     {
       "id": "2",
-      "total": 0,
+      "total": 65000,
       "user_id": "5e46",
-      "items": []
+      "items": [
+        {
+          "id": 7,
+          "cart_id": "2",
+          "product_id": "22",
+          "price": 65000,
+          "quantity": 1
+        }
+      ]
     },
     {
       "id": "3",
@@ -661,7 +669,7 @@
       "total": 48000
     },
     {
-      "id": 3,
+      "id": "3",
       "user_id": "ae2c",
       "date": "2024-11-19T20:05:41.369Z",
       "order_items": [
@@ -683,7 +691,7 @@
       "total": 115000
     },
     {
-      "id": 4,
+      "id": "4",
       "user_id": "c2a8",
       "date": "2024-11-19T21:47:59.940Z",
       "order_items": [
@@ -1106,6 +1114,14 @@
     {
       "id": "11",
       "user_id": "ae2c"
+    },
+    {
+      "id": "22",
+      "user_id": "5e46"
+    },
+    {
+      "id": "368e9888-290c-4a07-99ba-b2de66091905",
+      "user_id": "5e46"
     }
   ],
   "favorites": [
