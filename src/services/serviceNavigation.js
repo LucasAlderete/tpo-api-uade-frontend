@@ -1,36 +1,23 @@
+import useApiClient from '../hooks/useApiClient';
+
+const { apiClient } = useApiClient();
+
 export const post = async (product_id) => {
-    try {
-
-        const response = await fetch("http://localhost:3000/api/navigation", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ product_id}),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        return response.json();
-    } catch (error) {
-        console.error("Error in postNavigation:", error.message);
-        throw error;
-    }
+  try {
+    const response = await apiClient.post(`/api/navigation`, { product_id });
+    return response.data;
+  } catch (error) {
+    console.error("Error in postNavigation:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Error posting navigation");
+  }
 };
 
 export const get = async () => {
-    try {
-        const navigationResponse = await fetch("http://localhost:3000/api/navigation");
-        if (!navigationResponse.ok) {
-            throw new Error(`Error al obtener la navegación: ${navigationResponse.statusText}`);
-        }
-        const navigationData = await navigationResponse.json();
-        return navigationData;
-    } catch (error) {
-        console.error("Error en getNavigationDecored:", error.message);
-        throw error;
-    }
+  try {
+    const response = await apiClient.get(`/api/navigation`);
+    return response.data;
+  } catch (error) {
+    console.error("Error in getNavigation:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Error fetching navigation");
+  }
 };
-

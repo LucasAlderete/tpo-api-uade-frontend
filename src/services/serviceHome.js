@@ -1,7 +1,7 @@
 export const getHome = async () => {
   try {
     const [homeResponse] = await Promise.all([
-      fetch("http://localhost:3000/api/home"),
+      fetch("http://localhost:3000/home"),
     ]);
 
     // Parseamos las respuestas como JSON
