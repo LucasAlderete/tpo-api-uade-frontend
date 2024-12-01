@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import CategorySection from "../components/CategorySection.jsx";
-import { getAllDecoratedByUser } from '../services/serviceFavs.js';
+import { get } from '../services/serviceFavs.js';
 
 const MyFavorites = () => {
 
@@ -14,9 +14,7 @@ const MyFavorites = () => {
       try {
         let favorites = null;
         if (isAuthenticated()) {  
-          const storedData = localStorage.getItem("userData");
-          const user_id = storedData && isAuthenticated() ? JSON.parse(storedData).id : 0;
-          favorites = await getAllDecoratedByUser(user_id);
+          favorites = await get();
         }
 
         setData({
