@@ -11,6 +11,7 @@ const Header = () => {
 
   const [userData, setUserData] = useState(() => {
     const storedData = localStorage.getItem("userData");
+    console.log(storedData);
     return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
 
@@ -66,12 +67,12 @@ const Header = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {isAuthenticated()
+                  {(userData && isAuthenticated())
                     ? `${userData.name} ${userData.surname}`
                     : "Guest"}
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
-                  {isAuthenticated() ? (
+                  {(userData && isAuthenticated()) ? (
                     <>
                       <li>
                         <Link

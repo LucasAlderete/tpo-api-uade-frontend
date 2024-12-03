@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useServiceAuth from "../hooks/useServiceAuth";
 import PropTypes from 'prop-types';
+import { getUserDetails } from "../services/serviceUserDetails";
 
 export const AuthContext = createContext();
 
@@ -22,22 +23,26 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, email, password, birthday, name, surname, role) => {
     try {
       const responseData = await registerService(username, email, password, birthday, name, surname, role);
-      saveUserData(responseData);
       successfulAuth(responseData);
-    } catch {
+      await saveUserData(responseData);
+      navigate("/");
+    } catch (e) {
+      console.log(`exception: ${e}`)
       alert("usuario o mail ya en uso, pruebe nuevamente");
     }
   }
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     if (isAuthenticated()) {
       navigate("/");
     }
     try {
-      const responseData = await authenticateService(email, password);
-      saveUserData(responseData);
+      const responseData = await authenticateService(username, password);
       successfulAuth(responseData);
-    } catch {
+      await saveUserData(responseData);
+      navigate("/");
+    } catch (e) {
+      console.log(`exception: ${e}`)
       alert("credenciales incorrectas");
     }
   };
@@ -66,10 +71,11 @@ export const AuthProvider = ({ children }) => {
   const successfulAuth = (responseData) => {
     setToken(responseData);
     localStorage.setItem("token", JSON.stringify(responseData));
-    navigate("/");
   }
 
-  const saveUserData = (userData) => {
+  const saveUserData = async () => {
+    console.log("saveUserData2!!!!")
+    const userData = await getUserDetails();
     localStorage.setItem("userData", JSON.stringify(userData));
     const event = new CustomEvent("userDataChanged", { detail: userData });
     window.dispatchEvent(event);
