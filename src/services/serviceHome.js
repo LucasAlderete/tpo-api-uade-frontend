@@ -1,15 +1,11 @@
+import useApiClient from '../hooks/useApiClient';
+
+const { apiClient } = useApiClient();
+
 export const getHome = async () => {
   try {
-    const [homeResponse] = await Promise.all([
-      fetch("http://localhost:3000/home"),
-    ]);
-
-    // Parseamos las respuestas como JSON
-    const homeData = await homeResponse.json();
-
-    return {
-      homeData
-    };
+    const response = await apiClient.get(`/home`);
+    return response.data; 
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
