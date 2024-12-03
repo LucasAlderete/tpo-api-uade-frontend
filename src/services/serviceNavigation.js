@@ -4,7 +4,7 @@ const { apiClient } = useApiClient();
 
 export const post = async (product_id) => {
   try {
-    const response = await apiClient.post(`/api/navigation`, { product_id });
+    const response = await apiClient.post(`/navigation`, { product_id });
     return response.data;
   } catch (error) {
     console.error("Error in postNavigation:", error.response?.data || error.message);
@@ -14,7 +14,7 @@ export const post = async (product_id) => {
 
 export const get = async () => {
   try {
-    const response = await apiClient.get(`/api/navigation`);
+    const response = await apiClient.get(`/navigation`);
     return response.data;
   } catch (error) {
     console.error("Error in getNavigation:", error.response?.data || error.message);
