@@ -7,14 +7,26 @@ const useServiceCart = () => {
   const getCart = async () => {
     const {apiClient} = useApiClient();
     try {
-      getProducts();
+      await getProducts();
 
       const response = await apiClient.get(`/cart`);
 
       const cartData = response.data;
-  
 
-      return {id:cartData.id, items: cartData.items, total: cartData.total, success: true};
+      const updatedCartData = cartData.items.map(item => {
+        
+        let product = products.find(product => product.name === item.name);
+      
+        if (product) {
+          return {
+            ...item,
+            price: product.price, 
+          };
+        }
+      });
+
+
+      return {id:cartData.id, items: updatedCartData, total: cartData.total, success: true};
     } catch (error) {
       return {success: false};
     }
