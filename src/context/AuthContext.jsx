@@ -24,9 +24,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const responseData = await registerService(username, email, password, birthday, name, surname, role);
       successfulAuth(responseData);
-      saveUserData(responseData);
+      await saveUserData(responseData);
       navigate("/");
-    } catch {
+    } catch (e) {
+      console.log(`exception: ${e}`)
       alert("usuario o mail ya en uso, pruebe nuevamente");
     }
   }
@@ -38,9 +39,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const responseData = await authenticateService(username, password);
       successfulAuth(responseData);
-      saveUserData(responseData);
+      await saveUserData(responseData);
       navigate("/");
-    } catch {
+    } catch (e) {
+      console.log(`exception: ${e}`)
       alert("credenciales incorrectas");
     }
   };
@@ -71,9 +73,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", JSON.stringify(responseData));
   }
 
-  const saveUserData = () => {
-    userData = getUserDetails();
-    localStorage.setItem("userData", userData);
+  const saveUserData = async () => {
+    console.log("saveUserData2!!!!")
+    const userData = await getUserDetails();
+    localStorage.setItem("userData", JSON.stringify(userData));
     const event = new CustomEvent("userDataChanged", { detail: userData });
     window.dispatchEvent(event);
   }

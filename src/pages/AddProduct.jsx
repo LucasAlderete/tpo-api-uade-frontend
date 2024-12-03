@@ -6,6 +6,8 @@ import { Button } from 'react-bootstrap';
 import { getProductById, addProductToDb, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 import {AuthContext} from '../context/AuthContext';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const AddProduct = () => {
   const { error } = useContext(AuthContext);
@@ -72,16 +74,27 @@ const AddProduct = () => {
   };
 
   const handleImageChange = async (e) => {
-    const urls = Array.from(e.target.value);
+    const urls = e.target.value.split(',').map((url) => url.trim());
+    console.log(urls);
+  
+    const newImages = urls.map((url) => ({
+      id: uuidv4(), 
+      path: url,
+      product: `${formValues.id} | ${formValues.name}`, 
+    }));
   
     try {
       
+      const savedImages = await Promise.all(newImages.map((image) => addImageToDb(image)));
+  
+      setImages((prev) => [...prev, ...savedImages]); 
+  
       setFormValues((prev) => ({
         ...prev,
-        url_image_list: [...prev.url_image_list, ...urls],
+        url_image_list: [...prev.url_image_list, ...savedImages.map((img) => img.id)], 
       }));
     } catch (error) {
-      console.error("Error al manejar las imágenes:", error);
+      console.error("Error al agregar las imágenes:", error);
     }
   };
 
@@ -98,25 +111,26 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const productData = {
       ...formValues,
-      url_image_list: images, 
+      url_image_list: images.map((image) => image.id), 
     };
   
     try {
       if (isEditMode) {
-        console.log(productData);
         await updateProductInDb(productId, productData);
         console.log("Producto actualizado con éxito.");
       } else {
         await addProductToDb(productData);
         console.log("Producto agregado con éxito.");
       }
-      navigate("/product-management"); 
+      navigate("/product-management");
     } catch (error) {
       console.error("Error al guardar el producto", error);
     }
   };
+  
 
   const handleRemoveImage = (index) => {
     setImages(images.filter((_, i) => i !== index)); 

@@ -9,7 +9,39 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
    <Form className="product-form">
      <h4>Detalle de producto</h4>
 
-     <Form.Group className="mb-3 text-start">
+     <Row>
+       <Col md={6}>
+         <FormField
+           label="Modelo"
+           type="text"
+           name="name"
+           value={formValues.name}
+           onChange={handleInputChange}
+           placeholder="Ingresa el nombre del modelo"
+         />
+       </Col>
+       <Col md={6}>
+         <FormField
+           label="Categoría"
+           type="text"
+           name="category_name"
+           value={formValues.category_name}
+           onChange={handleInputChange}
+           placeholder="Ingresa una categoría"
+         />
+       </Col>
+     </Row>
+
+
+     <TextAreaField
+       label="Descripción"
+       name="description"
+       value={formValues.description}
+       onChange={handleInputChange}
+       placeholder="Ingresa una descripción"
+     />
+
+    <Form.Group className="mb-3 text-start">
       <Form.Label>Imágenes del modelo</Form.Label>
       <div className="image-upload">
         {/* Mostrar las imágenes existentes */}
@@ -47,38 +79,6 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
       </div>
     </Form.Group>
 
-     
-     <Row>
-       <Col md={6}>
-         <FormField
-           label="Modelo"
-           type="text"
-           name="name"
-           value={formValues.name}
-           onChange={handleInputChange}
-           placeholder="Ingresa el nombre del modelo"
-         />
-       </Col>
-       <Col md={6}>
-         <FormField
-           label="Categoría"
-           type="text"
-           name="category_name"
-           value={formValues.category_name}
-           onChange={handleInputChange}
-           placeholder="Ingresa una categoría"
-         />
-       </Col>
-     </Row>
-
-
-     <TextAreaField
-       label="Descripción"
-       name="description"
-       value={formValues.description}
-       onChange={handleInputChange}
-       placeholder="Ingresa una descripción"
-     />
     
      <Row className="mt-3 mb-4">
        <Col md={6}>

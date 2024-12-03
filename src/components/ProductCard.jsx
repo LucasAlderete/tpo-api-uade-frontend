@@ -1,5 +1,5 @@
 import {useContext, useState, useEffect } from 'react';
-import { add, remove, getAllByUser } from '../services/serviceFavs.js';
+import { add, remove, get } from '../services/serviceFavs.js';
 import useServiceCart from "../hooks/useServiceCart";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -26,12 +26,12 @@ const ProductCard = ({ product }) => {
   
   useEffect(() => {
     const fetchCart = async () => {
-      const favorites = await getAllByUser(user_id);
+      const favorites = await get();
       const cart = await useServiceCart().getCart(user_id);
       const items = cart.items;
 
       const isFavorite = favorites.some(
-        (favorite) => favorite.product_id == product.product_id && favorite.user_id == user_id
+        (favorite) => favorite.product_id == product.product_id
       );
       setIsFavorite(isFavorite);
 
@@ -107,7 +107,7 @@ const ProductCard = ({ product }) => {
       }}
     >
       <img
-        src={product.url_image || "https://via.placeholder.com/150"}
+        src={product.images && product.images[0]  || "https://via.placeholder.com/150"}
         className="card-img-top"
         alt={product.name}
         style={{
