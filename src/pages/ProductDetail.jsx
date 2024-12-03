@@ -18,6 +18,9 @@ const ProductDetail = () => {
       if (isAuthenticated()) {
         await post(productId);
       }
+      if (data.images?.length == 0) {
+        data.images = ["https://via.placeholder.com/450"];
+      }
       setProduct(data);
       setLoading(false);
     };
