@@ -9,8 +9,8 @@ export const addProductToDb = async (productData) => {
   try {
 
     console.log(productData);
-    const productWithId = { ...productData, id: uuidv4() };
-    const response = await apiClient.post(PRODUCTS_ENDPOINT, productWithId);
+    const productWithId = { ...productData, secure_id: uuidv4() };
+    const response = await apiClient.post( `${PRODUCTS_ENDPOINT}/create`, productWithId);
     return response.data;
 
   } catch (error) {
@@ -67,3 +67,4 @@ export const updateProductInDb = async (productId, productData) => {
     throw error; 
   }
 };
+

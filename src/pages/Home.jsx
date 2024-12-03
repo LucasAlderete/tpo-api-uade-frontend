@@ -5,11 +5,12 @@ import ProductCarousel from "../components/ProductCarousel.jsx";
 import CategorySection from "../components/CategorySection.jsx";
 import { get } from '../services/serviceNavigation.js';
 import { getFavs } from '../services/serviceFavs.js';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Home = () => {
         });
       } catch (error) {
         console.error("Error al obtener los datos:", error);
+        navigate("/login");
       } finally {
         setLoading(false);
       }

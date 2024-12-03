@@ -17,17 +17,17 @@ const AddProduct = () => {
     description: '',
     price: 0,
     stock: 0,
-    url_image_list: [],
-    new: true
+    images: [],
+    secure_id: ''
   });
 
-  const [images, setImages] = useState([]);
+  const [imagesList, setImagesList] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false); 
 
   const location = useLocation();
   const navigate = useNavigate();
   
-  const productId = new URLSearchParams(location.search).get('productId'); 
+  const productId = new URLSearchParams(location.search).get('secure_id'); 
 
   useEffect(() => {
     if (productId) {
@@ -39,11 +39,10 @@ const AddProduct = () => {
             category_name: product.category_name,
             description: product.description,
             price: product.price,
-            stock: product.stock,
-            new: product.new,
+            stock: product.stock
           });
-          setImages(
-            product.url_image_list?.map((id) => ({
+          setImagesList(
+            product.images?.map((id) => ({
               id, 
             })) || []
           );
@@ -78,20 +77,17 @@ const AddProduct = () => {
     console.log(urls);
   
     const newImages = urls.map((url) => ({
-      id: uuidv4(), 
       path: url,
-      product: `${formValues.id} | ${formValues.name}`, 
+      product: `${formValues.secure_id} | ${formValues.name}`, 
     }));
   
     try {
-      
-      const savedImages = await Promise.all(newImages.map((image) => addImageToDb(image)));
   
-      setImages((prev) => [...prev, ...savedImages]); 
+      setImagesList((prev) => [...prev, ...newImages]); 
   
       setFormValues((prev) => ({
         ...prev,
-        url_image_list: [...prev.url_image_list, ...savedImages.map((img) => img.id)], 
+        images: [...prev.images, ...imagesList.map((img) => img.id)], 
       }));
     } catch (error) {
       console.error("Error al agregar las imágenes:", error);
@@ -105,7 +101,7 @@ const AddProduct = () => {
       formValues.description.trim() !== '' &&
       formValues.price > 0 && 
       formValues.stock > 0 && 
-      images 
+      imagesList 
     );
   };
 
@@ -114,7 +110,7 @@ const AddProduct = () => {
   
     const productData = {
       ...formValues,
-      url_image_list: images.map((image) => image.id), 
+      images: imagesList.map((image) => image.id), 
     };
   
     try {
@@ -133,7 +129,7 @@ const AddProduct = () => {
   
 
   const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index)); 
+    setImagesList(imagesList.filter((_, i) => i !== index)); 
   };
 
 
@@ -144,7 +140,7 @@ const AddProduct = () => {
       <p>{isEditMode ? 'Modifica los detalles del producto.' : 'Completa la siguiente información para agregar un producto a tu tienda.'}</p>
       <ProductForm
         formValues={formValues}
-        images={images}
+        images={imagesList}
         isEditing={isEditMode}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}

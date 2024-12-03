@@ -1,7 +1,6 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import FormField from './FormField';
 import TextAreaField from './TextAreaField';
-import PropTypes from 'prop-types';
 
 const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChange, handleRemoveImage, images }) => {
 
@@ -71,7 +70,6 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
             <input
               type="text"
               placeholder="Ingresa una o más URLs, separadas por coma"
-              onChange={handleImageChange} 
             />
             <Button onClick={handleImageChange}>Agregar imágenes</Button>
           </div>
@@ -110,26 +108,5 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
    </Form>
  );
 };
-
-ProductForm.propTypes = {
-  formValues: PropTypes.shape({
-    name: PropTypes.string, 
-    category_name: PropTypes.string, 
-    description: PropTypes.string, 
-    price: PropTypes.number, 
-    stock: PropTypes.number, 
-  }).isRequired,
-  isEditing: PropTypes.bool,
-  handleInputChange: PropTypes.func.isRequired, 
-  handleImageChange: PropTypes.func.isRequired,
-  handleRemoveImage: PropTypes.func.isRequired, 
-  images: PropTypes.arrayOf( 
-    PropTypes.shape({
-      id: PropTypes.number, 
-      path: PropTypes.string, 
-    })
-  ),
-};
-
 
 export default ProductForm;

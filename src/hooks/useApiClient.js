@@ -26,7 +26,8 @@ const useApiClient = () => {
     (config) => {
       const token = localStorage.getItem("token");
       console.log(`token de request: ${token}`)
-      if (token && isTokenValid(token)) {
+      // if (token && isTokenValid(token)) {
+      if (token) {
         console.log("token valido")
         config.headers.Authorization = `Bearer ${JSON.parse(token).token}`;
       } else {
