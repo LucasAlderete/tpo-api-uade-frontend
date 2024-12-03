@@ -6,6 +6,7 @@ import CategorySection from "../components/CategorySection.jsx";
 import { get } from '../services/serviceNavigation.js';
 import { getFavs } from '../services/serviceFavs.js';
 import { useNavigate } from "react-router-dom";
+import useServiceCart from "../hooks/useServiceCart";
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -18,6 +19,7 @@ const Home = () => {
       try {
         const homeData = await getHome();
         const favorites = await getFavs();
+        const cart = await useServiceCart().getCart();
         let recentlyViewedProducts = null;
         if (isAuthenticated()) {  
           recentlyViewedProducts = await get();
@@ -26,7 +28,8 @@ const Home = () => {
         setData({
           ...homeData,
           recently_viewed_products: recentlyViewedProducts,
-          favorites: favorites
+          favorites: favorites,
+          cart: cart
         });
       } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -46,13 +49,13 @@ const Home = () => {
   return (
     <div className="container text-center my-5">
       {data.recently_viewed_products && data.recently_viewed_products.length > 0 && (
-        <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products} favorites={data.favorites}/>
+        <ProductCarousel title="Productos Vistos Recientemente" products={data.recently_viewed_products} favorites={data.favorites} cart={data.cart}/>
       )}
       {data.featured_products && (
-        <ProductCarousel title="Productos Destacados" products={data.featured_products} favorites={data.favorites} />
+        <ProductCarousel title="Productos Destacados" products={data.featured_products} favorites={data.favorites}  cart={data.cart}/>
       )}
       {data.products && Object.keys(data.products).map((categoryName, index) => (
-        <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} favorites={data.favorites} />
+        <CategorySection key={index} categoryName={categoryName} products={data.products[categoryName]} favorites={data.favorites}  cart={data.cart}/>
       ))}
     </div>
   );
