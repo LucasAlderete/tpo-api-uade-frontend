@@ -34,7 +34,7 @@ const ProductCard = ({ product, favorites }) => {
       );
       setIsFavorite(isFavorite);
 
-      const item = items.find((item) => item.product_id === product.product_id);
+      const item = items.find((item) => item.name === product.name);
       if (item) {
         setIsCart(true);
       } else {
@@ -74,10 +74,10 @@ const ProductCard = ({ product, favorites }) => {
   
   const handleAddToCart = async () => {
     if (isCart) {
-      await useServiceCart().removeProduct(user_id, product.product_id);
+      await useServiceCart().removeProduct(product.name);
       setIsCart(false);
     } else {
-      const response = await useServiceCart().addProduct(user_id, product.product_id);
+      const response = await useServiceCart().addProduct(product.name);
       if (response.success) {
         setIsCart(true);
       } else {

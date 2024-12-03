@@ -1,51 +1,48 @@
 import useApiClient from "./useApiClient";
 
+
+let products = [];
+
 const useServiceCart = () => {
   const getCart = async () => {
     const {apiClient} = useApiClient();
     try {
-      const response = await apiClient.get(`/cart/`);
+      getProducts();
 
-      const cartData = response.data[0];
+      const response = await apiClient.get(`/cart`);
 
+      const cartData = response.data;
+  
 
-
-      const productRequests = cartData.items.map((item) =>
-        apiClient.get(`/product/${item.product_id}`)
-      );
-      
-      const productResponses = await Promise.all(productRequests);
-
-      return {id:cartData.id, items: productResponses, total: cartData.total, success: true};
+      return {id:cartData.id, items: cartData.items, total: cartData.total, success: true};
     } catch (error) {
       return {success: false};
     }
   };
 
 
-  const addProduct = async (productId) => {
+  const addProduct = async (productName) => {
     const {apiClient} = useApiClient();
     try {
-      await apiClient.post(`/cart/add` , {
-        params: {
-          productId: productId,
-        },
-      });
-
+      const product = products.find(product => product.name === productName);
+      
+      await apiClient.post(`/cart/add?productId=${product.id}`);
+      
       return {success: true};
     } catch (error) {
+      console.log(error); 
       return {success: false};
     }
   };
 
-  const decreaseProductQuantity = async (productId) => {
+  const decreaseProductQuantity = async (productName) => {
     const {apiClient} = useApiClient();
+
     try {
-      await apiClient.delete(`/cart/decrease_quantity` , {
-        params: {
-          productId: productId,
-        },
-      });
+      const product = products.find(product => product.name === productName);
+
+
+      const response = await apiClient.delete(`/cart/decrease_quantity?productId=${product.id}` );
   
       return {success: true};
     } catch (error) {
@@ -64,17 +61,16 @@ const useServiceCart = () => {
     }
   }
 
-  const removeProduct = async (productId) => {
+  const removeProduct = async (productName) => {
     const {apiClient} = useApiClient();
     try {
-      await apiClient.delete(`/cart/remove` , {
-        params: {
-          productId: productId,
-        },
-      });
+      const product = products.find(product => product.name === productName);
+
+      await apiClient.delete(`/cart/remove?productId=${product.id}`);
       
       return {success: true};
     } catch (error) {
+      console.log(error)
       return {success: false};
     }
   }
@@ -84,7 +80,7 @@ const useServiceCart = () => {
     try {
       const response = await apiClient.post(`/cart/checkout`);
 
-      if (response.data[0].success == true) {
+      if (response.data.success == true) {
         return {
           success: true,
           products: [],
@@ -94,7 +90,7 @@ const useServiceCart = () => {
 
       return {
         success: false,
-        products: response.data[0].products,
+        products: response.data.products,
         status: 200
       }
 
@@ -102,6 +98,17 @@ const useServiceCart = () => {
       return {success: false, status: 'error'};
     }
   }
+
+  const getProducts = async () => {
+    const {apiClient} = useApiClient();
+    try {
+      const response = await apiClient.get(`/product`);
+      products = response.data;
+    } catch (error) {
+      return {success: false};
+    }
+  }
+
   return {getCart, addProduct, decreaseProductQuantity, emptyCart, removeProduct, checkout};
 }
 
