@@ -1,6 +1,6 @@
 import ProductCard from "./ProductCard.jsx";
 
-const ProductCarousel = ({ title, products, onViewProduct }) => {
+const ProductCarousel = ({ title, products, onViewProduct, favorites }) => {
     const productsPerPage = 4;
   
     return (
@@ -23,7 +23,7 @@ const ProductCarousel = ({ title, products, onViewProduct }) => {
                   <div className="d-flex justify-content-start">
                     {currentProducts.map((product, index) => (
                       <div key={index} className="col-3">
-                        <ProductCard product={product} onViewProduct={onViewProduct} />
+                        <ProductCard product={product} onViewProduct={onViewProduct} favorites={favorites} />
                       </div>
                     ))}
                   </div>

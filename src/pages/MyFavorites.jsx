@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import CategorySection from "../components/CategorySection.jsx";
-import { get } from '../services/serviceFavs.js';
+import { getFavs } from '../services/serviceFavs.js';
 
 const MyFavorites = () => {
 
@@ -14,7 +14,7 @@ const MyFavorites = () => {
       try {
         let favorites = null;
         if (isAuthenticated()) {  
-          favorites = await get();
+          favorites = await getFavs();
         }
 
         setData({
@@ -36,7 +36,7 @@ const MyFavorites = () => {
     return (
       <>
         <div className="container text-center my-5">
-            <CategorySection key="0" categoryName="Mis Favoritos" products={data.favorites} />
+            <CategorySection key="0" categoryName="Mis Favoritos" products={data.favorites} favorites={data.favorites} />
         </div>
       </>
     );
