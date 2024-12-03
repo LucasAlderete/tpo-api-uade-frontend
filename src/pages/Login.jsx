@@ -6,12 +6,12 @@ const Login = () => {
 
     const { login } = useContext(AuthContext);
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
   
     const handleSubmit = (e) => {
         e.preventDefault();
-        login(email, password)
+        login(username, password)
     };
 
     return (
@@ -19,13 +19,13 @@ const Login = () => {
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                <label htmlFor="email" className="form-label">Direccion de email</label>
+                <label htmlFor="username" className="form-label">Nombre de Usuario</label>
                 <input
-                    type="email"
+                    type="username"
                     className="form-control"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                 />
                 </div>
