@@ -3,7 +3,7 @@ import axios from "axios";
 const useApiClient = () => {
 
   const apiClient = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: "http://localhost:8080/api",
     headers: {
       "Content-Type": "application/json",
     },
@@ -21,8 +21,7 @@ const useApiClient = () => {
   apiClient.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem("token");
-      // if (token && isTokenValid(token)) {
-      if (token) {
+      if (token && isTokenValid(token)) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
         return Promise.reject(new Error("Invalid or expired token, redirecting to login."));
