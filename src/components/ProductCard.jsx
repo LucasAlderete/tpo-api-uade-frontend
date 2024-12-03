@@ -4,7 +4,7 @@ import useServiceCart from "../hooks/useServiceCart";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const ProductCard = ({ product, favorites }) => {
+const ProductCard = ({ product, favorites, cart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCart, setIsCart] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
@@ -26,7 +26,7 @@ const ProductCard = ({ product, favorites }) => {
   
   useEffect(() => {
     const fetchCart = async () => {
-      const cart = await useServiceCart().getCart(user_id);
+      //const cart = await useServiceCart().getCart();
       const items = cart.items;
 
       const isFavorite = favorites.some(
