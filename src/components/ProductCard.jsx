@@ -51,7 +51,7 @@ const ProductCard = ({ product, favorites }) => {
   const handleAddToFavorites = async () => {
 
     if (isFavorite) {
-      const response = await remove(product.id, user_id);
+      const response = await remove(product.id);
       console.log("handleAddToFavorites", response);
       if (response) {
         setIsFavorite(false);
@@ -61,8 +61,8 @@ const ProductCard = ({ product, favorites }) => {
       }
     } else {
       
-      const response = await add(product.id, user_id);
-      if (response) {
+      const response = await add(product.id);
+      if (response == "") {
         setIsFavorite(true);
       } else {
         console.error(response.error || "Error al manejar favoritos.");
