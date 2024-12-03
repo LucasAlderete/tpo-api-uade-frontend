@@ -30,7 +30,7 @@ const ProductCard = ({ product, favorites }) => {
       const items = cart.items;
 
       const isFavorite = favorites.some(
-        (favorite) => favorite.product_id == product.product_id
+        (favorite) => favorite.id == product.id
       );
       setIsFavorite(isFavorite);
 
@@ -45,13 +45,13 @@ const ProductCard = ({ product, favorites }) => {
   }, [product.product_id]);
 
   const handleViewProduct = () => {
-    navigate(`/product/${product.product_id}`);
+    navigate(`/product/${product.id}`);
   };
   
   const handleAddToFavorites = async () => {
 
     if (isFavorite) {
-      const response = await remove(product.product_id, user_id);
+      const response = await remove(product.id, user_id);
       console.log("handleAddToFavorites", response);
       if (response) {
         setIsFavorite(false);
@@ -61,7 +61,7 @@ const ProductCard = ({ product, favorites }) => {
       }
     } else {
       
-      const response = await add(product.product_id, user_id);
+      const response = await add(product.id, user_id);
       if (response) {
         setIsFavorite(true);
       } else {
