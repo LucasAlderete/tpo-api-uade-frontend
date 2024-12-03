@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
-import { getProductById, addProductToDb, updateProductInDb, addImageToDb } from '../services/serviceProducts'; 
+import { getProductById, addProductToDb, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 import {AuthContext} from '../context/AuthContext';
 import { v4 as uuidv4 } from 'uuid';
