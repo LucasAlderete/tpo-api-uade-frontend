@@ -41,38 +41,38 @@ function Cart({}) {
   };
 
   const getItems = async () => {
-    const cart = await useServiceCart().getCart(userData.id);
+    const cart = await useServiceCart().getCart();
     setItems(cart.items);
     setTotal(cart.total);
     if (!cart.success) handlePopup("Error", "Error al cargar el carrito. Intente nuevamente.", "error");
   };
 
-  const addProduct = async (productId) => {
-    const response = await useServiceCart().addProduct(userData.id, productId);
+  const addProduct = async (productName) => {
+    const response = await useServiceCart().addProduct(productName);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo agregar el producto al carrito.", "error");
   };
 
-  const decreaseProductQuantity = async (productId) => {
-    const response = await useServiceCart().decreaseProductQuantity(userData.id, productId);
+  const decreaseProductQuantity = async (productName) => {
+    const response = await useServiceCart().decreaseProductQuantity(productName);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo disminuir la cantidad del producto.", "error");
   };
 
-  const removeProduct = async (productId) => {
-    const response = await useServiceCart().removeProduct(userData.id, productId);
+  const removeProduct = async (productName) => {
+    const response = await useServiceCart().removeProduct(productName);
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo eliminar el producto del carrito.", "error");
   };
 
   const emptyCart = async () => {
-    const response = await useServiceCart().emptyCart(userData.id);
+    const response = await useServiceCart().emptyCart();
     await getItems();
     if (!response.success) handlePopup("Error", "No se pudo vaciar el carrito. Intente nuevamente.", "error");
   };
 
   const checkout = async () => {
-    const response = await useServiceCart().checkout(userData.id);
+    const response = await useServiceCart().checkout();
     await getItems();
     if (response.success) {
       handlePopup("Compra Exitosa", "Compra realizada exitosamente!", "success");
@@ -143,7 +143,7 @@ function Cart({}) {
                     <Col xs={3} className="d-flex align-items-center">
                       <Button
                         variant="outline-secondary"
-                        onClick={() => decreaseProductQuantity(item.product_id)}
+                        onClick={() => decreaseProductQuantity(item.name)}
                       >
                         -
                       </Button>
@@ -155,7 +155,7 @@ function Cart({}) {
                       </span>
                       <Button
                         variant="outline-secondary"
-                        onClick={() => addProduct(item.product_id)}
+                        onClick={() => addProduct(item.name)}
                       >
                         +
                       </Button>
@@ -164,7 +164,7 @@ function Cart({}) {
                     <Col xs={1} className="text-end">
                       <Button
                         variant="link"
-                        onClick={() => removeProduct(item.product_id)}
+                        onClick={() => removeProduct(item.name)}
                       >
                         <FaTrash size={18} style={{ color: "#ccc" }} />
                       </Button>

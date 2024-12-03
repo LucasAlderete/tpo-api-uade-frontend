@@ -1,300 +1,126 @@
 import useApiClient from "./useApiClient";
 
+
+let products = [];
+
 const useServiceCart = () => {
-  const getCart = async (userId) => {
+  const getCart = async () => {
     const {apiClient} = useApiClient();
     try {
-      const response = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
+      await getProducts();
 
-      const cartData = response.data[0];
+      const response = await apiClient.get(`/cart`);
 
-      if(response.data.length === 0) {
-        await apiClient.post(`/carts`, {
-          user_id: userId,
-          total: 0,
-          items: []
-        });
-      }
+      const cartData = response.data;
 
-      const productRequests = cartData.items.map((item) =>
-        apiClient.get(`/products/${item.product_id}`)
-      );
+      const updatedCartData = cartData.items.map(item => {
+        
+        let product = products.find(product => product.name === item.name);
       
-      const productResponses = await Promise.all(productRequests);
-
-      const enrichedItems = await Promise.all(
-        cartData.items.map(async (item, index) => {
-          const productData = productResponses[index].data;
-
-          let firstImageUrl = null;
-          if (productData.url_image_list && productData.url_image_list.length > 0) {
-            const firstImageId = productData.url_image_list[0];
-            const imageResponse = await apiClient.get(
-              `/images/${firstImageId}`
-            );
-            firstImageUrl = imageResponse.data.path;
-          }
-
+        if (product) {
           return {
             ...item,
-            name: productData.name,
-            image: firstImageUrl, 
+            price: product.price, 
           };
-        })
-      );
-
-      return {id:cartData.id, items: enrichedItems, total: cartData.total, success: true};
-    } catch (error) {
-      return {success: false};
-    }
-  };
-
-
-  const addProduct = async (userId, productId) => {
-    const {apiClient} = useApiClient();
-    try {
-      const cartResponse = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
-      const cart = cartResponse.data[0];
-      const items = cart.items;
-
-      const item = items.find((item) => item.product_id === productId);
-      if (item) {
-        const updatedItem = { ...item, quantity: item.quantity + 1 };
-        const updatedOrderItems = items.map((item) =>
-          item.product_id === productId ? updatedItem : item
-        );
-
-        const newTotal = updatedOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        
-        await apiClient.patch(`/carts/${cart.id}/`, {
-          items: updatedOrderItems,
-          total: newTotal
-        });
-
-      } else {
-        const productResponse = await apiClient.get(`/products/${productId}`);
-        const product = productResponse.data;
-
-        const carts = await apiClient.get(`/carts/`);
-
-        let maxItemId = 0;
-        carts.data.forEach(async (cart) => {
-          const items = cart.items;
-          const item = items.find((item) => {
-              if (item.id > maxItemId) {
-                maxItemId = item.id
-              }
-            }
-          );
-        });
-
-        const newItem = {
-          id: maxItemId + 1,
-          cart_id: cart.id,
-          product_id: productId,
-          price: product.price,
-          quantity: 1
-        };
-
-        const updatedOrderItems = [...items, newItem];
-        const newTotal = updatedOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-        await apiClient.patch(`/carts/${cart.id}/`, {
-          id: cart.id,
-          user_id: userId,
-          items: updatedOrderItems,
-          total: newTotal
-        });
-
-      }
-      return {success: true};
-    } catch (error) {
-      return {success: false};
-    }
-  };
-
-  const decreaseProductQuantity = async (userId, productId) => {
-    const {apiClient} = useApiClient();
-    try {
-      const cartResponse = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
-      const cart = cartResponse.data[0];
-      const items = cart.items;
-
-      const item = items.find((item) => item.product_id === productId);
-      if (item) {
-        if (item.quantity === 1) {
-          await removeProduct(userId, productId);
-        } else {
-          const updatedItem = { ...item, quantity: item.quantity - 1 };
-          const updatedOrderItems = items.map((item) =>
-            item.product_id === productId ? updatedItem : item
-          );
-
-          const newTotal = updatedOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-          await apiClient.patch(`/carts/${cart.id}/`, {
-            items: updatedOrderItems,
-            total: newTotal
-          });
         }
-      }
-      return {success: true};
+      });
+
+
+      return {id:cartData.id, items: updatedCartData, total: cartData.total, success: true};
     } catch (error) {
       return {success: false};
     }
-  }
+  };
 
-  const emptyCart = async (userId) => {
+
+  const addProduct = async (productName) => {
     const {apiClient} = useApiClient();
     try {
-      const cartResponse = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
-      const cart = cartResponse.data[0];
-      await apiClient.patch(`/carts/${cart.id}/`, {
-        items: [],
-        total: 0
-      });
-
-      return {success: true};
-    } catch (error) {
-      return {success: false};
-    }
-  }
-
-  const removeProduct = async (userId, productId) => {
-    const {apiClient} = useApiClient();
-    try {
-      const cartResponse = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
-      const cart = cartResponse.data[0];
-      const items = cart.items;
-
-      const item = items.find((item) => item.product_id === productId);
-      if (item) {
-        const updatedOrderItems = items.filter((item) => item.product_id !== productId);
-        const newTotal = updatedOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-        await apiClient.patch(`/carts/${cart.id}/`, {
-          items: updatedOrderItems,
-          total: newTotal
-        });
-      }
-
-      return {success: true};
-    } catch (error) {
-      return {success: false};
-    }
-  }
-
-  const checkout = async (userId) => {
-    const {apiClient} = useApiClient();
-    try {
-      const cartResponse = await apiClient.get(`/carts/` , {
-        params: {
-          user_id: userId,
-        },
-      });
-      const cart = cartResponse.data[0];
-      const items = cart.items;
-
-      const productRequests = items.map((item) =>
-        apiClient.get(`/products/${item.product_id}`)
-      );
-
-      const productResponses = await Promise.all(productRequests);
-
-      let outOfStockItems = items.filter(item => item.quantity > productResponses.find(product => product.data.id == item.product_id).data.stock);
+      const product = products.find(product => product.name === productName);
       
-      outOfStockItems = outOfStockItems.map(item => {
-        const product = productResponses.find(product => product.data.id == item.product_id).data;
-        return product.name;
-      }
-      );
-    
+      await apiClient.post(`/cart/add?productId=${product.id}`);
+      
+      return {success: true};
+    } catch (error) {
+      console.log(error); 
+      return {success: false};
+    }
+  };
 
-      if (outOfStockItems.length > 0) {
-        return {
-          success: false,
-          products: outOfStockItems,
-          status: 200
-        }
-      } else {
-        const orders = await apiClient.get(`/orders/`);
+  const decreaseProductQuantity = async (productName) => {
+    const {apiClient} = useApiClient();
 
-        let maxOrderItemId = 0;
-        orders.data.forEach(async (order) => {
-          const orderItems = order.order_items;
-          const orderItem = orderItems.find((item) => {
-              if (item.id > maxOrderItemId) {
-                maxOrderItemId = item.id
-              }
-            }
-          );
-        });
-
-        let maxOrderId = 0;
-        orders.data.forEach(async (order) => {
-          if (order.id > maxOrderId) {
-            maxOrderId = order.id
-          }
-        });
-
-        const newOrderItems = items.map((item, index) => ({
-          id: maxOrderItemId + index + 1,
-          order_id: maxOrderId + index + 1,
-          product_id: item.product_id,
-          price: item.price,
-          quantity: item.quantity,
-        }));
-
-        const newTotal = newOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    try {
+      const product = products.find(product => product.name === productName);
 
 
-        await apiClient.post(`/orders`, {
-          id: maxOrderId + 1,
-          user_id: userId,
-          date: new Date().toISOString(),
-          order_items: newOrderItems,
-          total: newTotal,
-        });
+      const response = await apiClient.delete(`/cart/decrease_quantity?productId=${product.id}` );
+  
+      return {success: true};
+    } catch (error) {
+      return {success: false};
+    }
+  }
 
-        for (const item of items) {
-          const productResponse = await apiClient.get(`/products/${item.product_id}`);
-          const product = productResponse.data;
-          product.stock -= item.quantity;
-          await apiClient.patch(`/products/${item.product_id}`, product);
-        }
+  const emptyCart = async () => {
+    const {apiClient} = useApiClient();
+    try {
+      await apiClient.delete(`/cart/empty`);
+      
+      return {success: true};
+    } catch (error) {
+      return {success: false};
+    }
+  }
 
-        await emptyCart(userId);
+  const removeProduct = async (productName) => {
+    const {apiClient} = useApiClient();
+    try {
+      const product = products.find(product => product.name === productName);
 
+      await apiClient.delete(`/cart/remove?productId=${product.id}`);
+      
+      return {success: true};
+    } catch (error) {
+      console.log(error)
+      return {success: false};
+    }
+  }
+
+  const checkout = async () => {
+    const {apiClient} = useApiClient();
+    try {
+      const response = await apiClient.post(`/cart/checkout`);
+
+      if (response.data.success == true) {
         return {
           success: true,
           products: [],
           status: 200
         }
+      } 
+
+      return {
+        success: false,
+        products: response.data.products,
+        status: 200
       }
+
     } catch (error) {
       return {success: false, status: 'error'};
     }
   }
+
+  const getProducts = async () => {
+    const {apiClient} = useApiClient();
+    try {
+      const response = await apiClient.get(`/product`);
+      products = response.data;
+    } catch (error) {
+      return {success: false};
+    }
+  }
+
   return {getCart, addProduct, decreaseProductQuantity, emptyCart, removeProduct, checkout};
 }
 
