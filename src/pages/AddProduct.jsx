@@ -73,6 +73,8 @@ const AddProduct = () => {
   };
 
   const handleImageChange = async (e) => {
+    console.log(e.target.value);
+    console.log(e.target.value.split(','));
     const urls = e.target.value.split(',').map((url) => url.trim());
     console.log(urls);
   

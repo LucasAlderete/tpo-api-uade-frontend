@@ -47,7 +47,7 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
         {images.length > 0 && !isEditing && (
           <div className="existing-images">
             {images.map((image, index) => (
-              <div key={image.id} className="image-preview-container">
+              <div key={image.path} className="image-preview-container">
                 <img
                   src={image.path}
                   alt={`Preview ${index + 1}`}
