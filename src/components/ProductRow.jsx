@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { deleteProductById } from '../services/serviceProducts';
 
 
@@ -74,21 +73,6 @@ const ProductRow = ({ product, onProductDeleted }) => {
       </Modal>
     </>
   );
-};
-
-ProductRow.propTypes = {
-    product: PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string, 
-        category_name: PropTypes.string, 
-        description: PropTypes.string, 
-        price: PropTypes.number, 
-        stock: PropTypes.number,
-        images: PropTypes.array,
-        additional_information: PropTypes.string,
-        url_image_list: PropTypes.arrayOf(PropTypes.number),
-    }).isRequired,
-    onProductDeleted: PropTypes.func.isRequired,
 };
 
 export default ProductRow;

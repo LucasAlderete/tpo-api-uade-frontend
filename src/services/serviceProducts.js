@@ -40,7 +40,7 @@ export const fetchProductsFromDb = async () => {
 
 export const deleteProductById = async (id) => {
   try {
-    const response = await apiClient.delete(`${PRODUCTS_ENDPOINT}/${id}`);
+    const response = await apiClient.delete(`${PRODUCTS_ENDPOINT}/delete/${id}`);
     return response.data; 
   } catch (error) {
     console.error('Error al eliminar el producto:', error);

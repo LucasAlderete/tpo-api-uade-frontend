@@ -32,7 +32,7 @@ const ProductManagementPage = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [filteredProducts]);
+  }, []);
 
   const handleAddProduct = () => {
     navigate('/add-product');
