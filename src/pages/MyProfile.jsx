@@ -97,7 +97,7 @@ const MyProfile = () => {
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
                         <td>{item.quantity}</td>
-                        <td>${item.price * item.quantity}</td>
+                        <td>${item.price}</td>
                       </tr>
                     ))}
                   </tbody>
