@@ -1,32 +1,34 @@
 import { useEffect, useState, useContext } from 'react';
-import serviceMyProfile from '../services/serviceMyProfile';
+import { getUserWithOrders } from '../services/serviceMyProfile';
 import ProfileCard from '../components/ProfileCard';
 import { AuthContext } from "../context/AuthContext";
-import {getTodosProductos} from '../services/serviceProducts'
 
 const MyProfile = () => {
-  const [orders, setOrders] = useState([])
   const { isAuthenticated } = useContext(AuthContext);
-  const [data, setData] = useState(null);
+  const [orders, setOrders] = useState(null)
   const [userData, setUserData] = useState(() => {
     const storedData = localStorage.getItem("userData");
     return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
+  const [userWithOrders, setUserWithOrders] = useState(null)
 
+  // settear usuario con ordenes
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUserWithOrders = async () => {
       try {
-        const data = await getTodosProductos();
-        setData(data);
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
+        const userWithOrders = await getUserWithOrders();
+        setUserWithOrders(userWithOrders);
+        setOrders(userWithOrders.orders_dto)
+        console.log(userWithOrders)
+      } catch (e) {
+        setOrders(false)
+        console.error("Error: ", e);
       }
     };
-    fetchData();
+    fetchUserWithOrders();
   }, []);
   
-
-  // Obtengo usuario
+  // settear usuario
   useEffect(() => {
     const handleUserDataChange = (event) => {
       setUserData(event.detail);
@@ -39,20 +41,6 @@ const MyProfile = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchMyProfile = async () => {
-      try {
-        const data = await serviceMyProfile.ordersById();
-        //console.log(await serviceMyProfile.ProductIdList());
-        setOrders(data);
-        //console.log(data)
-      } catch (error) {
-        console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
-      }
-    };
-    fetchMyProfile();
-  }, []);
-
   return (
 
     <div className="container mt-5">
@@ -60,8 +48,12 @@ const MyProfile = () => {
       <ProfileCard profile={userData} />
       
       <h3>Checkouts</h3>
-      {(orders && orders.length === 0)
-      ?"Todavia no se cargaron ordenes"
+      {(orders == null)
+      ?"Cargando..."
+      :(orders.length === 0)
+      ?"No tiene ninguna orden cargada."
+      :(orders == false)
+      ?"No se pudieron cargar tus ordenes. Por favor intentelo más tarde."
       : <div className="accordion" id="accordionCheckouts">
         {orders.map((orders) => (
           <div className="accordion-item" key={orders.id}>
@@ -100,10 +92,10 @@ const MyProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.order_items.map((item, itemIndex) => (
+                    {orders.items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
-                        <td>{data.find(producto => producto.id == item.product_id).name}</td>
+                        <td>{item.product}</td>
                         <td>{item.quantity}</td>
                         <td>${item.price * item.quantity}</td>
                       </tr>

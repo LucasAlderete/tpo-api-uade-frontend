@@ -1,32 +1,14 @@
 import axios from "axios";
+import useApiClient from '../hooks/useApiClient';
 
-const serviceMyProfile = {
+const { apiClient } = useApiClient();
+const ENDPOINT = '/my-profile';
 
-    async ordersById() {
-
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      const orders = await axios.get(`http://localhost:3000/orders?user_id=${userData.id}`);
-      //console.log("Usuario:", userData);
-      //console.log("Lista ordenes de usuario:", orders.data);
-      return orders.data;
-    },
-    
-    async productNameById(id) {
-      const product_id = await axios.get(`http://localhost:3000/products/${id}`)
-      return product_id.data.name;
-    },
-
-    async ProductIdList() {
-      let lista = [];
-      const orderList = await this.ordersById();
-      orderList.map(order => {
-        order.order_items.map(item=> {
-          lista.push(item.product_id)
-        })
-      });
-      return lista;
-    }
-
-  };
-
-export default serviceMyProfile;
+export const getUserWithOrders = async() => {
+  try{
+    const response = await apiClient.get(`${ENDPOINT}`)
+  return response.data;
+  } catch (e) {
+    console.error("Error al obtener productos con ordenes", e)
+  }
+};
