@@ -4,7 +4,7 @@ const useServiceAuth = () => {
 
   const registerService = async (username, email, password, birthday, name, surname, role) => {
     const response = await authClient.post(
-      "/register", {username, email, password, birthday, name, surname, role}
+      "/auth/register", {username, email, password, birthday, name, surname, role}
     );
     if (response.status != 200) {
       throw new Error();
