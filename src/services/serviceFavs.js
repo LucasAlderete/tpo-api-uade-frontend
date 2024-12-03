@@ -24,7 +24,7 @@ export const remove = async (product_id) => {
   }
 };
 
-export const get = async () => {
+export const getFavs = async () => {
   try {
     const response = await apiClient.get(`/favorite`);
     return response.data; 
