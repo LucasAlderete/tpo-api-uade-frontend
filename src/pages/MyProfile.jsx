@@ -6,18 +6,18 @@ import {getTodosProductos} from '../services/serviceProducts'
 
 const MyProfile = () => {
   const [orders, setOrders] = useState([])
-  const { isAuthenticated } = useContext(AuthContext);
-  const [data, setData] = useState(null);
+  const [allProducts, setAllProducts] = useState(null);
   const [userData, setUserData] = useState(() => {
     const storedData = localStorage.getItem("userData");
     return storedData && isAuthenticated() ? JSON.parse(storedData) : null;
   });
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getTodosProductos();
-        setData(data);
+        const productos = await getTodosProductos();
+        setAllProducts(productos);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
@@ -26,7 +26,7 @@ const MyProfile = () => {
   }, []);
   
 
-  // Obtengo usuario
+  // settear usuario
   useEffect(() => {
     const handleUserDataChange = (event) => {
       setUserData(event.detail);
@@ -39,13 +39,12 @@ const MyProfile = () => {
     };
   }, []);
 
+  // settear ordenes
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const data = await serviceMyProfile.ordersById();
-        //console.log(await serviceMyProfile.ProductIdList());
-        setOrders(data);
-        //console.log(data)
+        const ordenes = await serviceMyProfile.ordersById();
+        setOrders(ordenes);
       } catch (error) {
         console.error("ERROR: Error al cargar el perfil del usuario. Intente nuevamente.", error);
       }
@@ -103,7 +102,7 @@ const MyProfile = () => {
                     {orders.order_items.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <th scope="row">{itemIndex + 1}</th>
-                        <td>{data.find(producto => producto.id == item.product_id).name}</td>
+                        <td>{allProducts.find(producto => producto.id == item.product_id).name}</td>
                         <td>{item.quantity}</td>
                         <td>${item.price * item.quantity}</td>
                       </tr>
