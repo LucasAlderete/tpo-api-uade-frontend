@@ -78,7 +78,7 @@ const MyProfile = () => {
               <div className="accordion-body">
                  {/* Información de la orden */}
             
-                <p><strong>Fecha:</strong> {orders.date}</p>
+                <p><strong>Fecha:</strong> {`${orders.date[0]}/${orders.date[1]}/${orders.date[2]} ${orders.date[3]}:${orders.date[4]}:${orders.date[5]}`}</p>
                 <p><strong>Precio Final:</strong> ${orders.total}</p>
 
                  {/*Tabla de items*/}
@@ -97,7 +97,7 @@ const MyProfile = () => {
                         <th scope="row">{itemIndex + 1}</th>
                         <td>{item.product}</td>
                         <td>{item.quantity}</td>
-                        <td>${item.price * item.quantity}</td>
+                        <td>${item.price}</td>
                       </tr>
                     ))}
                   </tbody>
