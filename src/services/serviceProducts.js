@@ -58,9 +58,10 @@ export const getProductById = async (id) => {
   }
 };
 
-export const updateProductInDb = async (productId, productData) => {
+export const updateProductInDb = async (productData) => {
   try {
-    const response = await apiClient.put(`${PRODUCTS_ENDPOINT}/${productId}`, productData);
+    console.log(productData.secure_id);
+    const response = await apiClient.put(`${PRODUCTS_ENDPOINT}/update/${productData.secure_id}?stock=${productData.stock}`, productData);
     return response.data; 
   } catch (error) {
     console.error("Error en updateProductInDb:", error);

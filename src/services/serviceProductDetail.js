@@ -4,7 +4,7 @@ const { apiClient } = useApiClient();
 
 export const getProductDetail = async (id) => {
   try {
-    const response = await apiClient.get(`/product/id/${id}`);
+    const response = await apiClient.get(`/products/id/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching product detail:", error.response?.data || error.message);

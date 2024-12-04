@@ -45,7 +45,7 @@ const ProductCard = ({ product, favorites, cart }) => {
   }, [product.product_id]);
 
   const handleViewProduct = () => {
-    navigate(`/product/${product.id}`);
+    navigate(`/products/${product.id}`);
   };
   
   const handleAddToFavorites = async () => {

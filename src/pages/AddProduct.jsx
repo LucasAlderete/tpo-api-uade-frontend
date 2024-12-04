@@ -6,7 +6,6 @@ import { Button } from 'react-bootstrap';
 import { getProductById, addProductToDb, updateProductInDb } from '../services/serviceProducts'; 
 import '../styles/ProductManagementPage.css';
 import {AuthContext} from '../context/AuthContext';
-import { v4 as uuidv4 } from 'uuid';
 
 
 const AddProduct = () => {
@@ -18,6 +17,7 @@ const AddProduct = () => {
     price: 0,
     stock: 0,
     images: [],
+    id: 0,
     secure_id: ''
   });
 
@@ -27,7 +27,7 @@ const AddProduct = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const productId = new URLSearchParams(location.search).get('secure_id'); 
+  const productId = new URLSearchParams(location.search).get('productId'); 
 
   useEffect(() => {
     if (productId) {
@@ -39,7 +39,9 @@ const AddProduct = () => {
             category_name: product.category_name,
             description: product.description,
             price: product.price,
-            stock: product.stock
+            stock: product.stock,
+            id: product.id,
+            secure_id: product.secure_id
           });
           setImagesList(
             product.images?.map((id) => ({
@@ -59,7 +61,7 @@ const AddProduct = () => {
         ...formValues,
         [name]: checked ? [...formValues[name], value] : formValues[name].filter(item => item !== value),
       });
-    } else if (type === 'number') {
+    } else if (type === 'number' && name === 'price') {
       setFormValues({
         ...formValues,
         [name]: parseFloat(value),
@@ -72,24 +74,28 @@ const AddProduct = () => {
     }
   };
 
-  const handleImageChange = async (e) => {
-    console.log(e.target.value);
-    console.log(e.target.value.split(','));
-    const urls = e.target.value.split(',').map((url) => url.trim());
-    console.log(urls);
+  const handleImageChange = async (inputValue) => {
+    if (!inputValue) {
+      console.error("No se proporcionó un valor para manejar imágenes.");
+      return;
+    }
+
+    const urls = inputValue.split(',').map((url) => url.trim());
   
     const newImages = urls.map((url) => ({
       path: url,
-      product: `${formValues.secure_id} | ${formValues.name}`, 
+      product: formValues.id, 
     }));
   
     try {
   
       setImagesList((prev) => [...prev, ...newImages]); 
+
+      imagesList.map((img) => console.log(img));
   
       setFormValues((prev) => ({
         ...prev,
-        images: [...prev.images, ...imagesList.map((img) => img.id)], 
+        images: [...prev.images, ...imagesList.map((img) => img.path)], 
       }));
     } catch (error) {
       console.error("Error al agregar las imágenes:", error);
@@ -117,7 +123,7 @@ const AddProduct = () => {
   
     try {
       if (isEditMode) {
-        await updateProductInDb(productId, productData);
+        await updateProductInDb(productData);
         console.log("Producto actualizado con éxito.");
       } else {
         await addProductToDb(productData);

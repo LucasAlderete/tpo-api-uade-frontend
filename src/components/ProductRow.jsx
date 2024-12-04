@@ -27,7 +27,7 @@ const ProductRow = ({ product, onProductDeleted }) => {
   };
 
   const handleEditProduct = () => {
-    navigate(`/add-product?productId=${product.id}`); 
+    navigate(`/add-product?productId=${product.secure_id}`); 
   };
 
   return (

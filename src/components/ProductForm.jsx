@@ -1,8 +1,20 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import FormField from './FormField';
 import TextAreaField from './TextAreaField';
+import { useState } from 'react';
 
 const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChange, handleRemoveImage, images }) => {
+
+  const [imageInput, setImageInput] = useState('');
+
+  const handleInputLocalChange = (e) => {
+    setImageInput(e.target.value);
+  };
+
+  const handleButtonClick = () => {
+    handleImageChange(imageInput);
+    setImageInput('');
+  };
 
  return (
    <Form className="product-form">
@@ -47,7 +59,7 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
         {images.length > 0 && !isEditing && (
           <div className="existing-images">
             {images.map((image, index) => (
-              <div key={image.path} className="image-preview-container">
+              <div key={`${image.path}${index}`} className="image-preview-container">
                 <img
                   src={image.path}
                   alt={`Preview ${index + 1}`}
@@ -70,8 +82,10 @@ const ProductForm = ({ formValues, isEditing, handleInputChange, handleImageChan
             <input
               type="text"
               placeholder="Ingresa una o más URLs, separadas por coma"
+              value={imageInput}
+              onChange={handleInputLocalChange}
             />
-            <Button onClick={handleImageChange}>Agregar imágenes</Button>
+            <Button onClick={handleButtonClick}>Agregar imágenes</Button>
           </div>
         )}
       </div>
